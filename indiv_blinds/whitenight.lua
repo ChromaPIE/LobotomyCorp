@@ -7,13 +7,7 @@ local blind = {
     debuff = {},
     boss = {showdown = true, min = 10, max = 10},
     boss_colour = HEX('D41C25'),
-    loc_txt = {
-        name = "WhiteNight",
-        text = {
-            "Played Apostles reduce",
-            "blind size by 5X Base"
-        }
-    }
+    loc_txt = {}
 }
 
 blind.set_blind = function(self, blind, reset, silent)
