@@ -127,6 +127,15 @@ return {
                     "且无法售出"
                 }
             },
+            lobc_magical_girl = {
+                name = "Magical Girl",
+                text = {
+                    "When this Abnormality",
+                    "{C:attention}breaches{}, {C:attention}permanently{}",
+                    "increase blind",
+                    "size by {X:red,C:white} X2 {}",
+                }
+            },
             lobc_gift = {
                 name = "礼物",
                 text = {
@@ -250,8 +259,7 @@ return {
                     "以至少{X:red,C:white}5倍{}于最低要求",
                     "的分数击败{C:attention}盲注{}时",
                     "该异想体将陷入{C:attention}歇斯底里{}状态",
-                    "倍率低至{X:red,C:white} X1 {}时自毁",
-                    "并使盲注的最低要求永久{X:red,C:white}翻倍"
+                    "倍率低至{X:red,C:white} X1 {}时{C:attention}突破收容"
                 }
             },
 
@@ -583,7 +591,45 @@ return {
                     "score gain and increase",
                     "hands loss by {C:blue}#4#{}"
                 }
-            }
+            },
+
+            dis_j_lobc_servant_of_wrath_1 = {
+                name = "O-01-00",
+                text = {
+                    "{C:attention}(#2#/2){} ...",
+                    "{C:attention}(#3#/3){} ...",
+                    "{C:attention}(#4#/7){} ...",
+                }
+            },
+            dis_j_lobc_servant_of_wrath_2 = {
+                name = "O-01-00",
+                text = {
+                    "When round starts, plays the highest",
+                    "{C:attention}poker hand{} from your hand",
+                    "{C:attention}(#3#/3){} ...",
+                    "{C:attention}(#4#/7){} ...",
+                }
+            },
+            dis_j_lobc_servant_of_wrath_3 = {
+                name = "O-01-00",
+                text = {
+                    "When round starts, plays the highest",
+                    "{C:attention}poker hand{} from your hand",
+                    "Scored cards this way give {X:red,C:white} X#1# {} Mult",
+                    "{C:attention}(#4#/7){} ...",
+                }
+            },
+            j_lobc_servant_of_wrath = {
+                name = "The Servant of Wrath",
+                text = {
+                    "When round starts, plays the highest",
+                    "{C:attention}poker hand{} from your hand",
+                    "Scored cards this way give {X:red,C:white} X#1# {} Mult",
+                    "If {C:attention}3{} hands played this way",
+                    "have {C:attention}3{} or less cards,",
+                    "this Abnormality {C:attention}breaches{}"
+                }
+            },
         },
         Blind = {
             bl_lobc_whitenight = {
