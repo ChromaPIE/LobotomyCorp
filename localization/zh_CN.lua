@@ -99,6 +99,13 @@ return {
 					"一切都会好起来的！",
                 }
             },
+            und_j_lobc_shy_look = {
+                name = "O-01-92",
+                text = {
+                    "It's a good day!",
+                    "Are you still shy today?",
+                }
+            },
             und_j_lobc_servant_of_wrath = {
                 name = "O-01-00",
                 text = {
@@ -123,17 +130,15 @@ return {
                 name = "歇斯底里",
                 text = {
                     "每个盲注后",
-                    "该异想体损失{X:red,C:white} X0.5 {}倍率",
+                    "该异想体损失{X:mult,C:white} X0.5 {}倍率",
                     "且无法售出"
                 }
             },
             lobc_magical_girl = {
-                name = "Magical Girl",
+                name = "魔法少女",
                 text = {
-                    "When this Abnormality",
-                    "{C:attention}breaches{}, {C:attention}permanently{}",
-                    "increase blind",
-                    "size by {X:red,C:white} X2 {}",
+                    "该异想体若{C:attention}突破收容",
+                    "盲注得分要求{C:attention}永久{X:mult,C:white} X2 ",
                 }
             },
             lobc_gift = {
@@ -237,7 +242,7 @@ return {
             dis_j_lobc_queen_of_hatred_2 = {
                 name = "O-01-04",
                 text = {
-                    "{X:red,C:white} X#1# {}倍率",
+                    "{X:mult,C:white} X#1# {}倍率",
                     "{C:attention}(#3#/3){} ...",
                     "{C:attention}(#4#/7){} ...",
                 }
@@ -245,8 +250,8 @@ return {
             dis_j_lobc_queen_of_hatred_3 = {
                 name = "O-01-04",
                 text = {
-                    "{X:red,C:white} X#1# {}倍率",
-                    "以至少{X:red,C:white}5倍{}于最低要求",
+                    "{X:mult,C:white} X#1# {}倍率",
+                    "以至少{X:mult,C:white}5倍{}于最低要求",
                     "的分数击败{C:attention}盲注时",
                     "该异想体将陷入{C:attention}歇斯底里{}状态",
                     "{C:attention}(#4#/7){} ...",
@@ -255,11 +260,11 @@ return {
             j_lobc_queen_of_hatred = {
                 name = "憎恶女王",
                 text = {
-                    "{X:red,C:white} X#1# {}倍率",
-                    "以至少{X:red,C:white}5倍{}于最低要求",
+                    "{X:mult,C:white} X#1# {}倍率",
+                    "以至少{X:mult,C:white}5倍{}于最低要求",
                     "的分数击败{C:attention}盲注{}时",
                     "该异想体将陷入{C:attention}歇斯底里{}状态",
-                    "倍率低至{X:red,C:white} X1 {}时{C:attention}突破收容"
+                    "倍率低至{X:mult,C:white} X1 {}时{C:attention}突破收容"
                 }
             },
 
@@ -337,20 +342,20 @@ return {
             dis_j_lobc_theresia_2 = {
                 name = "T-09-09",
                 text = {
-                    "This Abnormality gains",
-                    "{C:chips}+#2#{} Chips each hand",
+                    "每次出牌后",
+                    "该异想体获得{C:chips}+#2#{}筹码",
                     "{C:attention}(#4#/4){} ...",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
+                    "{C:inactive}（当前为{C:chips}+#1#{C:inactive}筹码）"
                 }
             },
             j_lobc_theresia = {
-                name = "Theresia",
+                name = "特蕾西娅",
                 text = {
-                    "This Abnormality gains",
-                    "{C:chips}+#2#{} Chips each hand",
-                    "After the third hand played,",
-                    "debuffs all {C:attention}playing cards{}",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
+                    "每次出牌后",
+                    "该异想体获得{C:chips}+#2#{}筹码",
+                    "第三次出牌后",
+                    "使所有{C:attention}扑克牌{}失效",
+                    "{C:inactive}（当前为{C:chips}+#1#{C:inactive}筹码）"
                 }
             },
 
@@ -592,6 +597,39 @@ return {
                     "hands loss by {C:blue}#4#{}"
                 }
             },
+            
+            dis_j_lobc_shy_look_1 = {
+                name = "O-01-92",
+                text = {
+                    "{C:attention}(#2#/2){} ...",
+                    "{C:attention}(#3#/4){} ...",
+                    "{C:attention}(#4#/6){} ...",
+                }
+            },
+            dis_j_lobc_shy_look_2 = {
+                name = "O-01-92",
+                text = {
+                    "+{C:attention}Variable{} {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{C:attention}(#3#/4){} ...",
+                    "{C:attention}(#4#/6){} ...",
+                }
+            },
+            dis_j_lobc_shy_look_3 = {
+                name = "O-01-92",
+                text = {
+                    "+{C:attention}Variable{} {C:chips}Chips{} and {C:mult}Mult{}",
+                    "The face changes every #1# seconds",
+                    "{C:attention}(#4#/6){} ...",
+                }
+            },
+            j_lobc_shy_look = {
+                name = "Today's Shy Look",
+                text = {
+                    "+{C:attention}Variable{} {C:chips}Chips{} and {C:mult}Mult{}",
+                    "The face changes every {C:attention}#1#{} seconds",
+                    "Happier faces give more Chips and Mult",
+                }
+            },
 
             dis_j_lobc_servant_of_wrath_1 = {
                 name = "O-01-00",
@@ -604,8 +642,8 @@ return {
             dis_j_lobc_servant_of_wrath_2 = {
                 name = "O-01-00",
                 text = {
-                    "When round starts, plays the highest",
-                    "{C:attention}poker hand{} from your hand",
+                    "When round starts, plays {C:attention}5{}",
+                    "random cards from your hand",
                     "{C:attention}(#3#/3){} ...",
                     "{C:attention}(#4#/7){} ...",
                 }
@@ -613,21 +651,20 @@ return {
             dis_j_lobc_servant_of_wrath_3 = {
                 name = "O-01-00",
                 text = {
-                    "When round starts, plays the highest",
-                    "{C:attention}poker hand{} from your hand",
-                    "Scored cards this way give {X:red,C:white} X#1# {} Mult",
+                    "When round starts, plays {C:attention}5{}",
+                    "random cards from your hand",
+                    "Scored cards this way give {X:mult,C:white} X#1# {} Mult",
                     "{C:attention}(#4#/7){} ...",
                 }
             },
             j_lobc_servant_of_wrath = {
                 name = "The Servant of Wrath",
                 text = {
-                    "When round starts, plays the highest",
-                    "{C:attention}poker hand{} from your hand",
-                    "Scored cards this way give {X:red,C:white} X#1# {} Mult",
-                    "If {C:attention}3{} hands played this way",
-                    "have {C:attention}3{} or less cards,",
-                    "this Abnormality {C:attention}breaches{}"
+                    "When round starts, plays {C:attention}5{}",
+                    "random cards from your hand",
+                    "Scored cards this way give {X:mult,C:white} X#1# {} Mult",
+                    "If {C:attention}three{} hands played this way are",
+                    "{C:attention}High Cards{}, this Abnormality {C:attention}breaches{}",
                 }
             },
         },
