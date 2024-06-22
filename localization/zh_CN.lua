@@ -55,6 +55,23 @@ return {
 					"惟余那百般的寂寥",
                 }
             },
+            und_j_lobc_nameless_fetus = {
+                name = "O-01-15",
+                text = {
+                    "\"One day you'll understand.",
+                    "The meaning of the desperation",
+                    "on their faces when",
+                    "the roulette spins.\"",
+                }
+            },
+            und_j_lobc_wall_gazer = {
+                name = "F-01-18",
+                text = {
+                    "\"Over time, her unbearable sorrow",
+                    "grew into a mournful obsession,",
+                    "covered in countless, lengthy hairs.\"",
+                }
+            },
             und_j_lobc_plague_doctor = {
                 name = "O-01-45",
                 text = {
@@ -386,6 +403,68 @@ return {
                 }
             },
 
+            dis_j_lobc_nameless_fetus_1 = {
+                name = "O-01-15",
+                text = {
+                    "{C:attention}(#4#/2){} ...",
+                    "{C:attention}(#5#/4){} ...",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            dis_j_lobc_nameless_fetus_2 = {
+                name = "O-01-15",
+                text = {
+                    "{X:mult,C:white} X#2# {} Mult after playing a {C:attention}#1#{}",
+                    "{C:attention}(#5#/4){} ...",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            dis_j_lobc_nameless_fetus_3 = {
+                name = "O-01-15",
+                text = {
+                    "{X:mult,C:white} X#2# {} Mult after playing a {C:attention}#1#{}",
+                    "{X:mult,C:white} X#3# {} Mult if other hands are played",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            j_lobc_nameless_fetus = {
+                name = "Nameless Fetus",
+                text = {
+                    "{X:mult,C:white} X#2# {} Mult after playing a {C:attention}#1#{}",
+                    "{X:mult,C:white} X#3# {} Mult if other hands are played",
+                    "If the {C:attention}first hand{} of round has",
+                    "only {C:attention}1{} card, destroy it",
+                    "and change selected hand type"
+                }
+            },
+
+            dis_j_lobc_wall_gazer_1 = {
+                name = "F-01-18",
+                text = {
+                    "{C:attention}(#3#/2){} ...",
+                    "{C:attention}(#4#/4){} ..."
+                }
+            },
+            dis_j_lobc_wall_gazer_2 = {
+                name = "Wall Gazer",
+                text = {
+                    "Retriggers the {C:attention}lowest{} ranked",
+                    "scoring card in {C:attention}first hand{}",
+                    "randomly from {C:attention}#1#{} to {C:attention}#2#{} times",
+                    "{C:attention}(#4#/4){} ..."
+                }
+            },
+            j_lobc_wall_gazer = {
+                name = "The Lady Facing the Wall",
+                text = {
+                    "Retriggers the {C:attention}lowest{} ranked",
+                    "scoring card in {C:attention}first hand{}",
+                    "randomly from {C:attention}#1#{} to {C:attention}#2#{} times",
+                    "{C:attention}Playing cards{} are drawn {C:attention}face{}",
+                    "{C:attention}down{} until hand is played"
+                }
+            },
+
             dis_j_lobc_plague_doctor_1 = {
                 name = "O-01-45",
                 text = {
@@ -642,8 +721,7 @@ return {
             dis_j_lobc_servant_of_wrath_2 = {
                 name = "O-01-00",
                 text = {
-                    "When round starts, plays {C:attention}5{}",
-                    "random cards from your hand",
+                    "开局时，从手牌中随机打出{C:attention}5{}张牌",
                     "{C:attention}(#3#/3){} ...",
                     "{C:attention}(#4#/7){} ...",
                 }
@@ -651,20 +729,18 @@ return {
             dis_j_lobc_servant_of_wrath_3 = {
                 name = "O-01-00",
                 text = {
-                    "When round starts, plays {C:attention}5{}",
-                    "random cards from your hand",
-                    "Scored cards this way give {X:mult,C:white} X#1# {} Mult",
+                    "开局时，从手牌中随机打出{C:attention}5{}张牌",
+                    "此种出牌在计分时{X:mult,C:white} X#1# {}倍率",
                     "{C:attention}(#4#/7){} ...",
                 }
             },
             j_lobc_servant_of_wrath = {
-                name = "The Servant of Wrath",
+                name = "烈怒侍从",
                 text = {
-                    "When round starts, plays {C:attention}5{}",
-                    "random cards from your hand",
-                    "Scored cards this way give {X:mult,C:white} X#1# {} Mult",
-                    "If {C:attention}three{} hands played this way are",
-                    "{C:attention}High Cards{}, this Abnormality {C:attention}breaches{}",
+                    "开局时，从手牌中随机打出{C:attention}5{}张牌",
+                    "此种出牌在计分时{X:mult,C:white} X#1# {}倍率",
+                    "且若有{C:attention}三次{}为{C:attention}高牌",
+                    "则该异想体{C:attention}突破收容",
                 }
             },
         },
