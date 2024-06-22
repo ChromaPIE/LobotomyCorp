@@ -6,7 +6,7 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future. Most art is from Lobotomy Corporation by Project Moon.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.5.1
+--- VERSION: 0.6.0
 
 local mod_path = SMODS.current_mod.path
 -- To disable a Joker, comment it out by adding -- at the start of the line.
@@ -15,6 +15,7 @@ local joker_list = {
     "one_sin",
     "theresia",
     "old_lady",
+    "wall_gazer", -- The Lady Facing the Wall
     "plague_doctor",
     "punishing_bird",
     "shy_look",
@@ -23,6 +24,7 @@ local joker_list = {
     "scorched_girl",
     "happy_teddy_bear",
     "red_shoes",
+    "nameless_fetus",
     "iron_maiden", -- We Can Change Anything
 
     --- Rare
@@ -48,6 +50,7 @@ local sound_list = {
     punishing_bird_hit = "SmallBird_Hit",
     iron_maiden_tick = "Iron_Generate",
     iron_maiden_end = "Iron_End",
+    nameless_cry = "nameless_cry",
 }
 
 -- Badge colors
@@ -285,13 +288,24 @@ function set_joker_usage()
     end
 end
 
--- Scorched Girl's debuff first hand drawn
 function SMODS.current_mod.set_debuff(card, should_debuff)
-    if card.ability and card.ability.scorched_girl_debuff then
-        card.debuff = true
-        return true
+    if card.ability then
+        -- Scorched Girl's debuff first hand drawn
+        if card.ability.scorched_girl_debuff then
+            card.debuff = true
+            return true
+        end
     end
     return nil
+end
+
+-- Wall Gazer face down
+local stay_flippedref = Blind.stay_flipped
+function Blind.stay_flipped(self, area, card)
+    if area == G.hand and next(SMODS.find_card("j_lobc_wall_gazer")) and G.GAME.current_round.hands_played == 0 then
+        return true
+    end
+    return stay_flippedref(self, area, card_updateref)
 end
 
 -- Remove Queen of Hatred's sell button
