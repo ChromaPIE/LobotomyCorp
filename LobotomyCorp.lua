@@ -6,7 +6,7 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future. Most art is from Lobotomy Corporation by Project Moon.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.5.2
+--- VERSION: 0.5.2c
 
 local mod_path = SMODS.current_mod.path
 -- To disable a Joker, comment it out by adding -- at the start of the line.
@@ -306,7 +306,7 @@ function Blind.stay_flipped(self, area, card)
     if area == G.hand and next(SMODS.find_card("j_lobc_wall_gazer")) and G.GAME.current_round.hands_played == 0 then
         return true
     end
-    return stay_flippedref(self, area, card_updateref)
+    return stay_flippedref(self, area, card)
 end
 
 -- Remove Queen of Hatred's sell button
