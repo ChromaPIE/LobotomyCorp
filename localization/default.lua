@@ -137,6 +137,13 @@ return {
                     "greeting each other by name...",
                 }
             },
+            und_j_lobc_youre_bald = {
+                name = "Bald-Is-Awesome!",
+                text = {
+                    "You turn on your",
+                    "electric hair clipper...",
+                }
+            },
 
             ---- Boosters ----
             p_lobc_extraction_normal = {
@@ -759,6 +766,20 @@ return {
                     "{C:attention}High Cards{}, this Abnormality {C:attention}breaches{}",
                 }
             },
+
+            dis_j_lobc_youre_bald_1 = {
+                name = "Bald-Is-Awesome!",
+                text = {
+                    "{C:attention}(#1#/3){} ...",
+                }
+            },
+            j_lobc_youre_bald = {
+                name = "You're Bald...",
+                text = {
+                    "All future Jokers",
+                    "become {C:attention}bald{}",
+                }
+            },
         }
     },
     misc = {
@@ -772,6 +793,14 @@ return {
             lobc_he = "HE",
             lobc_waw = "WAW",
             lobc_aleph = "ALEPH",
+        },
+        challenge_names = {
+            c_lobc_dark_days = "Dark Days",
+        },
+        v_text = {
+            ch_c_lobc_all_whitenight = {"All {C:attention}Boss Blinds{} are {C:dark_edition}WhiteNight{}"},
+            ch_c_lobc_all_whitenight_2 = {"{C:dark_edition}WhiteNight{} does not give its {C:attention}Joker{} when defeated"},
+            ch_c_lobc_all_whitenight_3 = {"{C:attention}Plague Doctor{} cannot {C:attention}breach{}"}
         },
         dictionary = {
             k_lobc_breached = "Breached!",

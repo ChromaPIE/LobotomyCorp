@@ -6,7 +6,7 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future. Most art is from Lobotomy Corporation by Project Moon.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.5.2c
+--- VERSION: 0.5.3
 
 local mod_path = SMODS.current_mod.path
 -- To disable a Joker, comment it out by adding -- at the start of the line.
@@ -19,6 +19,7 @@ local joker_list = {
     "plague_doctor",
     "punishing_bird",
     "shy_look",
+    "youre_bald",
 
     --- Uncommon
     "scorched_girl",
@@ -51,6 +52,10 @@ local sound_list = {
     iron_maiden_tick = "Iron_Generate",
     iron_maiden_end = "Iron_End",
     nameless_cry = "nameless_cry",
+}
+
+local challenge_list = {
+    "dark_days"
 }
 
 -- Badge colors
@@ -146,6 +151,19 @@ for k, v in pairs(sound_list) do
     })
 end
 
+-- Load challenges
+for _, v in ipairs(challenge_list) do
+    local chal = NFS.load(mod_path .. "challenges/" .. v .. ".lua")()
+
+    if not chal then
+        sendErrorMessage("[LobotomyCorp] Cannot find challenge with shorthand: " .. v)
+    else
+        chal.key = v
+        chal.loc_txt = ""
+        local chal_obj = SMODS.Challenge(chal)
+    end
+end
+
 -- Atlases
 SMODS.Atlas({ 
     key = "LobotomyCorp_Jokers", 
@@ -194,6 +212,13 @@ SMODS.Atlas({
     py = 95
 })
 
+SMODS.Atlas({
+    key = "LobotomyCorp_jokersbald",
+    path = "LobotomyCorp_jokersbald.png",
+    px = 71,
+    py = 95
+})
+
 -- Make Extraction Pack
 SMODS.Center({
     prefix = 'p',
@@ -230,7 +255,8 @@ end
 -- Overwrite blind spawning for Abnormality Boss Blinds if requirements are met
 local get_new_bossref = get_new_boss
 function get_new_boss()
-    if G.GAME.pool_flags["plague_doctor_breach"] and not G.GAME.pool_flags["whitenight_defeated"] then return "bl_lobc_whitenight" end
+    if G.GAME.modifiers.lobc_all_whitenight or 
+    (G.GAME.pool_flags["plague_doctor_breach"] and not G.GAME.pool_flags["whitenight_defeated"]) then return "bl_lobc_whitenight" end
     return get_new_bossref()
     --return "bl_lobc_whitenight"
 end
@@ -328,7 +354,7 @@ function Card.add_to_deck(self, from_debuff)
                 card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_lobc_downgrade')})
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        play_sound('lobc_old_lady_downgrade', 1, 0.7)
+                        play_sound('lobc_old_lady_downgrade', 1, 0.6)
                         return true
                     end
                 }))
@@ -354,6 +380,18 @@ local sprite_drawref = Sprite.draw
 function Sprite.draw(self, overlay)
     if self.atlas == G.ASSET_ATLAS["lobc_LobotomyCorp_moodboard"] then return end
     sprite_drawref(self, overlay)
+end
+
+-- You're Bald...
+local set_spritesref = Card.set_sprites
+function Card.set_sprites(self, _center, _front)
+    set_spritesref(self, _center, _front)
+    if next(SMODS.find_card("j_lobc_youre_bald")) then
+        if _center and _center.set == "Joker" and self.children.center.atlas == G.ASSET_ATLAS["Joker"] then
+            self.children.center.atlas = G.ASSET_ATLAS["lobc_LobotomyCorp_jokersbald"]
+            self.children.center:set_sprite_pos(_center.pos)
+        end
+    end
 end
 
 -- WhiteNight confession win round
@@ -432,13 +470,10 @@ local function get_abno_pool(_type, _rarity, legendary, key_append)
         end
         if v.no_pool_flag and G.GAME.pool_flags[v.no_pool_flag] then add = false end
 
-        if add then
+        if add and not G.GAME.banned_keys[v.key] then
            _pool[#_pool+1] = v.key
+           _pool_size = _pool_size + 1
         end
-    end
-
-    for k,v in pairs(_pool) do
-        _pool_size = _pool_size + 1
     end
 
     --if pool is empty
@@ -633,4 +668,8 @@ function G.FUNCS.can_skip_booster(e)
     else
         can_skip_boosterref(e)
     end
+end
+
+to_big = to_big or function(num)
+    return num
 end
