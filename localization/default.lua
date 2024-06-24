@@ -800,7 +800,9 @@ return {
         v_text = {
             ch_c_lobc_all_whitenight = {"All {C:attention}Boss Blinds{} are {C:dark_edition}WhiteNight{}"},
             ch_c_lobc_all_whitenight_2 = {"{C:dark_edition}WhiteNight{} does not give its {C:attention}Joker{} when defeated"},
-            ch_c_lobc_all_whitenight_3 = {"{C:attention}Plague Doctor{} cannot {C:attention}breach{}"}
+            ch_c_lobc_all_whitenight_3 = {"{C:attention}Plague Doctor{} cannot {C:attention}breach{}"},
+            ch_c_lobc_all_whitenight_4 = {"Reduced {C:attention}Boss Blind Size{} during the first {C:attention}3{} Antes"},
+            ch_c_lobc_all_whitenight_5 = {"{C:inactive}({}{C:dark_edition}WhiteNight{}{C:inactive} cannot go below {C:attention}X6.66{} Blind Size from {C:attention}Apostles{})"},
         },
         dictionary = {
             k_lobc_breached = "Breached!",
@@ -808,6 +810,8 @@ return {
             k_lobc_extraction_pack = "Extraction Pack",
             k_lobc_active = "active",
             k_lobc_inactive = "inactive",
+            k_lobc_punishing_bird = "Punishing Bird",
+            k_lobc_iron_maiden = "We Can Change Anything",
 
             ---- Plague Doctor ----
             k_lobc_plague_apostle_1_1 = "And I say also unto thee, That thou art the first apostle, and upon this rock",

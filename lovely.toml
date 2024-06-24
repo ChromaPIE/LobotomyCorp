@@ -174,3 +174,32 @@ position = "at"
 payload = "if to_big(G.GAME.chips) >= to_big(G.GAME.blind.chips) or G.GAME.current_round.hands_left <= 0 then"
 match_indent = true
 
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "local label_scale = 0.5"
+position = "before"
+payload = '''
+if score == 'defeated_by' and G.GAME.lobc_death_text then 
+    score_tab[1].nodes[1].config.object:remove()
+    score_tab[1].nodes = {
+        {n=G.UIT.O, config={object = DynaText({string = G.GAME.lobc_death_text, colours = {G.C.WHITE},shadow = true, float = true,maxw = 2.2, scale = 0.45})}}
+    }
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "local blind_amt = get_blind_amount(G.GAME.round_resets.blind_ante)*blind_choice.config.mult*G.GAME.starting_params.ante_scaling"
+position = "after"
+payload = '''
+if G.GAME.modifiers.lobc_all_whitenight and blind_choice.config.key == "bl_lobc_whitenight" then
+    if G.GAME.round_resets.blind_ante == 1 then blind_amt = blind_amt / 6 end
+    if G.GAME.round_resets.blind_ante == 2 then blind_amt = blind_amt / 3 end
+    if G.GAME.round_resets.blind_ante == 3 then blind_amt = blind_amt / 2 end
+end
+'''
+match_indent = true
+

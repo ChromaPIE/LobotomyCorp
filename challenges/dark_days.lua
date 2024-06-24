@@ -4,6 +4,8 @@ local chal = {
             {id = "lobc_all_whitenight"},
             {id = "lobc_all_whitenight_2"},
             {id = "lobc_all_whitenight_3"},
+            {id = "lobc_all_whitenight_4"},
+            {id = "lobc_all_whitenight_5"},
         },
         modifiers = {
             {id = 'dollars', value = 25},
