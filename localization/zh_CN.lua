@@ -131,6 +131,13 @@ return {
                     "greeting each other by name...",
                 }
             },
+            und_j_lobc_youre_bald = {
+                name = "Bald-Is-Awesome!",
+                text = {
+                    "You turn on your",
+                    "electric hair clipper...",
+                }
+            },
 
             ---- Boosters ----
             p_lobc_extraction_normal = {
@@ -293,10 +300,9 @@ return {
                 }
             },
             dis_j_lobc_happy_teddy_bear_2 = {
-                name = "A Teddy Bear",
+                name = "一只泰迪熊",
                 text = {
-                    "Upgrade level of played",
-                    "{C:attention}poker hand #1#{} times",
+                    "使出牌{C:attention}牌型{}提升{C:attention}#1#{}级",
                     "{C:attention}(#4#/6){} ..."
                 }
             },
@@ -743,6 +749,20 @@ return {
                     "则该异想体{C:attention}突破收容",
                 }
             },
+
+            dis_j_lobc_youre_bald_1 = {
+                name = "Bald-Is-Awesome!",
+                text = {
+                    "{C:attention}(#1#/3){} ...",
+                }
+            },
+            j_lobc_youre_bald = {
+                name = "You're Bald...",
+                text = {
+                    "All future Jokers",
+                    "become {C:attention}bald{}",
+                }
+            },
         },
         Blind = {
             bl_lobc_whitenight = {
@@ -765,6 +785,14 @@ return {
             lobc_he = "HE",
             lobc_waw = "WAW",
             lobc_aleph = "ALEPH",
+        },
+        challenge_names = {
+            c_lobc_dark_days = "Dark Days",
+        },
+        v_text = {
+            ch_c_lobc_all_whitenight = {"All {C:attention}Boss Blinds{} are {C:dark_edition}WhiteNight{}"},
+            ch_c_lobc_all_whitenight_2 = {"{C:dark_edition}WhiteNight{} does not give its {C:attention}Joker{} when defeated"},
+            ch_c_lobc_all_whitenight_3 = {"{C:attention}Plague Doctor{} cannot {C:attention}breach{}"}
         },
         dictionary = {
             k_lobc_breached = "突破！",
