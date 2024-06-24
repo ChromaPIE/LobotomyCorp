@@ -792,7 +792,9 @@ return {
         v_text = {
             ch_c_lobc_all_whitenight = {"All {C:attention}Boss Blinds{} are {C:dark_edition}WhiteNight{}"},
             ch_c_lobc_all_whitenight_2 = {"{C:dark_edition}WhiteNight{} does not give its {C:attention}Joker{} when defeated"},
-            ch_c_lobc_all_whitenight_3 = {"{C:attention}Plague Doctor{} cannot {C:attention}breach{}"}
+            ch_c_lobc_all_whitenight_3 = {"{C:attention}Plague Doctor{} cannot {C:attention}breach{}"},
+            ch_c_lobc_all_whitenight_4 = {"Reduced {C:attention}Boss Blind Size{} during the first {C:attention}3{} Antes"},
+            ch_c_lobc_all_whitenight_5 = {"{C:inactive}({}{C:dark_edition}WhiteNight{}{C:inactive} cannot go below {C:attention}X6.66{} Blind Size from {C:attention}Apostles{})"},
         },
         dictionary = {
             k_lobc_breached = "突破！",
@@ -800,6 +802,8 @@ return {
             k_lobc_extraction_pack = "异想体提取包",
             k_lobc_active = "激活",
             k_lobc_inactive = "未激活",
+            k_lobc_punishing_bird = "Punishing Bird",
+            k_lobc_iron_maiden = "We Can Change Anything",
 
             ---- Plague Doctor ----
             k_lobc_plague_apostle_1_1 = "你还告诉你，你是第一个使徒，我要把我的教会",
