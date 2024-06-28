@@ -25,7 +25,7 @@ joker.calculate = function(self, card, context)
                     end
                 end
 
-                for i = 1, math.min(5, G.hand.config.highlighted_limit - #G.hand.highlighted) do
+                for i = 1, math.min(5, G.hand.config.highlighted_limit - #G.hand.highlighted, #G.hand.cards - #G.hand.highlighted) do
                     if #available_cards > 0 then
                         local chosen_card, chosen_card_key = pseudorandom_element(available_cards, pseudoseed("random_card"))
                         G.E_MANAGER:add_event(Event({
@@ -80,7 +80,7 @@ joker.calculate = function(self, card, context)
                     card:juice_up(0.3, 0.4)
                     card.states.drag.is = true
                     card.children.center.pinch.x = true
-                    G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * 2
+                    G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * 1.5
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after',
                         delay = 0.3,
@@ -126,3 +126,5 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
 end
 
 return joker
+
+-- tiphxodia gaming

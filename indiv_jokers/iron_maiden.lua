@@ -1,20 +1,10 @@
--- iron maiden
--- my lady has spoken
--- ga1ahad you will shall never collapse
--- so i charged up my lasers
-
--- ta lilalu lila
--- that makes your bones stronger than steel
--- tu lilata lila
--- that backs your thoughts up to the cloud
-
 local joker = {
     name = "We Can Change Anything",
     config = {extra = {
         blind_gain = 5, hands_loss = 0.02, 
         loss_increase = 0.02, interval = 10, 
         elapsed = 0, seconds = 0
-    }}, rarity = 2, cost = 6,
+    }}, rarity = 1, cost = 6,
     pos = {x = 7, y = 5}, 
     blueprint_compat = false, 
     eternal_compat = true,
@@ -26,7 +16,7 @@ local joker = {
 }
 
 joker.update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and G.STATE == G.STATES.SELECTING_HAND and not card.debuff then
+    if card.area == G.jokers and G.STAGE == G.STAGES.RUN and G.STATE == G.STATES.SELECTING_HAND and not card.debuff then
         card.ability.extra.elapsed = card.ability.extra.elapsed + (dt / G.SETTINGS.GAMESPEED)
         if card.ability.extra.elapsed >= 1 then
             card.ability.extra.elapsed = card.ability.extra.elapsed - 1
@@ -101,3 +91,13 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
 end
 
 return joker
+
+-- iron maiden
+-- my lady has spoken
+-- ga1ahad you will shall never collapse
+-- so i charged up my lasers
+
+-- ta lilalu lila
+-- that makes your bones stronger than steel
+-- tu lilata lila
+-- that backs your thoughts up to the cloud

@@ -74,6 +74,22 @@ return {
                     "covered in countless, lengthy hairs.\"",
                 }
             },
+            und_j_lobc_nothing_there = {
+                name = "O-06-20",
+                text = {
+                    "And the many shells",
+                    "cry out one word,",
+                    "\"{C:red}Manager{}\".",
+                }
+            },
+            und_j_lobc_all_around_helper = {
+                name = "T-05-41",
+                text = {
+                    "Blood covers the whole floor,",
+                    "screams echo,",
+                    "people are running away...",
+                }
+            },
             und_j_lobc_plague_doctor = {
                 name = "O-01-45",
                 text = {
@@ -177,7 +193,7 @@ return {
                     "When this Abnormality",
                     "{C:attention}breaches{}, {C:attention}permanently{}",
                     "increase blind",
-                    "size by {X:mult,C:white} X2 {}",
+                    "size by {X:mult,C:white} X1.5 {}",
                 }
             },
             lobc_gift = {
@@ -337,7 +353,7 @@ return {
                 name = "A Teddy Bear",
                 text = {
                     "Upgrade level of played",
-                    "{C:attention}poker hand #1#{} times",
+                    "{C:attention}poker hand #1#{} time",
                     "{C:attention}(#4#/6){} ..."
                 }
             },
@@ -345,7 +361,7 @@ return {
                 name = "Happy Teddy Bear",
                 text = {
                     "Upgrade level of played",
-                    "{C:attention}poker hand #1#{} times",
+                    "{C:attention}poker hand #1#{} time",
                     "If {C:attention}consecutive{} hands have",
                     "the same {C:attention}poker hand{},",
                     "reduce its level to {C:attention}0{}",
@@ -505,6 +521,73 @@ return {
                     "randomly from {C:attention}#1#{} to {C:attention}#2#{} times",
                     "{C:attention}Playing cards{} are drawn {C:attention}face{}",
                     "{C:attention}down{} until hand is played"
+                }
+            },
+
+            dis_j_lobc_nothing_there_1 = {
+                name = "O-06-20",
+                text = {
+                    "{C:attention}(#1#/4){} ...",
+                    "{C:attention}(#2#/7){} ...",
+                    "{C:attention}(#3#/9){} ..."
+                }
+            },
+            dis_j_lobc_nothing_there_2 = {
+                name = "O-06-20",
+                text = {
+                    "Copies the abilities of leftmost",
+                    "and rightmost {C:attention}Jokers{}",
+                    "{C:attention}(#2#/7){} ...",
+                    "{C:attention}(#3#/9){} ..."
+                }
+            },
+            dis_j_lobc_nothing_there_3 = {
+                name = "O-06-20",
+                text = {
+                    "Copies the abilities of leftmost",
+                    "and rightmost {C:attention}Jokers{}",
+                    "When Blind is selected, flips and shuffles",
+                    "all Jokers for the first hand",
+                    "{C:attention}(#3#/9){} ..."
+                }
+            },
+            j_lobc_nothing_there = {
+                name = "Nothing There",
+                text = {
+                    "Copies the abilities of leftmost",
+                    "and rightmost {C:attention}Jokers{}",
+                    "When Blind is selected, flips and shuffles",
+                    "all Jokers for the first hand, then",
+                    "takes the appearance of another Joker",
+                    "Cannot copy Jokers of selected type"
+                }
+            },
+
+            dis_j_lobc_all_around_helper_1 = {
+                name = "T-05-41",
+                text = {
+                    "{C:attention}(#4#/3){} ...",
+                    "{C:attention}(#5#/6){} ..."
+                }
+            },
+            dis_j_lobc_all_around_helper_2 = {
+                name = "T-05-41",
+                text = {
+                    "This Abnormality gains {X:mult,C:white} X#2# {} Mult",
+                    "after a {C:attention}Blind{} is defeated in {C:attention}1{} hand",
+                    "{C:attention}(#5#/6){} ...",
+                    "{C:inactive}(Currently {X:mult,C:white} #1# {C:inactive} Mult)",
+                }
+            },
+            j_lobc_all_around_helper = {
+                name = "All-Around Helper",
+                text = {
+                    "This Abnormality gains {X:mult,C:white} X#2# {} Mult",
+                    "after a {C:attention}Blind{} is defeated in {C:attention}1{} hand",
+                    "After gaining Mult {C:attention}4{} times,",
+                    "destroys a random Joker",
+                    "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+                    "{C:inactive}Activates after {C:attention}#3#{C:inactive} blind(s)"
                 }
             },
 
@@ -839,6 +922,52 @@ return {
                     "become {C:attention}bald{}",
                 }
             },
+        },
+        Blind = {
+            -- Abnormalities
+            bl_lobc_whitenight = {
+                name = "WhiteNight",
+                text = {
+                    "Played Apostles reduce",
+                    "blind size by 5X Base"
+                }
+            },
+
+            -- Dawn Ordeals
+
+            -- Noon Ordeals
+
+            -- Dusk Ordeals
+            bl_lobc_dusk_base = {
+                name = "Dusk Ordeal",
+                text = {
+                    "Fight against a",
+                    "random Dusk Ordeal"
+                }
+            },
+            bl_lobc_dusk_green = {
+                name = "Green Dusk",
+                text = {
+                    "Decreases level of played",
+                    "poker hand twice"
+                }
+            },
+            bl_lobc_dusk_amber = {
+                name = "Amber Dusk",
+                text = {
+                    "Debuffs a playing card per card drawn,",
+                    "destroys debuffed cards before scoring"
+                }
+            },
+            bl_lobc_dusk_crimson = {
+                name = "Crimson Dusk",
+                text = {
+                    "Immediately fight Crimson Noon",
+                    "after beating this Blind"
+                }
+            }
+
+            -- Midnight Ordeals
         }
     },
     misc = {
@@ -872,6 +1001,30 @@ return {
             k_lobc_inactive = "inactive",
             k_lobc_punishing_bird = "Punishing Bird",
             k_lobc_iron_maiden = "We Can Change Anything",
+
+            ---- Ordeals ----
+
+            -- Dusk
+            k_lobc_dusk_green = "The Dusk of Green",
+            k_lobc_dusk_green_name = "Where We Must Reach",
+            k_lobc_dusk_green_start_1 = "We constructed a looming tower to return whence we came.",
+            k_lobc_dusk_green_start_2 = "",
+            k_lobc_dusk_green_end_1 = "There wasn't an answer. We didn't find a single thing we wanted.",
+            k_lobc_dusk_green_end_2 = "We only witnessed the death of life itself.",
+
+            k_lobc_dusk_amber = "The Dusk of Amber",
+            k_lobc_dusk_amber_name = "Food Chain",
+            k_lobc_dusk_amber_start_1 = "To accustom oneself to the taste was an inevitable process.",
+            k_lobc_dusk_amber_start_2 = "",
+            k_lobc_dusk_amber_end_1 = "We could live. We could continue eating.",
+            k_lobc_dusk_amber_end_2 = "",
+
+            k_lobc_dusk_crimson = "The Dusk of Crimson",
+            k_lobc_dusk_crimson_name = "The Struggle at the Climax",
+            k_lobc_dusk_crimson_start_1 = "Throwing away our old bodies, we all become one,",
+            k_lobc_dusk_crimson_start_2 = "infinitely continuing the red march.",
+            k_lobc_dusk_crimson_end_1 = "One day we will know, and tomorrow we will march hand in hand.",
+            k_lobc_dusk_crimson_end_2 = "",
 
             ---- Plague Doctor ----
             k_lobc_plague_apostle_1_1 = "And I say also unto thee, That thou art the first apostle, and upon this rock",

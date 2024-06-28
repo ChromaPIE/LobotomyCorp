@@ -1,6 +1,6 @@
 local joker = {
     name = "Happy Teddy Bear",
-    config = {extra = {upgrade = 2, last_hand_played = nil}}, rarity = 2, cost = 6,
+    config = {extra = {upgrade = 1, last_hand_played = nil}}, rarity = 2, cost = 6,
     pos = {x = 4, y = 0}, 
     blueprint_compat = true, 
     eternal_compat = true,
@@ -51,3 +51,5 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
 end
 
 return joker
+
+-- happy teddy bear fervent emotions go

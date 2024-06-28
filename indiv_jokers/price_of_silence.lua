@@ -1,5 +1,3 @@
--- hokma balls
-
 local joker = {
     name = "The Price of Silence",
     config = {extra = {
@@ -16,7 +14,7 @@ local joker = {
 }
 
 joker.update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and G.STATE == G.STATES.SELECTING_HAND and not card.debuff then
+    if card.area == G.jokers and G.STAGE == G.STAGES.RUN and G.STATE == G.STATES.SELECTING_HAND and not card.debuff then
         card.ability.extra.elapsed = card.ability.extra.elapsed + (dt / G.SETTINGS.GAMESPEED)
 
         local available_cards = {}
@@ -140,3 +138,6 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
 end
 
 return joker
+
+-- hokma balls
+-- p + space: the fight

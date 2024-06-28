@@ -5,6 +5,7 @@ local joker = {
     blueprint_compat = false, 
     eternal_compat = true,
     perishable_compat = true,
+    yes_pool_flag = "allow_abnormalities_in_shop",
     abno = true,
     risk = "zayin",
     discover_rounds = 3,
@@ -27,3 +28,5 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
 end
 
 return joker
+
+-- this abno sucks why does it exist LMAO
