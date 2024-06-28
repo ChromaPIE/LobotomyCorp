@@ -70,6 +70,22 @@ return {
                     "“缘愁似个长”",
                 }
             },
+            und_j_lobc_nothing_there = {
+                name = "O-06-20",
+                text = {
+                    "And the many shells",
+                    "cry out one word,",
+                    "\"{C:red}Manager{}\".",
+                }
+            },
+            und_j_lobc_all_around_helper = {
+                name = "T-05-41",
+                text = {
+                    "Blood covers the whole floor,",
+                    "screams echo,",
+                    "people are running away...",
+                }
+            },
             und_j_lobc_plague_doctor = {
                 name = "O-01-45",
                 text = {
@@ -167,7 +183,7 @@ return {
                 name = "魔法少女",
                 text = {
                     "该异想体若{C:attention}突破收容",
-                    "盲注得分要求{C:attention}永久{X:mult,C:white} X2 ",
+                    "盲注得分要求{C:attention}永久{X:mult,C:white} X1.5 ",
                 }
             },
             lobc_gift = {
@@ -179,7 +195,7 @@ return {
                 }
             },
             lobc_blessed = {
-                name = "Blessed",
+                name = "受祝",
                 text = {
                     "{C:attention}O-01-45",
                     "已为本牌施洗"
@@ -491,6 +507,73 @@ return {
                 }
             },
 
+            dis_j_lobc_nothing_there_1 = {
+                name = "O-06-20",
+                text = {
+                    "{C:attention}(#1#/4){} ...",
+                    "{C:attention}(#2#/7){} ...",
+                    "{C:attention}(#3#/9){} ..."
+                }
+            },
+            dis_j_lobc_nothing_there_2 = {
+                name = "O-06-20",
+                text = {
+                    "Copies the abilities of leftmost",
+                    "and rightmost {C:attention}Jokers{}",
+                    "{C:attention}(#2#/7){} ...",
+                    "{C:attention}(#3#/9){} ..."
+                }
+            },
+            dis_j_lobc_nothing_there_3 = {
+                name = "O-06-20",
+                text = {
+                    "Copies the abilities of leftmost",
+                    "and rightmost {C:attention}Jokers{}",
+                    "When Blind is selected, flips and shuffles",
+                    "all Jokers for the first hand",
+                    "{C:attention}(#3#/9){} ..."
+                }
+            },
+            j_lobc_nothing_there = {
+                name = "Nothing There",
+                text = {
+                    "Copies the abilities of leftmost",
+                    "and rightmost {C:attention}Jokers{}",
+                    "When Blind is selected, flips and shuffles",
+                    "all Jokers for the first hand, then",
+                    "takes the appearance of another Joker",
+                    "Cannot copy Jokers of selected type"
+                }
+            },
+
+            dis_j_lobc_all_around_helper_1 = {
+                name = "T-05-41",
+                text = {
+                    "{C:attention}(#4#/3){} ...",
+                    "{C:attention}(#5#/6){} ..."
+                }
+            },
+            dis_j_lobc_all_around_helper_2 = {
+                name = "T-05-41",
+                text = {
+                    "This Abnormality gains {X:mult,C:white} X#2# {} Mult",
+                    "after a {C:attention}Blind{} is defeated in {C:attention}1{} hand",
+                    "{C:attention}(#5#/6){} ...",
+                    "{C:inactive}(Currently {X:mult,C:white} #1# {C:inactive} Mult)",
+                }
+            },
+            j_lobc_all_around_helper = {
+                name = "All-Around Helper",
+                text = {
+                    "This Abnormality gains {X:mult,C:white} X#2# {} Mult",
+                    "after a {C:attention}Blind{} is defeated in {C:attention}1{} hand",
+                    "After gaining Mult {C:attention}4{} times,",
+                    "destroys a random Joker",
+                    "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+                    "{C:inactive}Activates after {C:attention}#3#{C:inactive} blind(s)"
+                }
+            },
+
             dis_j_lobc_plague_doctor_1 = {
                 name = "O-01-45",
                 text = {
@@ -537,9 +620,9 @@ return {
             dis_j_lobc_whitenight_2 = {
                 name = "T-03-46",
                 text = {
-                    "{C:dark_edition}+1{} Joker Slot",
-                    "{C:attention}Baptizes{} a playing card each hand",
-                    "Played {C:attention}blessed{} cards give {C:mult}+#1#{} Mult",
+                    "每次出牌时为一张牌{C:attention}施洗",
+                    "打出的{C:attention}受祝{}牌",
+                    "将给予{C:mult}+#1#{}倍率",
                     "{C:attention}(#3#/8){} ..."
                 }
             },
@@ -717,7 +800,7 @@ return {
             dis_j_lobc_iron_maiden_2 = {
                 name = "T-09-85",
                 text = {
-                    "Every second, gain {C:attention}#1# score",
+                    "每秒获得{C:attention}#1#{}分",
                     "{C:attention}(#6#/4){} ...",
                     "{C:attention}(#7#/6){} ...",
                 }
@@ -725,19 +808,18 @@ return {
             dis_j_lobc_iron_maiden_3 = {
                 name = "T-09-85",
                 text = {
-                    "Every second, gain {C:attention}#1# score",
-                    "and temporary {C:blue}-#2#{} hands",
+                    "每秒获得{C:attention}#1#{}分",
+                    "并在本回合内{C:blue}-#2#{}出牌次数",
                     "{C:attention}(#7#/6){} ...",
                 }
             },
             j_lobc_iron_maiden = {
-                name = "We Can Change Anything",
+                name = "我们可以改变一切",
                 text = {
-                    "Every second, gain {C:attention}#1#{} score",
-                    "and temporary {C:blue}-#2#{} hands",
-                    "After {C:attention}#3#{} seconds, {C:attention}doubles{}",
-                    "score gain and increase",
-                    "hands loss by {C:blue}#4#{}"
+                    "每秒获得{C:attention}#1#{}分",
+                    "并在本回合内{C:blue}-#2#{}出牌次数",
+                    "{C:attention}#3#{}秒后，每秒获得分数{C:attention}翻倍",
+                    "出牌次数的削减随之提升{C:blue}#4#"
                 }
             },
             
@@ -823,13 +905,50 @@ return {
             },
         },
         Blind = {
+            -- Abnormalities
             bl_lobc_whitenight = {
-                name = "白夜",
-				text = {
-					"祭出使徒时",
-                    "以基础值的5倍削减得分要求"
-				}
+                name = "WhiteNight",
+                text = {
+                    "Played Apostles reduce",
+                    "blind size by 5X Base"
+                }
+            },
+
+            -- Dawn Ordeals
+
+            -- Noon Ordeals
+
+            -- Dusk Ordeals
+            bl_lobc_dusk_base = {
+                name = "Dusk Ordeal",
+                text = {
+                    "Fight against a",
+                    "random Dusk Ordeal"
+                }
+            },
+            bl_lobc_dusk_green = {
+                name = "Green Dusk",
+                text = {
+                    "Decreases level of played",
+                    "poker hand twice"
+                }
+            },
+            bl_lobc_dusk_amber = {
+                name = "Amber Dusk",
+                text = {
+                    "Debuffs a playing card per card drawn,",
+                    "destroys debuffed cards before scoring"
+                }
+            },
+            bl_lobc_dusk_crimson = {
+                name = "Crimson Dusk",
+                text = {
+                    "Immediately fight Crimson Noon",
+                    "after beating this Blind"
+                }
             }
+
+            -- Midnight Ordeals
         }
     },
     misc = {
@@ -861,8 +980,32 @@ return {
             k_lobc_extraction_pack = "异想体提取包",
             k_lobc_active = "激活",
             k_lobc_inactive = "未激活",
-            k_lobc_punishing_bird = "Punishing Bird",
+            k_lobc_punishing_bird = "惩戒鸟",
             k_lobc_iron_maiden = "We Can Change Anything",
+
+            ---- Ordeals ----
+
+            -- Dusk
+            k_lobc_dusk_green = "The Dusk of Green",
+            k_lobc_dusk_green_name = "Where We Must Reach",
+            k_lobc_dusk_green_start_1 = "We constructed a looming tower to return whence we came.",
+            k_lobc_dusk_green_start_2 = "",
+            k_lobc_dusk_green_end_1 = "There wasn't an answer. We didn't find a single thing we wanted.",
+            k_lobc_dusk_green_end_2 = "We only witnessed the death of life itself.",
+
+            k_lobc_dusk_amber = "The Dusk of Amber",
+            k_lobc_dusk_amber_name = "Food Chain",
+            k_lobc_dusk_amber_start_1 = "To accustom oneself to the taste was an inevitable process.",
+            k_lobc_dusk_amber_start_2 = "",
+            k_lobc_dusk_amber_end_1 = "We could live. We could continue eating.",
+            k_lobc_dusk_amber_end_2 = "",
+
+            k_lobc_dusk_crimson = "The Dusk of Crimson",
+            k_lobc_dusk_crimson_name = "The Struggle at the Climax",
+            k_lobc_dusk_crimson_start_1 = "Throwing away our old bodies, we all become one,",
+            k_lobc_dusk_crimson_start_2 = "infinitely continuing the red march.",
+            k_lobc_dusk_crimson_end_1 = "One day we will know, and tomorrow we will march hand in hand.",
+            k_lobc_dusk_crimson_end_2 = "",
 
             ---- Plague Doctor ----
             k_lobc_plague_apostle_1_1 = "你还告诉你，你是第一个使徒，我要把我的教会",
