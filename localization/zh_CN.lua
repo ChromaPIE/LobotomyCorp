@@ -67,9 +67,7 @@ return {
             und_j_lobc_wall_gazer = {
                 name = "F-01-18",
                 text = {
-                    "\"Over time, her unbearable sorrow",
-                    "grew into a mournful obsession,",
-                    "covered in countless, lengthy hairs.\"",
+                    "“缘愁似个长”",
                 }
             },
             und_j_lobc_plague_doctor = {
@@ -483,13 +481,13 @@ return {
                 }
             },
             j_lobc_wall_gazer = {
-                name = "The Lady Facing the Wall",
+                name = "面壁女",
                 text = {
-                    "Retriggers the {C:attention}lowest{} ranked",
-                    "scoring card in {C:attention}first hand{}",
-                    "randomly from {C:attention}#1#{} to {C:attention}#2#{} times",
-                    "{C:attention}Playing cards{} are drawn {C:attention}face{}",
-                    "{C:attention}down{} until hand is played"
+                    "使{C:attention}首次{}计分的出牌中",
+                    "点数{C:attention}最低{}的卡牌",
+                    "重新触发{C:attention}#1#{}至{C:attention}#2#{}次",
+                    "出牌前抽到的所有{C:attention}扑克牌",
+                    "全部{C:attention}背面朝上"
                 }
             },
 
