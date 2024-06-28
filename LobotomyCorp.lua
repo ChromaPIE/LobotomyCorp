@@ -6,7 +6,7 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future. Most art is from Lobotomy Corporation and Library of Ruina by Project Moon.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.6.0
+--- VERSION: 0.6.1c
 
 local mod_path = SMODS.current_mod.path
 -- To disable a Joker, comment it out by adding -- at the start of the line.
@@ -110,6 +110,7 @@ local badge_colors = {
     lobc_crimson = HEX("DC143C"),
     lobc_violet = HEX("800080"),
     lobc_indigo = HEX("1E90FF"),
+    lobc_base = HEX('C4C4C4'),
 }
 -- Badge colors
 local get_badge_colourref = get_badge_colour
@@ -177,6 +178,9 @@ for _, v in ipairs(blind_list) do
         blind.key = v
         blind.atlas = "LobotomyCorp_Blind"
         blind.discovered = true
+        if blind.color then
+            blind.boss_colour = badge_colors["lobc_"..blind.color]
+        end
 
         local blind_obj = SMODS.Blind(blind)
 
@@ -351,10 +355,10 @@ function G.FUNCS.draw_from_deck_to_hand(e)
         local available_cards = {}
 
         for _, v in ipairs(G.hand.cards) do
-            if not v.debuff then available_cards[#available_cards+1] = v end
+            if not v.ability.dusk_amber_debuff then available_cards[#available_cards+1] = v end
         end
         for _, v in ipairs(G.deck.cards) do
-            if not v.debuff then available_cards[#available_cards+1] = v end
+            if not v.ability.dusk_amber_debuff then available_cards[#available_cards+1] = v end
         end
 
         for i = 1, cards_drawn do
