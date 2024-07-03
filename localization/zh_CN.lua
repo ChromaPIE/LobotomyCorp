@@ -257,6 +257,7 @@ return {
             dis_j_lobc_scorched_girl_2 = {
                 name = "F-01-02",
                 text = {
+                    "选择{C:attention}盲注{}时",
                     "盲注分数要求{C:attention}-#1#%",
 					"{C:attention}(#3#/4){} ...",
                 }
@@ -264,6 +265,7 @@ return {
             j_lobc_scorched_girl = {
                 name = "焦化少女",
                 text = {
+                    "选择{C:attention}盲注{}时",
                     "盲注分数要求{C:attention}-#1#%",
 					"开局手牌全部失效",
                 }
@@ -916,35 +918,80 @@ return {
 
             -- Dawn Ordeals
             bl_lobc_dawn_base = {
-                name = "Dawn Ordeal",
+                name = "黎明考验",
                 text = {
-                    "Fight against a",
-                    "random Dawn Ordeal"
+                    "与随机的黎明考验",
+                    "展开对抗"
                 }
             },
             bl_lobc_dawn_green = {
-                name = "Green Dawn",
+                name = "绿色黎明",
                 text = {
-                    "Reduces the level of",
-                    "level 1 poker hands"
+                    "第一次出牌的牌型",
+                    "将遭到降级"
                 }
             },
             bl_lobc_dawn_amber = {
-                name = "Amber Dawn",
+                name = "琥珀色黎明",
                 text = {
-                    "Debuffs five cards in",
-                    "deck each hand"
+                    "每次出牌后",
+                    "使牌组中的4张卡牌失效"
                 }
             },
             bl_lobc_dawn_crimson = {
-                name = "Crimson Dawn",
+                name = "血色黎明",
                 text = {
-                    "Every 3 hands played,",
-                    "sells a random Joker"
+                    "每三次出牌前",
+                    "若不售出一张小丑牌",
+                    "则所有扑克牌失效"
+                }
+            },
+            bl_lobc_dawn_violet = {
+                name = "紫罗兰色黎明",
+                text = {
+                    "若单次出牌得分",
+                    "不足盲注要求的20%",
+                    "则出牌次数-1"
                 }
             },
 
             -- Noon Ordeals
+            bl_lobc_noon_base = {
+                name = "正午考验",
+                text = {
+                    "与随机的正午考验",
+                    "展开对抗"
+                }
+            },
+            bl_lobc_noon_green = {
+                name = "绿色正午",
+                text = {
+                    "等级最高的牌型打出时",
+                    "将遭到降级"
+                }
+            },
+            bl_lobc_noon_indigo = {
+                name = "靛蓝色正午",
+                text = {
+                    "每弃掉一张牌",
+                    "盲注最低得分要求提升0.1倍"
+                }
+            },
+            bl_lobc_noon_crimson = {
+                name = "血色正午",
+                text = {
+                    "击败本盲注后",
+                    "立刻迎战血色黎明"
+                }
+            },
+            bl_lobc_noon_violet = {
+                name = "紫罗兰色正午",
+                text = {
+                    "若单次出牌得分",
+                    "不足盲注要求的30%",
+                    "则出牌次数-2"
+                }
+            },
 
             -- Dusk Ordeals
             bl_lobc_dusk_base = {
@@ -964,8 +1011,10 @@ return {
             bl_lobc_dusk_amber = {
                 name = "Amber Dusk",
                 text = {
-                    "Debuffs a playing card per card drawn,",
-                    "destroys debuffed cards before scoring"
+                    "Debuffs a playing card in",
+                    "hand or deck per",
+                    "card drawn, destroys played",
+                    "debuffed cards before scoring",
                 }
             },
             bl_lobc_dusk_crimson = {
@@ -974,9 +1023,39 @@ return {
                     "Immediately fight Crimson Noon",
                     "after beating this Blind"
                 }
-            }
+            },
 
             -- Midnight Ordeals
+            bl_lobc_midnight_base = {
+                name = "Midnight Ordeal",
+                text = {
+                    "Fight against a",
+                    "random Midnight Ordeal"
+                }
+            },
+            bl_lobc_midnight_green = {
+                name = "Green Midnight",
+                text = {
+                    "Halves level of",
+                    "played poker hand",
+                    "(rounded down)",
+                }
+            },
+            bl_lobc_midnight_amber = {
+                name = "Amber Midnight",
+                text = {
+                    "Debuffs half of deck,",
+                    "destroys played debuffed",
+                    "cards before scoring",
+                }
+            },
+            bl_lobc_midnight_violet = {
+                name = "Violet Midnight",
+                text = {
+                    "Lose if hand doesn't",
+                    "score at least 40% of blind"
+                }
+            }
         }
     },
     misc = {
