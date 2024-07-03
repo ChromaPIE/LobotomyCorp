@@ -365,8 +365,8 @@ return {
             dis_j_lobc_red_shoes_2 = {
                 name = "O-04-08",
                 text = {
-                    "Played cards permanently gain",
-                    "{C:chips}+#1#{} Chips when scored",
+                    "打出的牌在计分时",
+                    "永久获得{C:chips}+#1#{}筹码",
                     "{C:attention}(#3#/3){} ...",
                     "{C:attention}(#4#/7){} ..."
                 }
@@ -374,22 +374,22 @@ return {
             dis_j_lobc_red_shoes_3 = {
                 name = "O-04-08",
                 text = {
-                    "Played cards permanently gain",
-                    "{C:chips}+#1#{} Chips when scored",
-                    "When {C:attention}Blind{} is selected, forces",
-                    "{C:attention}2{} cards to always be selected",
+                    "打出的牌在计分时",
+                    "永久获得{C:chips}+#1#{}筹码",
+                    "选择{C:attention}盲注{}时",
+                    "强制选定{C:attention}2{}张牌",
                     "{C:attention}(#4#/7){} ..."
                 }
             },
             j_lobc_red_shoes = {
-                name = "Red Shoes",
+                name = "红舞鞋",
                 text = {
-                    "Played cards permanently gain",
-                    "{C:chips}+#1#{} Chips when scored",
-                    "When {C:attention}Blind{} is selected, forces",
-                    "{C:attention}2{} cards to always be selected",
-                    "Destroys scored cards with",
-                    "{C:chips}100{} or more bonus Chips"
+                    "打出的牌在计分时",
+                    "永久获得{C:chips}+#1#{}筹码",
+                    "选择{C:attention}盲注{}时",
+                    "强制选定{C:attention}2{}张牌",
+                    "若卡牌的筹码加成达{C:chips}100",
+                    "则其会在计分后被摧毁"
                 }
             },
 
@@ -439,8 +439,8 @@ return {
             j_lobc_old_lady = {
                 name = "Old Lady",
                 text = {
-                    "This Abnormality gains",
-                    "{C:mult}+#2#{} Mult each hand",
+                    "每次出牌，该异想体",
+                    "获得{C:mult}+#2#{}倍率",
                     "When another Joker is added,",
                     "this Abnormality loses {C:mult}#3#{} Mult",
                     "{C:inactive}(Currently {C:mult}#6##1#{C:inactive} Mult)"
@@ -830,7 +830,7 @@ return {
                 text = {
                     "{C:attention}(#2#/2){} ...",
                     "{C:attention}(#3#/4){} ...",
-                    "{C:attention}(#4#/6){} ...",
+                    "{C:attention}(#4#/6){} ..."
                 }
             },
             dis_j_lobc_shy_look_2 = {
@@ -838,7 +838,7 @@ return {
                 text = {
                     "+{C:attention}Variable{} {C:chips}Chips{} and {C:mult}Mult{}",
                     "{C:attention}(#3#/4){} ...",
-                    "{C:attention}(#4#/6){} ...",
+                    "{C:attention}(#4#/6){} ..."
                 }
             },
             dis_j_lobc_shy_look_3 = {
@@ -863,7 +863,7 @@ return {
                 text = {
                     "{C:attention}(#2#/2){} ...",
                     "{C:attention}(#3#/3){} ...",
-                    "{C:attention}(#4#/7){} ...",
+                    "{C:attention}(#4#/7){} ..."
                 }
             },
             dis_j_lobc_servant_of_wrath_2 = {
@@ -871,7 +871,7 @@ return {
                 text = {
                     "开局时，从手牌中随机打出{C:attention}5{}张牌",
                     "{C:attention}(#3#/3){} ...",
-                    "{C:attention}(#4#/7){} ...",
+                    "{C:attention}(#4#/7){} ..."
                 }
             },
             dis_j_lobc_servant_of_wrath_3 = {
@@ -879,7 +879,7 @@ return {
                 text = {
                     "开局时，从手牌中随机打出{C:attention}5{}张牌",
                     "此种出牌在计分时{X:mult,C:white} X#1# {}倍率",
-                    "{C:attention}(#4#/7){} ...",
+                    "{C:attention}(#4#/7){} ..."
                 }
             },
             j_lobc_servant_of_wrath = {
@@ -893,16 +893,17 @@ return {
             },
 
             dis_j_lobc_youre_bald_1 = {
-                name = "Bald-Is-Awesome!",
+                name = "秃头超酷！",
                 text = {
                     "{C:attention}(#1#/3){} ...",
                 }
             },
             j_lobc_youre_bald = {
-                name = "You're Bald...",
+                name = "你秃了……",
                 text = {
-                    "All future Jokers",
-                    "become {C:attention}bald{}",
+                    "未来出现的",
+                    "所有小丑牌",
+                    "均将{C:attention}变秃"
                 }
             },
         },
@@ -1122,11 +1123,11 @@ return {
             k_lobc_dawn_crimson_end_2 = "",
 
             -- Noon
-            k_lobc_noon_green = "The Noon of Green",
-            k_lobc_noon_green_name = "Process of Understanding",
-            k_lobc_noon_green_start_1 = "In the end, they were bound to life. We existed only to express despair and ire.",
-            k_lobc_noon_green_start_2 = "We will understand life and the soul with our own hands.",
-            k_lobc_noon_green_end_1 = "We will understand life and the soul with our own hands.",
+            k_lobc_noon_green = "绿色正午",
+            k_lobc_noon_green_name = "理解的过程",
+            k_lobc_noon_green_start_1 = "他们，终究被生命所束缚。而我们，是为了倾泻绝望与怒火而存在。",
+            k_lobc_noon_green_start_2 = "我们将亲手剖析生命，理解灵魂。",
+            k_lobc_noon_green_end_1 = "我们将亲手剖析生命，理解灵魂。",
             k_lobc_noon_green_end_2 = "",
 
             k_lobc_noon_violet = "The Noon of Violet",
