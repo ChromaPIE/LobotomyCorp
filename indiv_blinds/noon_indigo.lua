@@ -1,8 +1,8 @@
 local blind = {
-    name = "Crimson Noon",
-    color = "crimson",
+    name = "Indigo Noon",
+    color = "indigo",
     time = "noon",
-    pos = {x = 0, y = 12},
+    pos = {x = 0, y = 14},
     dollars = 4, 
     mult = 1.5, 
     vars = {}, 

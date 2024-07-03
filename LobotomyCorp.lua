@@ -6,10 +6,12 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future. Most art is from Lobotomy Corporation and Library of Ruina by Project Moon.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.6.1c
+--- VERSION: 0.7.0
 
 local mod_path = SMODS.current_mod.path
--- To disable a Joker, comment it out by adding -- at the start of the line.
+
+--=============== STEAMODDED OBJECTS ===============--
+-- To disable any object, comment it out by adding -- at the start of the line.
 local joker_list = {
     --- Common
     "one_sin",
@@ -51,19 +53,35 @@ local blind_list = {
     "whitenight",
 
     -- Dawn Ordeals
+    "dawn_base",
+    "dawn_green",
+    "dawn_crimson",
+    "dawn_amber",
+    "dawn_violet",
     
     -- Noon Ordeals
+    "noon_base",
+    "noon_green",
+    "noon_crimson",
+    "noon_indigo",
+    "noon_violet",
 
     -- Dusk Ordeals
-    --"dusk_base",
-    --"dusk_green",
-    --"dusk_crimson",
-    --"dusk_amber",
+    "dusk_base",
+    "dusk_green",
+    "dusk_crimson",
+    "dusk_amber",
 
     -- Midnight Ordeals
+    "midnight_base",
+    "midnight_green",
+    "midnight_violet",
+    "midnight_amber",
 }
 
 local sound_list = {
+    music_first_warning = "Emergency1",
+    music_second_warning = "Emergency2",
     music_third_warning = "Emergency3",
     music_abno_choice = "AbnormalityChoice",
 
@@ -79,13 +97,13 @@ local sound_list = {
     helper_destroy = "Robo_Rise",
 
     green_start = "Machine_Start",
-    green_defeat = "Machine_End",
+    green_end = "Machine_End",
     amber_start = "Bug_Start",
-    amber_defeat = "Bug_End",
+    amber_end = "Bug_End",
     crimson_start = "Circus_Start",
-    crimson_defeat = "Circus_End",
+    crimson_end = "Circus_End",
     violet_start = "OutterGod_Start",
-    violet_defeat = "OutterGod_End",
+    violet_end = "OutterGod_End",
     indigo_start = "Scavenger_Start",
     indigo_end = "Scavenger_End",
 }
@@ -172,12 +190,12 @@ end
 for _, v in ipairs(blind_list) do
     local blind = NFS.load(mod_path .. "indiv_blinds/" .. v .. ".lua")()
 
-    if not blind then
+    if not blind --[[or v ~= "whitenight"]] then
         sendErrorMessage("[LobotomyCorp] Cannot find blind with shorthand: " .. v)
     else
         blind.key = v
         blind.atlas = "LobotomyCorp_Blind"
-        blind.discovered = true
+        --blind.discovered = true
         if blind.color then
             blind.boss_colour = badge_colors["lobc_"..blind.color]
         end
@@ -213,68 +231,6 @@ for _, v in ipairs(challenge_list) do
     end
 end
 
--- Atlases
-SMODS.Atlas({ 
-    key = "LobotomyCorp_Jokers", 
-    atlas_table = "ASSET_ATLAS", 
-    path = "LobotomyCorp_spritesheet.png", 
-    px = 71, 
-    py = 95 
-})
-
-SMODS.Atlas({ 
-    key = "LobotomyCorp_Undiscovered", 
-    atlas_table = "ASSET_ATLAS", 
-    path = "LobotomyCorp_undiscovered.png", 
-    px = 71, 
-    py = 95 
-})
-
-SMODS.Atlas({ 
-    key = "LobotomyCorp_Booster", 
-    atlas_table = "ASSET_ATLAS", 
-    path = "LobotomyCorp_booster.png", 
-    px = 71, 
-    py = 95 
-})
-
-SMODS.Atlas({ 
-    key = "LobotomyCorp_Blind", 
-    atlas_table = "ANIMATION_ATLAS", 
-    path = "LobotomyCorp_blind.png", 
-    px = 34, 
-    py = 34,
-    frames = 21,
-})
-
-SMODS.Atlas({
-    key = "modicon",
-    path = "LobotomyCorp_icon.png",
-    px = 34,
-    py = 34
-})
-
-SMODS.Atlas({
-    key = "LobotomyCorp_moodboard",
-    path = "LobotomyCorp_moodboard.png",
-    px = 71,
-    py = 95
-})
-
-SMODS.Atlas({
-    key = "LobotomyCorp_jokersbald",
-    path = "LobotomyCorp_jokersbald.png",
-    px = 71,
-    py = 95
-})
-
-SMODS.Atlas({
-    key = "LobotomyCorp_modifiers",
-    path = "LobotomyCorp_modifiers.png",
-    px = 71,
-    py = 95
-})
-
 -- Make Extraction Pack
 SMODS.Center({
     prefix = 'p',
@@ -295,55 +251,72 @@ SMODS.Center({
     end
 })
 
--- Clear all Cathys
-sendInfoMessage("Loaded LobotomyCorp~")
-
----- Other functions ----
-
-local abno_blinds = {
-    "whitenight",
-}
-
-local ordeal_blinds = {
-    "dusk_green",
-    "dusk_crimson",
-    "dusk_amber",
-}
-
--- oops
-local init_game_objectref = Game.init_game_object
-function Game.init_game_object(self)
-    local G = init_game_objectref(self)
-    for _, v in ipairs(abno_blinds) do
-        G.bosses_used["bl_lobc_"..v] = 1e300
-    end
-    for _, v in ipairs(ordeal_blinds) do
-        G.bosses_used["bl_lobc_"..v] = 1e300
-    end
-    return G
-end
-
+--=============== BLINDS ===============--
 -- Overwrite blind spawning for Abnormality Boss Blinds if requirements are met
 local get_new_bossref = get_new_boss
 function get_new_boss()
     if G.GAME.modifiers.lobc_all_whitenight or 
     (G.GAME.pool_flags["plague_doctor_breach"] and not G.GAME.pool_flags["whitenight_defeated"]) then return "bl_lobc_whitenight" end
     return get_new_bossref()
-    --return "bl_final_bell"
+    --return "bl_lobc_dusk_crimson"
 end
 
--- i am NOT implementing a none hand myself. yell at me if this fucks up anything
-local get_poker_hand_inforef = G.FUNCS.get_poker_hand_info
-function G.FUNCS.get_poker_hand_info(_cards)
-    if G.STATE == G.STATES.HAND_PLAYED and #_cards == 0 then
-        local poker_hands = evaluate_poker_hand(_cards)
-        local scoring_hand = {}
-        local text = "High Card"
-        local disp_text = text
-        local loc_disp_text = localize(text, 'poker_hands')
-        return text, loc_disp_text, poker_hands, scoring_hand, disp_text
+-- Overwrite blind select for Ordeals
+local reset_blindsref = reset_blinds
+function reset_blinds()
+    reset_blindsref()
+    if G.GAME.round_resets.blind_states.Small == 'Upcoming' then
+        if G.GAME.round_resets.ante % 8 == 2 and G.GAME.round_resets.ante > 0 and
+           (G.GAME.modifiers.lobc_ordeals or pseudorandom("dawn_ordeal") < 0.125) then
+                G.GAME.round_resets.blind_choices.Small = 'bl_lobc_dawn_base'
+        else
+            G.GAME.round_resets.blind_choices.Small = 'bl_small'
+        end
+
+        if G.GAME.round_resets.ante % 8 == 4 and G.GAME.round_resets.ante > 0 and
+           (G.GAME.modifiers.lobc_ordeals or pseudorandom("noon_ordeal") < 0.125) then
+            G.GAME.round_resets.blind_choices.Big = 'bl_lobc_noon_base'
+        else
+            G.GAME.round_resets.blind_choices.Big = 'bl_big'
+        end
+
+        -- don't overwrite whitenight
+        if G.GAME.round_resets.blind_choices.Boss == "bl_lobc_whitenight" then return end
+
+        if G.GAME.round_resets.ante % 8 == 6 and G.GAME.round_resets.ante > 0 then
+            if G.GAME.modifiers.lobc_ordeals or pseudorandom("dusk_ordeal") < 0.125 then
+                G.GAME.bosses_used[G.GAME.round_resets.blind_choices.Boss] = G.GAME.bosses_used[G.GAME.round_resets.blind_choices.Boss] - 1
+                G.GAME.round_resets.blind_choices.Boss = 'bl_lobc_dusk_base'
+            end
+        end
+
+        if G.GAME.round_resets.ante % 8 == 0 and G.GAME.round_resets.ante > 0 then
+            if G.GAME.modifiers.lobc_ordeals or pseudorandom("midnight_ordeal") < 0.125 then
+                G.GAME.bosses_used[G.GAME.round_resets.blind_choices.Boss] = G.GAME.bosses_used[G.GAME.round_resets.blind_choices.Boss] - 1
+                G.GAME.round_resets.blind_choices.Boss = 'bl_lobc_midnight_base'
+            end
+        end
     end
-    return get_poker_hand_inforef(_cards)
+end
+
+-- Make Lobcorp blinds unable to spawn normally
+local init_game_objectref = Game.init_game_object
+function Game.init_game_object(self)
+    local G = init_game_objectref(self)
+    for _, v in ipairs(blind_list) do
+        G.bosses_used["bl_lobc_"..v] = 1e300
+    end
+    return G
+end
+
+-- Ordeals
+local set_blindref = Blind.set_blind
+function Blind.set_blind(self, blind, reset, silent)
+    if blind and blind.color and blind.color == "base" then
+        local chosen_blind = pseudorandom_element(blind.blind_list, pseudoseed("dusk_ordeal"))
+        return set_blindref(self, G.P_BLINDS['bl_lobc_'..chosen_blind], reset, silent)
+    end
+    return set_blindref(self, blind, reset, silent)
 end
 
 -- Amber Dusk's debuff per card drawn
@@ -353,88 +326,179 @@ function G.FUNCS.draw_from_deck_to_hand(e)
     if G.GAME.blind.config.blind.key == "bl_lobc_dusk_amber" then
         local cards_drawn = e or math.min(#G.deck.cards, G.hand.config.card_limit - #G.hand.cards)
         local available_cards = {}
+        local proc = false
 
         for _, v in ipairs(G.hand.cards) do
-            if not v.ability.dusk_amber_debuff then available_cards[#available_cards+1] = v end
+            if not v.ability.amber_debuff then available_cards[#available_cards+1] = v end
         end
         for _, v in ipairs(G.deck.cards) do
-            if not v.ability.dusk_amber_debuff then available_cards[#available_cards+1] = v end
+            if not v.ability.amber_debuff then available_cards[#available_cards+1] = v end
         end
 
         for i = 1, cards_drawn do
             if #available_cards > 0 then
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
-                    delay = 0.2,
+                    delay = 0.4,
                     func = function() 
                         local chosen_card, chosen_card_key = pseudorandom_element(available_cards, pseudoseed("dusk_amber"))
                         chosen_card.debuff = true
-                        chosen_card.ability.dusk_amber_debuff = true
+                        chosen_card.ability.amber_debuff = true
                         table.remove(available_cards, chosen_card_key)
-                        G.GAME.blind:wiggle()
+                        proc = true
                         return true
                     end 
                 }))
             end
         end
+
+        if proc then G.GAME.blind:wiggle() end
     end
 end
 
--- Check rounds until observation unlock
-function Card:check_rounds(comp)
-    local val = G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key] and G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key].count or 0
-    return math.min(val, comp)
-end
-
--- Card updates
-local card_updateref = Card.update
-function Card.update(self, dt)
-    if G.STAGE == G.STAGES.RUN then
-        -- Check if enough rounds have passed, should be saving
-        if self.config.center.abno then
-            local count = G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key] and G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key].count or 0
-            self.config.center.discovered = (count >= self.config.center.discover_rounds)
+-- Indigo Noon
+local discard_cards_from_highlightedref = G.FUNCS.discard_cards_from_highlighted
+G.FUNCS.discard_cards_from_highlighted = function(e, hook)
+    if G.GAME.blind.config.blind.key == "bl_lobc_noon_indigo" then
+        local proc = false
+        for _ = 1, math.min(#G.hand.highlighted, G.discard.config.card_limit - #G.play.cards) do
+            local chips = get_blind_amount(G.GAME.round_resets.ante)*G.GAME.starting_params.ante_scaling*0.1
+            if type(chips) == 'table' then chips:ceil() else chips = math.ceil(chips) end
+            G.GAME.blind.chips = G.GAME.blind.chips + chips
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)
+            G.HUD_blind:recalculate() 
+            G.hand_text_area.blind_chips:juice_up()
+            proc = true
         end
+        if proc then G.GAME.blind:wiggle() end
     end
-    card_updateref(self, dt)
+    discard_cards_from_highlightedref(e, hook)
 end
 
--- Update round count for abnos
-local set_joker_usageref = set_joker_usage
-function set_joker_usage()
-    set_joker_usageref()
-    for k, v in pairs(G.jokers.cards) do
-        if v.config.center_key and v.ability.set == 'Joker' and v.config.center.abno and not v.config.center.discovered and 
-          G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].count >= v.config.center.discover_rounds then
-            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
-                play_sound('card1')
-                v:flip()
-            return true end }))
-            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
-                discover_card(v.config.center)
-                v:set_sprites(v.config.center, nil)
-                play_sound('card1')
-                v:flip()
-            return true end }))
-        end
-    end
-end
+-- Crimson Noon and Crimson Dusk switching to lower tier
+local update_new_roundref = Game.update_new_round
+function Game.update_new_round(self, dt)
+    if self.buttons then self.buttons:remove(); self.buttons = nil end
+    if self.shop then self.shop:remove(); self.shop = nil end
 
-local should_debuff_ability = {
-    "scorched_girl_debuff",
-    "theresia_debuff",
-    "dusk_amber_debuff"
-}
-function SMODS.current_mod.set_debuff(card, should_debuff)
-    if card.ability then
-        for _, v in ipairs(should_debuff_ability) do
-            if card.ability[v] then 
-                card.debuff = true 
-                return true
+    if not G.STATE_COMPLETE and 
+    (G.GAME.blind.config.blind.color and G.GAME.blind.config.blind.color == "crimson") then
+        local original_blind = G.GAME.blind.lobc_original_blind and G.GAME.blind.lobc_original_blind or G.GAME.blind.config.blind.key
+        sendDebugMessage(original_blind)
+        if G.GAME.blind.config.blind.time == "dawn" then
+            if original_blind ~= "bl_lobc_dawn_crimson" then
+                -- For Noon and Dusk, reset to the original blind's values
+                G.GAME.blind:set_blind(G.P_BLINDS[original_blind])
+                G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante)*0.8*G.GAME.starting_params.ante_scaling
+                G.GAME.blind.lobc_original_blind = nil
             end
+        else
+            G.STATE = G.STATES.DRAW_TO_HAND
+            G.E_MANAGER:add_event(Event({
+                trigger = 'ease',
+                blocking = false,
+                ref_table = G.GAME,
+                ref_value = 'chips',
+                ease_to = 0,
+                delay = 0.5,
+                func = (function(t) return math.floor(t) end)
+            }))
+            G.GAME.blind:set_blind(G.P_BLINDS["bl_lobc_"..(G.GAME.blind.config.blind.time == "dusk" and "noon" or "dawn").."_crimson"])
+            G.GAME.blind.dollars = G.P_BLINDS[original_blind].dollars
+            G.GAME.current_round.dollars_to_be_earned = G.GAME.blind.dollars > 0 and (string.rep(localize('$'), G.GAME.blind.dollars)..'') or ('')
+            G.GAME.blind.lobc_original_blind = original_blind
+            if G.GAME.round_resets.hands < (G.GAME.blind.config.blind.time == "dusk" and 3 or 2) and G.GAME.current_round.hands_left == 0 then ease_hands_played(1) end
+        end
+    end
+
+    if G.STATE ~= G.STATES.DRAW_TO_HAND then
+        update_new_roundref(self, dt)
+    end
+end
+
+-- Crimson Dusk selling card
+local sell_cardref = Card.sell_card
+function Card.sell_card(self)
+    if self.ability.set == 'Joker' and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_lobc_dawn_crimson" then 
+        G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+            G.GAME.blind.hands_sub = 0
+            for _, v in ipairs(G.playing_cards) do
+                v:set_debuff(false)
+            end
+            return true
+        end}))
+    end
+    sell_cardref(self)
+end
+
+-- WhiteNight confession win round
+local alert_debuffref = Blind.alert_debuff
+function Blind.alert_debuff(self, first)
+    if self.config.blind.color and self.config.blind.color == "base" then return end
+    if self.config.blind.key == "bl_lobc_whitenight" and next(SMODS.find_card("j_lobc_one_sin")) then
+        self.block_play = true
+        G.E_MANAGER:add_event(Event({
+            blocking = false,
+            blockable = false,
+            func = function() 
+                if G.STATE == G.STATES.SELECTING_HAND then
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 4*G.SETTINGS.GAMESPEED,
+                        blocking = false,
+                        blockable = false,
+                        func = function() 
+                            self.block_play = false
+                            self.chips = 0
+                            self.chip_text = number_format(self.chips)
+                            self.dollars = 0
+                            G.E_MANAGER:add_event(Event({
+                                trigger = 'after',
+                                delay = 1,
+                                blocking = false,
+                                blockable = false,
+                                func = (function()
+                                    self.block_play = nil
+                                    if G.buttons then
+                                        local _buttons = G.buttons:get_UIE_by_ID('play_button')
+                                        _buttons.disable_button = nil
+                                    end
+                                    -- recheck just in case it fucks up
+                                    if G.STATE == G.STATES.SELECTING_HAND then
+                                        G.STATE = G.STATES.HAND_PLAYED
+                                        G.STATE_COMPLETE = true
+                                        end_round()
+                                    end
+                                    return true
+                                end)
+                            }))
+                            return true
+                        end
+                    }))
+                    return true
+                end
+            end
+        }))
+    else
+        if self.config.blind.color then
+            self:ordeal_alert()
+        else 
+            alert_debuffref(self, first) 
         end
     end
 end
+
+-- Make Ordeals not end the game on win ante hopefully
+local get_typeref = Blind.get_type
+function Blind.get_type(self)
+    if self.config.blind.color then
+        return G.GAME.blind_on_deck
+    end
+    return get_typeref(self)
+end
+
+--=============== JOKERS ===============--
 
 -- Wall Gazer face down
 local stay_flippedref = Blind.stay_flipped
@@ -504,6 +568,7 @@ function Card.set_sprites(self, _center, _front)
     end
 end
 
+-- The Price of Silence amplification
 local amplified_values = {
     "mult",
     "h_mult",
@@ -518,7 +583,6 @@ local amplified_values = {
     "d_size",
     "bonus",
 }
--- The Price of Silence amplification
 function Card:lobc_check_amplified()
     if self.ability.price_of_silence_amplified then
         for _, v in ipairs(amplified_values) do
@@ -529,6 +593,38 @@ function Card:lobc_check_amplified()
         -- glass card moment
         if self.ability.x_mult and self.config.center.config.Xmult then
             self.ability.x_mult = self.ability.x_mult + self.config.center.config.Xmult
+        end
+    end
+end
+
+--=============== MECHANICAL ===============--
+
+-- i am NOT implementing a none hand myself. yell at me if this fucks up anything
+local get_poker_hand_inforef = G.FUNCS.get_poker_hand_info
+function G.FUNCS.get_poker_hand_info(_cards)
+    if G.STATE == G.STATES.HAND_PLAYED and #_cards == 0 then
+        local poker_hands = evaluate_poker_hand(_cards)
+        local scoring_hand = {}
+        local text = "High Card"
+        local disp_text = text
+        local loc_disp_text = localize(text, 'poker_hands')
+        return text, loc_disp_text, poker_hands, scoring_hand, disp_text
+    end
+    return get_poker_hand_inforef(_cards)
+end
+
+-- Debuffing effects
+local should_debuff_ability = {
+    "scorched_girl_debuff",
+    "theresia_debuff",
+}
+function SMODS.current_mod.set_debuff(card, should_debuff)
+    if card.ability then
+        for _, v in ipairs(should_debuff_ability) do
+            if card.ability[v] then 
+                card.debuff = true 
+                return true
+            end
         end
     end
 end
@@ -561,69 +657,9 @@ function Card.set_ability(self, center, initial, delay_sprites)
     end
 end
 
--- WhiteNight confession win round
-local alert_debuffref = Blind.alert_debuff
-function Blind.alert_debuff(self, first)
-    if self.config.blind.color and self.config.blind.color == "base" then return end
-    if self.config.blind.key == "bl_lobc_whitenight" and next(SMODS.find_card("j_lobc_one_sin")) then
-        self.block_play = true
-        G.E_MANAGER:add_event(Event({
-            blocking = false,
-            blockable = false,
-            func = function() 
-                if G.STATE == G.STATES.SELECTING_HAND then
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 4*G.SETTINGS.GAMESPEED,
-                        blocking = false,
-                        blockable = false,
-                        func = function() 
-                            self.block_play = false
-                            self.chips = 0
-                            self.chip_text = number_format(self.chips)
-                            self.dollars = 0
-                            G.E_MANAGER:add_event(Event({
-                                trigger = 'after',
-                                delay = 1,
-                                blocking = false,
-                                blockable = false,
-                                func = (function()
-                                    self.block_play = nil
-                                    if G.buttons then
-                                        local _buttons = G.buttons:get_UIE_by_ID('play_button')
-                                        _buttons.disable_button = nil
-                                    end
-                                    -- recheck just in case it fucks up
-                                    if G.STATE == G.STATES.SELECTING_HAND then
-                                        G.STATE = G.STATES.HAND_PLAYED
-                                        G.STATE_COMPLETE = true
-                                        end_round()
-                                    end
-                                    return true
-                                end)
-                            }))
-                            return true
-                        end
-                    }))
-                    return true
-                end
-            end
-        }))
-    else
-        local ordeal = false
-        for _, v in ipairs(ordeal_blinds) do
-            if self.config.blind.color then
-                self:ordeal_alert()
-                ordeal = true
-                break
-            end
-        end
-        if not ordeal then alert_debuffref(self, first) end
-    end
-end
-
 -- Blind:alert_debuff for ordeals
 function Blind:ordeal_alert()
+    if G.GAME.current_round.hands_played > 0 then return end
     self.block_play = true
     G.E_MANAGER:add_event(Event({
         blockable = false,
@@ -645,7 +681,7 @@ function Blind:ordeal_alert()
                         attention_text({scale = 0.35, text = localize(loc_key..'_start_2'), hold = hold_time, align = 'cm', offset = { x = 0, y = -0.6 }, major = G.play, silent = true})
                         G.E_MANAGER:add_event(Event({
                             trigger = 'after',
-                            delay = hold_time/2,
+                            delay = hold_time/3,
                             blocking = false,
                             blockable = false,
                             func = (function()
@@ -665,6 +701,79 @@ function Blind:ordeal_alert()
         end)
     }))
 end
+
+-- Announce Ordeal during end_round
+local draw_from_hand_to_discardref = G.FUNCS.draw_from_hand_to_discard
+function G.FUNCS.draw_from_hand_to_discard(e)
+    if G.GAME.blind.config.blind.color then
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = G.SETTINGS.GAMESPEED * 5,
+            blockable = false,
+            func = (function()
+                local hold_time = G.SETTINGS.GAMESPEED * 6
+                local blind = G.GAME.blind
+                local loc_key = 'k_lobc_'..blind.config.blind.time..'_'..blind.config.blind.color
+                play_sound('lobc_'..blind.config.blind.color..'_end', 1, 0.5)
+                attention_text({scale = 0.3, text = localize(loc_key), hold = hold_time, align = 'cm', offset = { x = 0, y = -3.5 }, major = G.play, silent = true})
+                attention_text({scale = 1, text = localize(loc_key..'_name'), hold = hold_time, align = 'cm', offset = { x = 0, y = -2.5 }, major = G.play, silent = true})
+                attention_text({scale = 0.35, text = localize(loc_key..'_end_1'), hold = hold_time, align = 'cm', offset = { x = 0, y = -1 }, major = G.play, silent = true})
+                attention_text({scale = 0.35, text = localize(loc_key..'_end_2'), hold = hold_time, align = 'cm', offset = { x = 0, y = -0.6 }, major = G.play, silent = true})
+                return true
+            end)
+        }))
+    end
+    draw_from_hand_to_discardref(e)
+end
+
+-- Talisman compat
+to_big = to_big or function(num)
+    return num
+end
+
+--=============== OBSERVATION ===============--
+
+-- Check rounds until observation unlock
+function Card:check_rounds(comp)
+    local val = G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key] and G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key].count or 0
+    return math.min(val, comp)
+end
+
+-- Card updates
+local card_updateref = Card.update
+function Card.update(self, dt)
+    if G.STAGE == G.STAGES.RUN then
+        -- Check if enough rounds have passed, should be saving
+        if self.config.center.abno then
+            local count = G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key] and G.PROFILES[G.SETTINGS.profile].joker_usage[self.config.center_key].count or 0
+            self.config.center.discovered = (count >= self.config.center.discover_rounds)
+        end
+    end
+    card_updateref(self, dt)
+end
+
+-- Update round count for abnos
+local set_joker_usageref = set_joker_usage
+function set_joker_usage()
+    set_joker_usageref()
+    for k, v in pairs(G.jokers.cards) do
+        if v.config.center_key and v.ability.set == 'Joker' and v.config.center.abno and not v.config.center.discovered and 
+          G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].count >= v.config.center.discover_rounds then
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
+                play_sound('card1')
+                v:flip()
+            return true end }))
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
+                discover_card(v.config.center)
+                v:set_sprites(v.config.center, nil)
+                play_sound('card1')
+                v:flip()
+            return true end }))
+        end
+    end
+end
+
+--=============== BOOSTER PACK ===============--
 
 -- Get Abnormality pool
 -- Implementation somewhat borrowed from Sylvie's Sillyness and based on get_current_pool()
@@ -882,7 +991,7 @@ end
 
 local can_skip_boosterref = G.FUNCS.can_skip_booster
 function G.FUNCS.can_skip_booster(e)
-    if G.pack_cards and G.pack_cards.cards[1] and G.STATE == G.STATES.EXTRACTION_PACK then
+    if G.pack_cards and G.pack_cards.cards and G.pack_cards.cards[1] and G.STATE == G.STATES.EXTRACTION_PACK then
         e.config.colour = G.C.GREY
         e.config.button = 'skip_booster'
     else
@@ -890,6 +999,61 @@ function G.FUNCS.can_skip_booster(e)
     end
 end
 
-to_big = to_big or function(num)
-    return num
-end
+--=============== STEAMODDED OBJECTS 2 ===============--
+-- Atlases
+SMODS.Atlas({ 
+    key = "LobotomyCorp_Jokers", 
+    atlas_table = "ASSET_ATLAS", 
+    path = "LobotomyCorp_spritesheet.png", 
+    px = 71, 
+    py = 95 
+})
+SMODS.Atlas({ 
+    key = "LobotomyCorp_Undiscovered", 
+    atlas_table = "ASSET_ATLAS", 
+    path = "LobotomyCorp_undiscovered.png", 
+    px = 71, 
+    py = 95 
+})
+SMODS.Atlas({ 
+    key = "LobotomyCorp_Booster", 
+    atlas_table = "ASSET_ATLAS", 
+    path = "LobotomyCorp_booster.png", 
+    px = 71, 
+    py = 95 
+})
+SMODS.Atlas({ 
+    key = "LobotomyCorp_Blind", 
+    atlas_table = "ANIMATION_ATLAS", 
+    path = "LobotomyCorp_blind.png", 
+    px = 34, 
+    py = 34,
+    frames = 21,
+})
+SMODS.Atlas({
+    key = "modicon",
+    path = "LobotomyCorp_icon.png",
+    px = 34,
+    py = 34
+})
+SMODS.Atlas({
+    key = "LobotomyCorp_moodboard",
+    path = "LobotomyCorp_moodboard.png",
+    px = 71,
+    py = 95
+})
+SMODS.Atlas({
+    key = "LobotomyCorp_jokersbald",
+    path = "LobotomyCorp_jokersbald.png",
+    px = 71,
+    py = 95
+})
+SMODS.Atlas({
+    key = "LobotomyCorp_modifiers",
+    path = "LobotomyCorp_modifiers.png",
+    px = 71,
+    py = 95
+})
+
+-- Clear all Cathys
+sendInfoMessage("Loaded LobotomyCorp~")

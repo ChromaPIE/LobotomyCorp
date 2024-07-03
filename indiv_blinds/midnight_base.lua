@@ -1,18 +1,18 @@
 local blind = {
-    name = "Dusk Ordeal",
+    name = "Midnight Ordeal",
     color = "base",
-    time = "dusk",
+    time = "midnight",
     discovered = true,
-    pos = {x = 0, y = 1},
+    pos = {x = 0, y = 15},
     dollars = 5, 
     mult = 2, 
     vars = {}, 
     debuff = {},
     boss = {min = 1, max = 10},
     blind_list = {
-        "dusk_green",
-        "dusk_crimson",
-        "dusk_amber"
+        "midnight_green",
+        "midnight_violet",
+        "midnight_amber"
     },
     loc_txt = {}
 }

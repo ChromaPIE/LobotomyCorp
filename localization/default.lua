@@ -271,6 +271,7 @@ return {
             dis_j_lobc_scorched_girl_2 = {
                 name = "F-01-02",
                 text = {
+                    "When {C:attention}Blind{} is selected,",
                     "{C:attention}-#1#%{} Blind Size",
                     "{C:attention}(#3#/4){} ..."
                 }
@@ -278,6 +279,7 @@ return {
             j_lobc_scorched_girl = {
                 name = "Scorched Girl",
                 text = {
+                    "When {C:attention}Blind{} is selected,",
                     "{C:attention}-#1#%{} Blind Size",
                     "Debuffs first hand drawn"
                 }
@@ -929,7 +931,7 @@ return {
                 name = "WhiteNight",
                 text = {
                     "Played Apostles reduce",
-                    "blind size by 5X Base"
+                    "blind size by 5X Base",
                 }
             },
 
@@ -945,57 +947,132 @@ return {
                 name = "Green Dawn",
                 text = {
                     "Reduces the level of",
-                    "level 1 poker hands"
+                    "first hand played"
                 }
             },
             bl_lobc_dawn_amber = {
                 name = "Amber Dawn",
                 text = {
-                    "Debuffs five cards in",
-                    "deck each hand"
+                    "Debuffs 4 cards in deck",
+                    "after playing a hand"
                 }
             },
             bl_lobc_dawn_crimson = {
                 name = "Crimson Dawn",
                 text = {
-                    "Every 3 hands played,",
-                    "sells a random Joker"
+                    "Before every third hand,",
+                    "debuffs all playing cards",
+                    "until a Joker is sold"
+                }
+            },
+            bl_lobc_dawn_violet = {
+                name = "Violet Dawn",
+                text = {
+                    "-1 hand if hand doesn't",
+                    "score at least 20% of blind"
                 }
             },
 
             -- Noon Ordeals
+            bl_lobc_noon_base = {
+                name = "Noon Ordeal",
+                text = {
+                    "Fight against a",
+                    "random Noon Ordeal"
+                }
+            },
+            bl_lobc_noon_green = {
+                name = "Green Noon",
+                text = {
+                    "Reduces the level of played",
+                    "poker hand if highest level"
+                }
+            },
+            bl_lobc_noon_indigo = {
+                name = "Indigo Noon",
+                text = {
+                    "Increase blind size by X0.1",
+                    "Base per card discarded"
+                }
+            },
+            bl_lobc_noon_crimson = {
+                name = "Crimson Noon",
+                text = {
+                    "Immediately fight Crimson Dawn",
+                    "after beating this Blind"
+                }
+            },
+            bl_lobc_noon_violet = {
+                name = "Violet Noon",
+                text = {
+                    "-2 hands if hand doesn't",
+                    "score at least 30% of blind"
+                }
+            },
 
             -- Dusk Ordeals
             bl_lobc_dusk_base = {
                 name = "Dusk Ordeal",
                 text = {
                     "Fight against a",
-                    "random Dusk Ordeal"
+                    "random Dusk Ordeal",
                 }
             },
             bl_lobc_dusk_green = {
                 name = "Green Dusk",
                 text = {
                     "Decreases level of played",
-                    "poker hand twice"
+                    "poker hand twice",
                 }
             },
             bl_lobc_dusk_amber = {
                 name = "Amber Dusk",
                 text = {
-                    "Debuffs a playing card per card drawn,",
-                    "destroys debuffed cards before scoring"
+                    "Debuffs a playing card in",
+                    "hand or deck per",
+                    "card drawn, destroys played",
+                    "debuffed cards before scoring",
                 }
             },
             bl_lobc_dusk_crimson = {
                 name = "Crimson Dusk",
                 text = {
                     "Immediately fight Crimson Noon",
-                    "after beating this Blind"
+                    "after beating this Blind",
                 }
-            }
+            },
 
             -- Midnight Ordeals
+            bl_lobc_midnight_base = {
+                name = "Midnight Ordeal",
+                text = {
+                    "Fight against a",
+                    "random Midnight Ordeal"
+                }
+            },
+            bl_lobc_midnight_green = {
+                name = "Green Midnight",
+                text = {
+                    "Halves level of",
+                    "played poker hand",
+                    "(rounded down)",
+                }
+            },
+            bl_lobc_midnight_amber = {
+                name = "Amber Midnight",
+                text = {
+                    "Debuffs half of deck,",
+                    "destroys played debuffed",
+                    "cards before scoring",
+                }
+            },
+            bl_lobc_midnight_violet = {
+                name = "Violet Midnight",
+                text = {
+                    "Lose if hand doesn't",
+                    "score at least 40% of blind"
+                }
+            }
         }
     },
     misc = {
