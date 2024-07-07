@@ -1,3 +1,5 @@
+-- Simplified Chinese localization by ChromaPIE
+
 return {
     descriptions = {
         Other = {
@@ -1010,12 +1012,11 @@ return {
                 }
             },
             bl_lobc_dusk_amber = {
-                name = "Amber Dusk",
+                name = "琥珀色黄昏",
                 text = {
-                    "Debuffs a playing card in",
-                    "hand or deck per",
-                    "card drawn, destroys played",
-                    "debuffed cards before scoring",
+                    "每抽一张牌，使手中",
+                    "或牌组中的随机一张牌失效",
+                    "打出的失效牌会在计分前遭到摧毁"
                 }
             },
             bl_lobc_dusk_crimson = {
@@ -1130,7 +1131,7 @@ return {
             k_lobc_dawn_crimson_end_2 = "",
 
             -- Noon
-            k_lobc_noon_green = "绿色正午",
+            k_lobc_noon_green = "绿色的正午",
             k_lobc_noon_green_name = "理解的过程",
             k_lobc_noon_green_start_1 = "他们，终究被生命所束缚。而我们，是为了倾泻绝望与怒火而存在。",
             k_lobc_noon_green_start_2 = "我们将亲手剖析生命，理解灵魂。",
@@ -1166,11 +1167,11 @@ return {
             k_lobc_dusk_green_end_1 = "There wasn't an answer. We didn't find a single thing we wanted.",
             k_lobc_dusk_green_end_2 = "We only witnessed the death of life itself.",
 
-            k_lobc_dusk_amber = "The Dusk of Amber",
-            k_lobc_dusk_amber_name = "Food Chain",
-            k_lobc_dusk_amber_start_1 = "To accustom oneself to the taste was an inevitable process.",
+            k_lobc_dusk_amber = "琥珀色的黄昏",
+            k_lobc_dusk_amber_name = "食物链",
+            k_lobc_dusk_amber_start_1 = "我们必须让自己适应它的味道。",
             k_lobc_dusk_amber_start_2 = "",
-            k_lobc_dusk_amber_end_1 = "We could live. We could continue eating.",
+            k_lobc_dusk_amber_end_1 = "我们将一直生存下去。我们将一直吞噬下去。",
             k_lobc_dusk_amber_end_2 = "",
 
             k_lobc_dusk_crimson = "The Dusk of Crimson",
