@@ -245,7 +245,7 @@ return {
                 text = {
                     "..."
                 }
-            }
+            },
         },
         Joker = {
             ---- Abnormalities' Observation Levels ----
@@ -455,32 +455,35 @@ return {
                     "{C:attention}(#4#/2){} ...",
                     "{C:attention}(#5#/4){} ...",
                     "{C:attention}(#6#/8){} ...",
+                    "{C:inactive}（指定牌型：{C:attention}#1#{C:inactive}）",
                 }
             },
             dis_j_lobc_nameless_fetus_2 = {
                 name = "O-01-15",
                 text = {
-                    "{X:mult,C:white} X#2# {} Mult after playing a {C:attention}#1#{}",
+                    "打出指定牌型时，{X:mult,C:white} X#2# {}倍率",
                     "{C:attention}(#5#/4){} ...",
                     "{C:attention}(#6#/8){} ...",
+                    "{C:inactive}（指定牌型：{C:attention}#1#{C:inactive}）",
                 }
             },
             dis_j_lobc_nameless_fetus_3 = {
                 name = "O-01-15",
                 text = {
-                    "{X:mult,C:white} X#2# {} Mult after playing a {C:attention}#1#{}",
-                    "{X:mult,C:white} X#3# {} Mult if other hands are played",
+                    "打出指定牌型时，{X:mult,C:white} X#2# {}倍率",
+                    "打出其他牌型时，{X:mult,C:white} X#3# {}倍率",
                     "{C:attention}(#6#/8){} ...",
+                    "{C:inactive}（指定牌型：{C:attention}#1#{C:inactive}）",
                 }
             },
             j_lobc_nameless_fetus = {
-                name = "Nameless Fetus",
+                name = "无名怪婴",
                 text = {
-                    "{X:mult,C:white} X#2# {} Mult after playing a {C:attention}#1#{}",
-                    "{X:mult,C:white} X#3# {} Mult if other hands are played",
-                    "If the {C:attention}first hand{} of round has",
-                    "only {C:attention}1{} card, destroy it",
-                    "and change selected hand type"
+                    "打出指定牌型时，{X:mult,C:white} X#2# {}倍率",
+                    "打出其他牌型时，{X:mult,C:white} X#3# {}倍率",
+                    "若本回合{C:attention}第一次出牌",
+                    "仅包含{C:attention}1{}张牌",
+                    "则摧毁之并重新指定牌型",
                 }
             },
 
@@ -1076,6 +1079,7 @@ return {
         challenge_names = {
             c_lobc_dark_days = "Dark Days",
             c_lobc_ordeals = "Increased Ordeals",
+            c_lobc_malkuth = "Control",
         },
         v_text = {
             ch_c_lobc_ordeals = {"Ordeals are guaranteed to appear every {C:attention}2{} Antes"},
@@ -1089,6 +1093,12 @@ return {
             ch_c_lobc_all_whitenight_3 = {"{C:attention}Plague Doctor{} cannot {C:attention}breach{}"},
             ch_c_lobc_all_whitenight_4 = {"Reduced {C:attention}Boss Blind Size{} during the first {C:attention}3{} Antes"},
             ch_c_lobc_all_whitenight_5 = {"{C:inactive}({C:dark_edition}WhiteNight{C:inactive} cannot go below {C:attention}X6.66{C:inactive} Blind Size from {C:attention}Apostles{C:inactive})"},
+
+            -- Malkuth
+            ch_c_lobc_malkuth = {"All {C:attention}Consumables{} are faced down"},
+            ch_c_lobc_malkuth_2 = {"After Ante {C:attention}3{}, all {C:attention}Jokers{} are faced down"},
+            ch_c_lobc_malkuth_3 = {"Every Ante after Ante {C:attention}3{}, shuffles all owned {C:attention}Jokers{}"},
+            ch_c_lobc_malkuth_4 = {"After Ante {C:attention}6{}, all cards cannot be sold"},
         },
         dictionary = {
             k_lobc_breached = "突破！",
