@@ -1,6 +1,10 @@
 local chal = {
     rules = {
         custom = {
+            {id = "lobc_netzach"},
+            {id = "lobc_netzach_2"},
+            {id = "lobc_netzach_3"},
+            {id = "lobc_netzach_4"},
             {id = "lobc_ordeals"},
             {id = "lobc_fast_ante_1"},
         },

@@ -10,6 +10,11 @@ local chal = {
         },
     },
     restrictions = {
+        banned_cards = {
+            {id = 'j_chicot'},
+            {id = 'v_directors_cut'},
+            {id = 'v_retcon'},
+        },
         banned_other = {
             {id = 'bl_final_acorn', type = 'blind'},
         }
