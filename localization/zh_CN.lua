@@ -139,11 +139,27 @@ return {
                     "unfamiliar yet sorrowful.",
                 }
             },
+            und_j_lobc_heart_of_aspiration = {
+                name = "T-09-77",
+                text = {
+                    "Excessive aspiration would bring",
+                    "about unwarranted frenzy.",
+                }
+            },
             und_j_lobc_iron_maiden = {
                 name = "T-09-85",
                 text = {
                     "现在，",
 					"一切都会好起来的！",
+                }
+            },
+            und_j_lobc_scarecrow_searching = {
+                name = "F-01-87",
+                text = {
+                    "The city still remained",
+                    "a beautiful place where",
+                    "the emerald roads sparkled",
+                    "bright as ever.",
                 }
             },
             und_j_lobc_shy_look = {
@@ -163,7 +179,7 @@ return {
                 }
             },
             und_j_lobc_servant_of_wrath = {
-                name = "O-01-00",
+                name = "O-01-??",
                 text = {
                     "Friend... A being more special",
                     "than any other, calling and",
@@ -285,6 +301,7 @@ return {
                 text = {
                     "选择{C:attention}盲注{}时",
                     "盲注分数要求{C:attention}-#1#%",
+                    "{s:0.15} {}",
 					"开局手牌全部{C:red}失效",
                 }
             },
@@ -307,6 +324,7 @@ return {
                 name = "一罪与百善",
                 text = {
                     "打出的牌在计分时给予{C:mult}+#1#{}倍率",
+                    "{s:0.15} {}",
 					"天诛降世，{C:attention}白夜{}将临。",
                 }
             },
@@ -331,6 +349,7 @@ return {
                 name = "O-01-04",
                 text = {
                     "{X:mult,C:white} X#1# {}倍率",
+                    "{s:0.15} {}",
                     "以至少{X:mult,C:white}5倍{}于最低要求",
                     "的分数击败{C:attention}盲注时",
                     "该异想体将陷入{C:attention}歇斯底里{}状态",
@@ -341,9 +360,11 @@ return {
                 name = "憎恶女王",
                 text = {
                     "{X:mult,C:white} X#1# {}倍率",
+                    "{s:0.15} {}",
                     "以至少{X:mult,C:white}5倍{}于最低要求",
                     "的分数击败{C:attention}盲注{}时",
                     "该异想体将陷入{C:attention}歇斯底里{}状态",
+                    "{s:0.15} {}",
                     "倍率低至{X:mult,C:white} X1 {}时{C:attention}突破收容"
                 }
             },
@@ -366,6 +387,7 @@ return {
                 name = "快乐泰迪",
                 text = {
                     "使出牌{C:attention}牌型{}提升{C:attention}#1#{}级",
+                    "{s:0.15} {}",
 					"若{C:attention}连续{}打出同种{C:attention}牌型",
 					"则使其等级{C:attention}归零",
 					"{C:inactive}（上次打出牌型：{C:attention}#2#{C:inactive}）"
@@ -394,6 +416,7 @@ return {
                 text = {
                     "打出的牌在计分时",
                     "永久获得{C:chips}+#1#{}筹码",
+                    "{s:0.15} {}",
                     "选择{C:attention}盲注{}时",
                     "强制选定{C:attention}2{}张牌",
                     "{C:attention}(#4#/7){} ..."
@@ -404,8 +427,10 @@ return {
                 text = {
                     "打出的牌在计分时",
                     "永久获得{C:chips}+#1#{}筹码",
+                    "{s:0.15} {}",
                     "选择{C:attention}盲注{}时",
                     "强制选定{C:attention}2{}张牌",
+                    "{s:0.15} {}",
                     "若卡牌的筹码加成达{C:chips}100",
                     "则其会在计分后被摧毁"
                 }
@@ -432,6 +457,7 @@ return {
                 text = {
                     "每次出牌后",
                     "该异想体获得{C:chips}+#2#{}筹码",
+                    "{s:0.15} {}",
                     "第三次出牌后",
                     "使所有{C:attention}扑克牌{C:red}失效",
                     "{C:inactive}（当前为{C:chips}+#1#{C:inactive}筹码）"
@@ -455,13 +481,14 @@ return {
                 }
             },
             j_lobc_old_lady = {
-                name = "Old Lady",
+                name = "老妇人",
                 text = {
                     "每次出牌，该异想体",
                     "获得{C:mult}+#2#{}倍率",
-                    "When another Joker is added,",
-                    "this Abnormality loses {C:mult}#3#{} Mult",
-                    "{C:inactive}(Currently {C:mult}#6##1#{C:inactive} Mult)"
+                    "{s:0.15} {}",
+                    "其他小丑牌加入槽位时",
+                    "该异想体{C:mult}-#3#{}倍率",
+                    "{C:inactive}（当前为{C:mult}#6##1#{C:inactive}倍率）"
                 }
             },
 
@@ -487,6 +514,7 @@ return {
                 name = "O-01-15",
                 text = {
                     "打出指定牌型时，{X:mult,C:white} X#2# {}倍率",
+                    "{s:0.15} {}",
                     "打出其他牌型时，{X:mult,C:white} X#3# {}倍率",
                     "{C:attention}(#6#/8){} ...",
                     "{C:inactive}（指定牌型：{C:attention}#1#{C:inactive}）",
@@ -496,7 +524,9 @@ return {
                 name = "无名怪婴",
                 text = {
                     "打出指定牌型时，{X:mult,C:white} X#2# {}倍率",
+                    "{s:0.15} {}",
                     "打出其他牌型时，{X:mult,C:white} X#3# {}倍率",
+                    "{s:0.15} {}",
                     "若本回合{C:attention}第一次出牌",
                     "仅包含{C:attention}1{}张牌",
                     "则摧毁之并重新指定牌型",
@@ -525,6 +555,7 @@ return {
                     "使{C:attention}首次{}计分的出牌中",
                     "点数{C:attention}最低{}的卡牌",
                     "重新触发{C:attention}#1#{}至{C:attention}#2#{}次",
+                    "{s:0.15} {}",
                     "出牌前抽到的所有{C:attention}扑克牌",
                     "全部{C:attention}背面朝上"
                 }
@@ -552,6 +583,7 @@ return {
                 text = {
                     "Copies the abilities of leftmost",
                     "and rightmost {C:attention}Jokers{}",
+                    "{s:0.15} {}",
                     "When Blind is selected, flips and shuffles",
                     "all Jokers for the first hand",
                     "{C:attention}(#3#/9){} ..."
@@ -562,9 +594,11 @@ return {
                 text = {
                     "Copies the abilities of leftmost",
                     "and rightmost {C:attention}Jokers{}",
+                    "{s:0.15} {}",
                     "When Blind is selected, flips and shuffles",
                     "all Jokers for the first hand, then",
                     "takes the appearance of another Joker",
+                    "{s:0.15} {}",
                     "Cannot copy Jokers of selected type"
                 }
             },
@@ -590,8 +624,10 @@ return {
                 text = {
                     "This Abnormality gains {X:mult,C:white} X#2# {} Mult",
                     "after a {C:attention}Blind{} is defeated in {C:attention}1{} hand",
+                    "{s:0.15} {}",
                     "After gaining Mult {C:attention}4{} times,",
                     "destroys a random Joker",
+                    "{s:0.15} {}",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
                     "{C:inactive}Activates after {C:attention}#3#{C:inactive} blind(s)"
                 }
@@ -617,6 +653,7 @@ return {
                 name = "疫医",
                 text = {
                     "每次出牌时为一张牌{C:attention}施洗",
+                    "{s:0.15} {}",
                     "打出的{C:attention}受祝{}牌",
                     "将给予{C:mult}+#1#{}倍率",
                     "{C:attention}(#4#/?){} ..."
@@ -626,8 +663,10 @@ return {
                 name = "疫医",
                 text = {
                     "每次出牌时为一张牌{C:attention}施洗",
+                    "{s:0.15} {}",
                     "打出的{C:attention}受祝{}牌",
                     "将给予{C:mult}+#1#{}倍率",
+                    "{s:0.15} {}",
                     "{C:attention}祝佑{C:attention}12{}张牌后",
                     "{C:attention}突破收容"
                 }
@@ -643,19 +682,24 @@ return {
             dis_j_lobc_whitenight_2 = {
                 name = "T-03-46",
                 text = {
+                    "小丑牌槽位{C:dark_edition}+1",
+                    "{s:0.15} {}",
                     "每次出牌时为一张牌{C:attention}施洗",
-                    "打出的{C:attention}受祝{}牌",
-                    "将给予{C:mult}+#1#{}倍率",
+                    "{s:0.15} {}",
+                    "打出的{C:attention}受祝{}牌将给予{C:mult}+#1#{}倍率",
                     "{C:attention}(#3#/8){} ..."
                 }
             },
             j_lobc_whitenight = {
                 name = "WhiteNight",
                 text = {
-                    "{C:dark_edition}+1{} Joker Slot",
-                    "{C:attention}Baptizes{} a playing card each hand",
-                    "Played {C:attention}blessed{} cards give {C:mult}+#1#{} Mult",
-                    "Retrigger {C:attention}blessed{} cards {C:attention}#2#{} times",
+                    "小丑牌槽位{C:dark_edition}+1",
+                    "{s:0.15} {}",
+                    "每次出牌时为一张牌{C:attention}施洗",
+                    "{s:0.15} {}",
+                    "打出的{C:attention}受祝{}牌将给予{C:mult}+#1#{}倍率",
+                    "{s:0.15} {}",
+                    "重新触发{C:attention}受祝{}牌{C:attention}#2#{}次",
                 }
             },
 
@@ -679,6 +723,7 @@ return {
                 name = "小鸟",
                 text = {
                     "{C:mult}+#1#{}倍率",
+                    "{s:0.15} {}",
                     "{C:attention}6{}回合后",
                     "该异想体获得{C:dark_edition}负片",
                     "{C:attention}(#5#/8){} ...",
@@ -689,8 +734,10 @@ return {
                 name = "惩戒鸟",
                 text = {
                     "{C:mult}+#1#{}倍率",
+                    "{s:0.15} {}",
                     "{C:attention}6{}回合后",
                     "该异想体获得{C:dark_edition}负片",
+                    "{s:0.15} {}",
                     "若{C:attention}售出{}该异想体",
                     "立即{C:attention}输掉{}本赛局",
                     "{C:inactive}（当前为{C:attention}#2#{C:inactive}回合）"
@@ -719,8 +766,9 @@ return {
                 text = {
                     "While {C:green}active{}, converts the {C:attention}rightmost{} scoring",
                     "card to the {C:attention}leftmost{} scoring card",
+                    "{s:0.15} {}",
                     "The converted card becomes {V:1}Amplified{}",
-                    "{C:attention}(#3#/7){} ...",
+                    "{C:attention}(#3#/7){} ..."
                 }
             },
             j_lobc_price_of_silence = {
@@ -728,7 +776,9 @@ return {
                 text = {
                     "While {C:green}active{}, converts the {C:attention}rightmost{} scoring",
                     "card to the {C:attention}leftmost{} scoring card",
+                    "{s:0.15} {}",
                     "The converted card becomes {V:1}Amplified{}",
+                    "{s:0.15} {}",
                     "Each hand, after {C:attention}13{} seconds, destroys a",
                     "random {C:attention}other{} Joker and becomes {C:red}inactive{}",
                     "{C:inactive}({C:red}Inactive{C:inactive} if there are no destructible Jokers)"
@@ -757,6 +807,7 @@ return {
                 text = {
                     "若计分牌的花色均为{C:hearts}红桃",
                     "则将计分且非{C:attention}礼物{}的牌复制入手牌中",
+                    "{s:0.15} {}",
                     "若计分牌中不包含{C:hearts}红桃{}牌",
                     "则摧毁所有计分牌",
                     "{C:attention}(#3#/8){} ..."
@@ -767,8 +818,10 @@ return {
                 text = {
                     "若计分牌的花色均为{C:hearts}红桃",
                     "则将计分且非{C:attention}礼物{}的牌复制入手牌中",
+                    "{s:0.15} {}",
                     "若计分牌中不包含{C:hearts}红桃{}牌",
                     "则摧毁所有计分牌",
+                    "{s:0.15} {}",
                     "移除该异想体时",
                     "所有{C:attention}礼物{}牌{C:attention}永久{C:red}失效"
                 }
@@ -786,6 +839,7 @@ return {
                 name = "T-01-68",
                 text = {
                     "This Abnormality is always {C:dark_edition}Eternal{}",
+                    "{s:0.15} {}",
                     "{C:attention}(#4#/3){} ...",
                     "{C:attention}(#5#/6){} ..."
                 }
@@ -794,6 +848,7 @@ return {
                 name = "T-01-68",
                 text = {
                     "This Abnormality is always {C:dark_edition}Eternal{}",
+                    "{s:0.15} {}",
                     "Gives {X:mult,C:white} X#2# {} per {C:dark_edition}Eternal{} Joker",
                     "{C:attention}(#5#/6){} ...",
                     "{C:inactive}(Currently gives {X:mult,C:white} X#1# {C:inactive})",
@@ -803,7 +858,9 @@ return {
                 name = "Funeral of the Dead Butterflies",
                 text = {
                     "This Abnormality is always {C:dark_edition}Eternal{}",
+                    "{s:0.15} {}",
                     "{X:mult,C:white} X#2# {} Mult for each {C:dark_edition}Eternal{} Joker",
+                    "{s:0.15} {}",
                     "When {C:attention}Boss Blind{} is defeated,",
                     "adds {C:dark_edition}Eternal{} to a random Joker",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive})",
@@ -830,6 +887,7 @@ return {
                 name = "T-01-75",
                 text = {
                     "卡牌{C:attention}计分{}后将全部被摧毁",
+                    "{s:0.15} {}",
                     "每摧毁一张卡牌，该异想体",
                     "获得{C:chips}+#3#{}筹码和{C:mult}+#4#{}倍率",
                     "{C:attention}(#7#/9){} ...",
@@ -837,14 +895,60 @@ return {
                 }
             },
             j_lobc_mosb = {
-                name = "The Mountain of Smiling Bodies",
+                name = "微笑的尸山",
                 text = {
-                    "Destroys all {C:attention}scored{} cards",
-                    "This Abnormality gains {C:chips}+#3#{} Chips and",
-                    "{C:mult}+#4#{} Mult when it destroys a card",
-                    "Increase {C:chips}Chips{} and {C:mult}Mult{} gain by {C:attention}#8#{}",
-                    "if {C:attention}5{} cards are destroyed at once",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips and {C:mult}+#2#{C:inactive} Mult)"
+                    "卡牌{C:attention}计分{}后将全部被摧毁",
+                    "{s:0.15} {}",
+                    "每摧毁一张卡牌，该异想体",
+                    "获得{C:chips}+#3#{}筹码和{C:mult}+#4#{}倍率",
+                    "{s:0.15} {}",
+                    "同时有{C:attention}5{}张牌被摧毁时",
+                    "可获得的{C:chips}筹码{}和{C:mult}倍率{}提升{C:attention}#8#",
+                    "{C:inactive}（当前为{C:chips}+#1#{C:inactive}筹码，{C:mult}+#2#{C:inactive}倍率）"
+                }
+            },
+
+            dis_j_lobc_heart_of_aspiration_1 = {
+                name = "T-09-77",
+                text = {
+                    "{C:attention}(#3#/2){} ...",
+                    "{C:attention}(#4#/4){} ...",
+                    "{C:attention}(#5#/6){} ...",
+                }
+            },
+            dis_j_lobc_heart_of_aspiration_2 = {
+                name = "T-09-77",
+                text = {
+                    "{C:blue}Hands{} and {C:red}Discards{} are",
+                    "not reset after each {C:attention}Blind{}",
+                    "{C:attention}(#4#/4){} ...",
+                    "{C:attention}(#5#/6){} ...",
+                }
+            },
+            dis_j_lobc_heart_of_aspiration_3 = {
+                name = "T-09-77",
+                text = {
+                    "{C:blue}Hands{} and {C:red}Discards{} are",
+                    "not reset after each {C:attention}Blind{}",
+                    "{s:0.15} {}",
+                    "This Abnormality gains {X:mult,C:white} X#2# {}",
+                    "Mult after each hand",
+                    "{C:attention}(#5#/6){} ...",
+                    "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive})"
+                }
+            },
+            j_lobc_heart_of_aspiration = {
+                name = "The Heart of Aspiration",
+                text = {
+                    "{C:blue}Hands{} and {C:red}Discards{} are",
+                    "not reset after each {C:attention}Blind{}",
+                    "{s:0.15} {}",
+                    "This Abnormality gains {X:mult,C:white} X#2# {}",
+                    "Mult after each hand",
+                    "{s:0.15} {}",
+                    "Resets {C:blue}Hands{}, {C:red}Discards{} and {C:mult}Mult{}",
+                    "after defeating {C:attention}Boss Blind{}",
+                    "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive})"
                 }
             },
 
@@ -852,16 +956,16 @@ return {
                 name = "T-09-85",
                 text = {
                     "{C:attention}(#5#/2){} ...",
-                    "{C:attention}(#6#/4){} ...",
-                    "{C:attention}(#7#/6){} ...",
+                    "{C:attention}(#6#/3){} ...",
+                    "{C:attention}(#7#/5){} ...",
                 }
             },
             dis_j_lobc_iron_maiden_2 = {
                 name = "T-09-85",
                 text = {
                     "每秒获得{C:attention}#1#{}分",
-                    "{C:attention}(#6#/4){} ...",
-                    "{C:attention}(#7#/6){} ...",
+                    "{C:attention}(#6#/3){} ...",
+                    "{C:attention}(#7#/5){} ...",
                 }
             },
             dis_j_lobc_iron_maiden_3 = {
@@ -869,7 +973,7 @@ return {
                 text = {
                     "每秒获得{C:attention}#1#{}分",
                     "并在本回合内{C:blue}-#2#{}出牌次数",
-                    "{C:attention}(#7#/6){} ...",
+                    "{C:attention}(#7#/5){} ...",
                 }
             },
             j_lobc_iron_maiden = {
@@ -877,11 +981,55 @@ return {
                 text = {
                     "每秒获得{C:attention}#1#{}分",
                     "并在本回合内{C:blue}-#2#{}出牌次数",
+                    "{s:0.15} {}",
                     "{C:attention}#3#{}秒后，每秒获得分数{C:attention}翻倍",
                     "出牌次数的削减随之提升{C:blue}#4#"
                 }
             },
-            
+
+            dis_j_lobc_scarecrow_searching_1 = {
+                name = "F-01-87",
+                text = {
+                    "{C:attention}(#2#/2){} ...",
+                    "{C:attention}(#3#/4){} ...",
+                    "{C:attention}(#4#/6){} ...",
+                }
+            },
+            dis_j_lobc_scarecrow_searching_2 = {
+                name = "F-01-87",
+                text = {
+                    "When this Abnormality is obtained and",
+                    "after each Blind, create {C:attention}2 {C:dark_edition}Negative {C:attention}Wisdoms",
+                    "{C:attention}(#3#/4){} ...",
+                    "{C:attention}(#4#/6){} ...",
+                }
+            },
+            dis_j_lobc_scarecrow_searching_3 = {
+                name = "F-01-87",
+                text = {
+                    "When this Abnormality is obtained and",
+                    "after each Blind, create {C:attention}2 {C:dark_edition}Negative {C:attention}Wisdoms",
+                    "{s:0.15} {}",
+                    "After each hand, destroy a {C:attention}Wisdom{} to",
+                    "give scoring cards an {C:attention}Enhancement{}, {C:blue}Seal{} or {C:dark_edition}Edition{}",
+                    "{C:attention}(#4#/6){} ...",
+                }
+            },
+            j_lobc_scarecrow_searching = {
+                name = "Scarecrow Searching for Wisdom",
+                text = {
+                    "When this Abnormality is obtained and",
+                    "after each Blind, create {C:attention}2 {C:dark_edition}Negative {C:attention}Wisdoms",
+                    "{s:0.15} {}",
+                    "After each hand, destroy a {C:attention}Wisdom{} to",
+                    "give scoring cards an {C:attention}Enhancement{}, {C:blue}Seal{} or {C:dark_edition}Edition{}",
+                    "{s:0.15} {}",
+                    "If there are none, increase Blind Size by",
+                    "{C:attention}10%{} per {C:attention}Wisdom{} created {C:inactive}(once per round){}",
+                    "{C:inactive}({C:attention}Wisdoms{C:inactive} created: {C:attention}#1#{C:inactive})"
+                }
+            },
+
             dis_j_lobc_shy_look_1 = {
                 name = "O-01-92",
                 text = {
@@ -902,6 +1050,7 @@ return {
                 name = "O-01-92",
                 text = {
                     "+{C:attention}Variable{} {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{s:0.15} {}",
                     "The face changes every #1# seconds",
                     "{C:attention}(#4#/6){} ...",
                 }
@@ -910,7 +1059,9 @@ return {
                 name = "Today's Shy Look",
                 text = {
                     "+{C:attention}Variable{} {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{s:0.15} {}",
                     "The face changes every {C:attention}#1#{} seconds",
+                    "{s:0.15} {}",
                     "Happier faces give more Chips and Mult",
                 }
             },
@@ -937,13 +1088,14 @@ return {
                     "When {C:attention}Blind{} is selected, add",
                     "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{}",
                     "to a random other card",
+                    "{s:0.15} {}",
                     "{C:green}#1# in #2#{} chance to",
                     "{C:attention}permanently{} {C:red}debuff{} it instead",
                 }
             },
 
             dis_j_lobc_servant_of_wrath_1 = {
-                name = "O-01-00",
+                name = "O-01-??",
                 text = {
                     "{C:attention}(#2#/2){} ...",
                     "{C:attention}(#3#/3){} ...",
@@ -951,7 +1103,7 @@ return {
                 }
             },
             dis_j_lobc_servant_of_wrath_2 = {
-                name = "O-01-00",
+                name = "O-01-??",
                 text = {
                     "开局时，从手牌中随机打出{C:attention}5{}张牌",
                     "{C:attention}(#3#/3){} ...",
@@ -959,9 +1111,10 @@ return {
                 }
             },
             dis_j_lobc_servant_of_wrath_3 = {
-                name = "O-01-00",
+                name = "O-01-??",
                 text = {
                     "开局时，从手牌中随机打出{C:attention}5{}张牌",
+                    "{s:0.15} {}",
                     "此种出牌在计分时{X:mult,C:white} X#1# {}倍率",
                     "{C:attention}(#4#/7){} ..."
                 }
@@ -970,7 +1123,9 @@ return {
                 name = "烈怒侍从",
                 text = {
                     "开局时，从手牌中随机打出{C:attention}5{}张牌",
+                    "{s:0.15} {}",
                     "此种出牌在计分时{X:mult,C:white} X#1# {}倍率",
+                    "{s:0.15} {}",
                     "且若有{C:attention}三次{}为{C:attention}高牌",
                     "则该异想体{C:attention}突破收容",
                 }
@@ -1140,6 +1295,15 @@ return {
                     "score at least 40% of blind"
                 }
             }
+        },
+        EGO_Gift = {
+            c_lobc_wisdom = {
+                name = "Wisdom",
+                text = {
+                    "Creates a",
+                    "{C:attention}playing card{}",
+                }
+            }
         }
     },
     misc = {
@@ -1154,6 +1318,7 @@ return {
             lobc_he = "HE",
             lobc_waw = "WAW",
             lobc_aleph = "ALEPH",
+            ego_gift = "E.G.O Gift",
         },
         challenge_names = {
             c_lobc_dark_days = "Dark Days",
@@ -1176,10 +1341,9 @@ return {
             ch_c_lobc_all_whitenight_5 = {"{C:inactive}({C:dark_edition}WhiteNight{C:inactive} cannot go below {C:attention}X6.66{C:inactive} Blind Size from {C:attention}Apostles{C:inactive})"},
 
             -- Malkuth
-            ch_c_lobc_malkuth = {"All {C:attention}Consumables{} are faced down"},
-            ch_c_lobc_malkuth_2 = {"After Ante {C:attention}3{}, all {C:attention}Jokers{} are faced down"},
-            ch_c_lobc_malkuth_3 = {"Every Ante after Ante {C:attention}3{}, shuffles all owned {C:attention}Jokers{}"},
-            ch_c_lobc_malkuth_4 = {"After Ante {C:attention}6{}, all cards cannot be sold"},
+            ch_c_lobc_malkuth = {"After Ante 3, all {C:attention}Consumables{} are faced down"},
+            ch_c_lobc_malkuth_2 = {"After Ante {C:attention}6{}, all cards are faced down and can't be sold"},
+            ch_c_lobc_malkuth_3 = {"Every Ante after Ante {C:attention}6{}, shuffles all owned {C:attention}Jokers{}"},
 
             -- Yesod
             ch_c_lobc_yesod = {"Most sprites are modified"},
@@ -1205,7 +1369,9 @@ return {
             k_lobc_active = "激活",
             k_lobc_inactive = "未激活",
             k_lobc_punishing_bird = "惩戒鸟",
-            k_lobc_iron_maiden = "We Can Change Anything",
+            k_lobc_iron_maiden = "我们可以改变一切",
+            k_ego_gift = "E.G.O Gift",
+            b_ego_gift_cards = "E.G.O Gifts",
 
             ---- Ordeals ----
 
