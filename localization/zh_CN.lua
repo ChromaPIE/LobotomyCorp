@@ -1074,21 +1074,21 @@ return {
             dis_j_lobc_old_faith_2 = {
                 name = "T-09-91",
                 text = {
-                    "When {C:attention}Blind{} is selected, add",
-                    "an {C:dark_edition}edition{} to a random card",
-                    "{C:inactive}(Joker, consumable or playing card)",
+                    "选择{C:attention}盲注{}时",
+                    "为随机一张卡牌添加{C:dark_edition}版本",
+                    "{C:inactive}（小丑牌、消耗牌或扑克牌）",
                     "{C:attention}(#4#/4){} ...",
                 }
             },
             j_lobc_old_faith = {
-                name = "Old Faith and Promise",
+                name = "古老的信念和承诺",
                 text = {
-                    "When {C:attention}Blind{} is selected, add",
-                    "an {C:dark_edition}edition{} to a random card",
-                    "{C:inactive}(Joker, consumable or playing card)",
+                    "选择{C:attention}盲注{}时",
+                    "为随机一张卡牌添加{C:dark_edition}版本",
+                    "{C:inactive}（小丑牌、消耗牌或扑克牌）",
                     "{s:0.15} {}",
-                    "{C:green}#1# in #2#{} chance to",
-                    "{C:attention}permanently{} {C:red}debuff{} it instead",
+                    "但同时有{C:green}#1#/#2#{}的几率",
+                    "使其{C:attention}永久{C:red}失效",
                 }
             },
 
@@ -1233,10 +1233,10 @@ return {
 
             -- Dusk Ordeals
             bl_lobc_dusk_base = {
-                name = "Dusk Ordeal",
+                name = "黄昏考验",
                 text = {
-                    "Fight against a",
-                    "random Dusk Ordeal"
+                    "与随机的黄昏考验",
+                    "展开对抗"
                 }
             },
             bl_lobc_dusk_green = {
@@ -1319,9 +1319,12 @@ return {
             ego_gift = "E.G.O饰品",
         },
         challenge_names = {
-            c_lobc_dark_days = "Dark Days",
-            c_lobc_ordeals = "Increased Ordeals",
-            c_lobc_malkuth = "Control",
+            c_lobc_dark_days = "黑暗时日",
+            c_lobc_ordeals = "重重考验",
+            c_lobc_malkuth = "控制",
+            c_lobc_yesod = "讯息",
+            c_lobc_hod = "训练",
+            c_lobc_netzach = "安全",
         },
         v_text = {
             ch_c_lobc_ordeals = {"Ordeals are guaranteed to appear every {C:attention}2{} Antes"},
