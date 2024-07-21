@@ -50,7 +50,7 @@ end
 
 joker.remove_from_deck = function(self, card, from_debuff)
     -- potential bug: two hearts of aspiration debuffed won't clear the no hands reset. too lazy to fix
-    if not G.GAME.modifiers.lobc_netzach and #SMODS.find_card("j_lobc_heart_of_aspiration") == 1 then
+    if not G.GAME.modifiers.lobc_netzach and #SMODS.find_card("j_lobc_heart_of_aspiration") == 0 then
         G.GAME.lobc_no_hands_reset = false
     end
 end
@@ -75,6 +75,29 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
     else
         localize{type = 'descriptions', key = desc_key, set = self.set, nodes = desc_nodes, vars = vars}
     end
+end
+
+if SMODS.Mods.JokerDisplay then
+    JokerDisplay.Definitions.j_lobc_heart_of_aspiration = {
+        text = {
+            {
+                border_nodes = {
+                    { text = "X" },
+                    { ref_table = "card.ability.extra", ref_value = "x_mult" }
+                }
+            }
+        },
+        style_function = function(card, text, reminder_text, extra)
+            if text then 
+                text.states.visible = card:check_rounds(4) >= 4
+            end
+            if reminder_text then
+            end
+            if extra then
+            end
+            return false
+        end
+    }
 end
 
 return joker

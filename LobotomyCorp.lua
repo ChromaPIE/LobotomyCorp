@@ -6,7 +6,7 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future. Most art is from Lobotomy Corporation and Library of Ruina by Project Moon.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.7.2
+--- VERSION: 0.8.0
 
 -- Talisman compat
 to_big = to_big or function(num)
@@ -14,6 +14,7 @@ to_big = to_big or function(num)
 end
 
 local mod_path = SMODS.current_mod.path
+local folder = string.match(mod_path, "[Mm]ods.*")
 
 --=============== STEAMODDED OBJECTS ===============--
 -- To disable any object, comment it out by adding -- at the start of the line.
@@ -104,6 +105,7 @@ local sound_list = {
     silence_destroy = "Clock_NoCreate",
     silence_tick = "Clock_Tick",
     helper_destroy = "Robo_Rise",
+    butterfly_attack = "Butterfly_Attack",
 
     green_start = "Machine_Start",
     green_end = "Machine_End",
@@ -240,8 +242,8 @@ for _, v in ipairs(consumable_list) do
     cons.key = v
     cons.atlas = "LobotomyCorp_consumable"
     if not cons.set then cons.set = "EGO_Gift" end
-    --cons.discovered = true
-
+    cons.discovered = true
+    cons.alerted = true
     local cons_obj = SMODS.Consumable(cons)
 
     for k_, v_ in pairs(cons) do
@@ -1087,17 +1089,17 @@ end
 local set_languageref = Game.set_language
 function Game.set_language(self)
     set_languageref(self)
-    self.FONTS["lobc_blank"] = {
-        file = "Mods/LobotomyCorp/assets/fonts/AdobeBlank.ttf", 
+    self.FONTS["blank"] = {
+        file = folder.."assets/fonts/AdobeBlank.ttf", 
         render_scale = self.TILESIZE*10, 
         TEXT_HEIGHT_SCALE = 0.83, 
         TEXT_OFFSET = {x=10,y=-20}, 
         FONTSCALE = 0.1, 
         squish = 1, 
         DESCSCALE = 1,
-        FONT = love.graphics.newFont("Mods/LobotomyCorp/assets/fonts/AdobeBlank.ttf", self.TILESIZE*10)
+        FONT = love.graphics.newFont(folder.."assets/fonts/AdobeBlank.ttf", self.TILESIZE*10)
     }
-    self.LANGUAGES["en-us"].font = self.FONTS["lobc_blank"]
+    self.LANGUAGES["en-us"].font = self.FONTS["blank"]
 end]]
 
 -- Clear all Cathys

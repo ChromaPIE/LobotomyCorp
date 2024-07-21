@@ -513,39 +513,39 @@ return {
                     "{C:attention}(#4#/2){} ...",
                     "{C:attention}(#5#/4){} ...",
                     "{C:attention}(#6#/8){} ...",
-                    "{C:inactive}(Chosen hand: {C:attention}#1#{C:inactive})",
+                    "{C:inactive}(Chosen hand type: {C:attention}#1#{C:inactive})",
                 }
             },
             dis_j_lobc_nameless_fetus_2 = {
                 name = "O-01-15",
                 text = {
-                    "{X:mult,C:white} X#2# {} Mult after playing chosen hand",
+                    "{X:mult,C:white} X#2# {} Mult after playing chosen hand type",
                     "{C:attention}(#5#/4){} ...",
                     "{C:attention}(#6#/8){} ...",
-                    "{C:inactive}(Chosen hand: {C:attention}#1#{C:inactive})",
+                    "{C:inactive}(Chosen hand type: {C:attention}#1#{C:inactive})",
                 }
             },
             dis_j_lobc_nameless_fetus_3 = {
                 name = "O-01-15",
                 text = {
-                    "{X:mult,C:white} X#2# {} Mult after playing chosen hand",
+                    "{X:mult,C:white} X#2# {} Mult after playing chosen hand type",
                     "{s:0.15} {}",
-                    "{X:mult,C:white} X#3# {} Mult if other hands are played",
+                    "{X:mult,C:white} X#3# {} Mult if other hand types are played",
                     "{C:attention}(#6#/8){} ...",
-                    "{C:inactive}(Chosen hand: {C:attention}#1#{C:inactive})",
+                    "{C:inactive}(Chosen hand type: {C:attention}#1#{C:inactive})",
                 }
             },
             j_lobc_nameless_fetus = {
                 name = "Nameless Fetus",
                 text = {
-                    "{X:mult,C:white} X#2# {} Mult after playing chosen hand",
+                    "{X:mult,C:white} X#2# {} Mult after playing chosen hand type",
                     "{s:0.15} {}",
-                    "{X:mult,C:white} X#3# {} Mult if other hands are played",
+                    "{X:mult,C:white} X#3# {} Mult if other hand types are played",
                     "{s:0.15} {}",
                     "If the {C:attention}first hand{} of round has",
                     "only {C:attention}1{} card, destroy it",
-                    "and change chosen hand",
-                    "{C:inactive}(Chosen hand: {C:attention}#1#{C:inactive})",
+                    "and change chosen hand type",
+                    "{C:inactive}(Chosen hand type: {C:attention}#1#{C:inactive})",
                 }
             },
 
@@ -1337,6 +1337,9 @@ return {
             c_lobc_dark_days = "Dark Days",
             c_lobc_ordeals = "Increased Ordeals",
             c_lobc_malkuth = "Control",
+            c_lobc_yesod = "Information",
+            c_lobc_hod = "Training",
+            c_lobc_netzach = "Safety",
         },
         v_text = {
             ch_c_lobc_ordeals = {"Ordeals are guaranteed to appear every {C:attention}2{} Antes"},
