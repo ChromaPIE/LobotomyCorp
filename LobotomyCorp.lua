@@ -15,6 +15,7 @@ end
 
 local mod_path = SMODS.current_mod.path
 local folder = string.match(mod_path, "[Mm]ods.*")
+local enable_ordeals = not SMODS.Mods.BB
 
 --=============== STEAMODDED OBJECTS ===============--
 -- To disable any object, comment it out by adding -- at the start of the line.
@@ -269,7 +270,7 @@ function reset_blinds()
     reset_blindsref()
     if G.GAME.round_resets.blind_states.Small == 'Upcoming' or G.GAME.round_resets.blind_states.Small == 'Hide' then
         if G.GAME.round_resets.ante % 8 == 2 and G.GAME.round_resets.ante > 0 and
-           (G.GAME.modifiers.lobc_ordeals or pseudorandom("dawn_ordeal") < 0.125) then
+           (G.GAME.modifiers.lobc_ordeals or pseudorandom("dawn_ordeal") < 0.125) and enable_ordeals then
                 G.GAME.round_resets.blind_choices.Small = 'bl_lobc_dawn_base'
         else
             G.GAME.round_resets.blind_choices.Small = 'bl_small'
@@ -686,6 +687,10 @@ function Game.init_game_object(self)
     for _, v in ipairs(blind_list) do
         G.bosses_used["bl_lobc_"..v] = 1e300
     end
+
+    -- Nameless Fetus
+    G.nameless_hand_type = nil
+
     return G
 end
 
@@ -970,6 +975,9 @@ SMODS.Booster({
     group_key = "k_lobc_extraction_pack",
 })
 
+--=============== CONFIG UI ===============--
+
+
 --=============== STEAMODDED OBJECTS 2 ===============--
 
 -- Atlases
@@ -1048,6 +1056,7 @@ SMODS.ConsumableType({
     secondary_colour = HEX("dd4930"),
     loc_txt = {},
     shop_rate = 0,
+    no_doe = true,
 })
 
 -- Shaders
