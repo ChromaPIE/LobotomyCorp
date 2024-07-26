@@ -530,6 +530,7 @@ return {
                     "若本回合{C:attention}第一次出牌",
                     "仅包含{C:attention}1{}张牌",
                     "则摧毁之并重新指定牌型",
+                    "{C:inactive}（指定牌型：{C:attention}#1#{C:inactive}）",
                 }
             },
 
@@ -676,7 +677,7 @@ return {
                 name = "T-03-46",
                 text = {
                     "{C:attention}(#3#/?){} ...",
-                    "{C:attention}(#3#/8){} ..."
+                    "{C:attention}(#3#/6){} ..."
                 }
             },
             dis_j_lobc_whitenight_2 = {
@@ -687,7 +688,7 @@ return {
                     "每次出牌时为一张牌{C:attention}施洗",
                     "{s:0.15} {}",
                     "打出的{C:attention}受祝{}牌将给予{C:mult}+#1#{}倍率",
-                    "{C:attention}(#3#/8){} ..."
+                    "{C:attention}(#3#/6){} ..."
                 }
             },
             j_lobc_whitenight = {
@@ -748,8 +749,8 @@ return {
                 name = "O-05-65",
                 text = {
                     "{C:attention}(#1#/2){} ...",
-                    "{C:attention}(#2#/5){} ...",
-                    "{C:attention}(#3#/7){} ...",
+                    "{C:attention}(#2#/4){} ...",
+                    "{C:attention}(#3#/6){} ...",
                 }
             },
             dis_j_lobc_price_of_silence_2 = {
@@ -757,8 +758,8 @@ return {
                 text = {
                     "While {C:green}active{}, converts the {C:attention}rightmost{} scoring",
                     "card to the {C:attention}leftmost{} scoring card",
-                    "{C:attention}(#2#/5){} ...",
-                    "{C:attention}(#3#/7){} ...",
+                    "{C:attention}(#2#/4){} ...",
+                    "{C:attention}(#3#/6){} ...",
                 }
             },
             dis_j_lobc_price_of_silence_3 = {
@@ -768,7 +769,7 @@ return {
                     "card to the {C:attention}leftmost{} scoring card",
                     "{s:0.15} {}",
                     "The converted card becomes {V:1}Amplified{}",
-                    "{C:attention}(#3#/7){} ..."
+                    "{C:attention}(#3#/6){} ..."
                 }
             },
             j_lobc_price_of_silence = {
@@ -779,8 +780,8 @@ return {
                     "{s:0.15} {}",
                     "The converted card becomes {V:1}Amplified{}",
                     "{s:0.15} {}",
-                    "Each hand, after {C:attention}13{} seconds, destroys a",
-                    "random {C:attention}other{} Joker and becomes {C:red}inactive{}",
+                    "After {C:attention}13{} seconds without {C:blue}play{} or {C:red}discard{}, destroys",
+                    "a random {C:attention}other{} Joker and becomes {C:red}inactive{}",
                     "{C:inactive}({C:red}Inactive{C:inactive} if there are no destructible Jokers)"
                 }
             },
@@ -1240,10 +1241,9 @@ return {
                 }
             },
             bl_lobc_dusk_green = {
-                name = "Green Dusk",
+                name = "绿色黄昏",
                 text = {
-                    "Decreases level of played",
-                    "poker hand twice"
+                    "将所出牌型降低2级"
                 }
             },
             bl_lobc_dusk_amber = {
@@ -1255,10 +1255,10 @@ return {
                 }
             },
             bl_lobc_dusk_crimson = {
-                name = "Crimson Dusk",
+                name = "血色黄昏",
                 text = {
-                    "Immediately fight Crimson Noon",
-                    "after beating this Blind"
+                    "击败本盲注后",
+                    "立即迎战血色正午"
                 }
             },
 
@@ -1342,7 +1342,7 @@ return {
             ch_c_lobc_all_whitenight_5 = {"{C:inactive}({C:dark_edition}WhiteNight{C:inactive} cannot go below {C:attention}X6.66{C:inactive} Blind Size from {C:attention}Apostles{C:inactive})"},
 
             -- Malkuth
-            ch_c_lobc_malkuth = {"After Ante 3, all {C:attention}Consumables{} are faced down"},
+            ch_c_lobc_malkuth = {"After Ante {C:attention}3{}, all {C:attention}Consumables{} are faced down"},
             ch_c_lobc_malkuth_2 = {"After Ante {C:attention}6{}, all cards are faced down and can't be sold"},
             ch_c_lobc_malkuth_3 = {"Every Ante after Ante {C:attention}6{}, shuffles all owned {C:attention}Jokers{}"},
 
@@ -1358,9 +1358,9 @@ return {
             ch_c_lobc_hod_3 = {"After Ante {C:attention}6{}, all {C:attention}Jokers{} are {C:attention}35%{} less effective"},
 
             -- Netzach
-            ch_c_lobc_netzach = {"After round ends, {C:blue}Hands{} and {C:red}Discards{} are not replenished"},
-            ch_c_lobc_netzach_2 = {"After Ante {C:attention}3{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention1{}"},
-            ch_c_lobc_netzach_3 = {"After Ante {C:attention}6{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention1{}"},
+            ch_c_lobc_netzach = {"{C:blue}Hands{} and {C:red}Discards{} are only replenished after beating an {C:attention}Ante{}"},
+            ch_c_lobc_netzach_2 = {"After Ante {C:attention}3{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention}1{}"},
+            ch_c_lobc_netzach_3 = {"After Ante {C:attention}6{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention}1{}"},
             ch_c_lobc_netzach_4 = {"All {C:attention}Blinds{} cannot be skipped"},
         },
         dictionary = {
@@ -1373,6 +1373,17 @@ return {
             k_lobc_iron_maiden = "我们可以改变一切",
             k_ego_gift = "E.G.O饰品",
             b_ego_gift_cards = "E.G.O饰品",
+
+            lobc_show_art_undiscovered = "未发现时仍显示异想体卡面",
+            lobc_disable_ordeals = "禁用随机考验",
+            lobc_discover_all = "发现全部项目",
+            lobc_no_sfx = "禁用特殊音效",
+            lobc_no_music = "禁用特殊音乐",
+            lobc_irreversible = "（该效果在本存档中无法再次变更！）",
+
+            ---- First time text ----
+            k_lobc_first_time_1 = "Manager, welcome to Lobotomy Corporation. Remember to take a look at the mod's settings.",
+            k_lobc_first_time_2 = "(Open the mod in the in-game mod list. This message will only appear once.)",
 
             ---- Ordeals ----
 
