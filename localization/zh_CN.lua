@@ -1381,6 +1381,19 @@ return {
             lobc_no_music = "禁用特殊音乐",
             lobc_irreversible = "（该效果在本存档中无法再次变更！）",
 
+            ---- Credits ----
+            lobc_credits_1 = "艺作和音效均来自脑叶公司及废墟图书馆",
+            lobc_credits_2 = "\"First Warning\", \"Second Warning\" and \"Third Warning\"",
+            lobc_credits_3 = "\"Abnormality Choice\" from Limbus Company",
+            lobc_credits_4 = "Nameless Fetus, The Lady Facing the Wall, All-Around Helper effects: ",
+            lobc_credits_5 = "Initial JokerDisplay for All-Around Helper, One Sin and Hundreds of Good Deeds: ",
+            lobc_credits_by = "by ",
+            lobc_credits_pm = "Project Moon",
+            lobc_credits_reb = "Dr.Reb",
+            lobc_credits_eim = "Studio EIM",
+            lobc_credits_twi = "Twilight & Sunset",
+            lobc_credits_opp = "OppositeWolf770",
+
             ---- First time text ----
             k_lobc_first_time_1 = "Manager, welcome to Lobotomy Corporation. Remember to take a look at the mod's settings.",
             k_lobc_first_time_2 = "(Open the mod in the in-game mod list. This message will only appear once.)",
