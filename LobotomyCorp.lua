@@ -6,16 +6,17 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future. Most art is from Lobotomy Corporation and Library of Ruina by Project Moon.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.8.0
+--- VERSION: 0.8.1
 
 -- Talisman compat
 to_big = to_big or function(num)
     return num
 end
 
+local current_mod = SMODS.current_mod
 local mod_path = SMODS.current_mod.path
+local config = SMODS.current_mod.config
 local folder = string.match(mod_path, "[Mm]ods.*")
-local enable_ordeals = not SMODS.Mods.BB
 
 --=============== STEAMODDED OBJECTS ===============--
 -- To disable any object, comment it out by adding -- at the start of the line.
@@ -183,7 +184,7 @@ for _, v in ipairs(joker_list) do
         joker_obj.set_sprites = function(self, card, front)
             card.children.center.atlas = G.ASSET_ATLAS["lobc_LobotomyCorp_Jokers"]
             local count = lobc_get_usage_count(card.config.center_key)
-            if count < card.config.center.discover_rounds then
+            if count < card.config.center.discover_rounds and not config.show_art_undiscovered then
                 card.children.center.atlas = G.ASSET_ATLAS["lobc_LobotomyCorp_Undiscovered"]
             end
             card.children.center:set_sprite_pos(card.config.center.pos)
@@ -221,10 +222,33 @@ end
 
 -- Load all sounds
 for k, v in pairs(sound_list) do
-    SMODS.Sound({
+    local sound = SMODS.Sound({
         key = k,
         path = v..".ogg"
     })
+    if k == "music_abno_choice" then
+        sound.select_music_track = function()
+            if config.no_music then return false end
+            return (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.config.center.group_key == "k_lobc_extraction_pack")
+        end
+    elseif k == "music_third_warning" then
+        sound.select_music_track = function()
+            if config.no_music then return false end
+            return (G.GAME and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_lobc_whitenight")
+        end
+    elseif k == "music_second_warning" then
+        sound.select_music_track = function()
+            if config.no_music then return false end
+            return (G.GAME and G.GAME.blind and G.GAME.blind.config.blind.time and G.GAME.blind.config.blind.time == "midnight")
+        end
+    elseif k == "music_first_warning" then
+        sound.select_music_track = function()
+            if config.no_music then return false end
+            return (G.GAME and G.GAME.blind and 
+            ((G.GAME.blind.config.blind.time and G.GAME.blind.config.blind.time == "dusk") or
+            (G.GAME.blind.lobc_original_blind and G.GAME.blind.lobc_original_blind == "bl_lobc_dusk_crimson")))
+        end
+    end
 end
 
 -- Load challenges
@@ -268,9 +292,10 @@ end
 local reset_blindsref = reset_blinds
 function reset_blinds()
     reset_blindsref()
+    if config.disable_ordeals and not G.GAME.modifiers.lobc_ordeals then return end
     if G.GAME.round_resets.blind_states.Small == 'Upcoming' or G.GAME.round_resets.blind_states.Small == 'Hide' then
         if G.GAME.round_resets.ante % 8 == 2 and G.GAME.round_resets.ante > 0 and
-           (G.GAME.modifiers.lobc_ordeals or pseudorandom("dawn_ordeal") < 0.125) and enable_ordeals then
+           (G.GAME.modifiers.lobc_ordeals or pseudorandom("dawn_ordeal") < 0.125) then
                 G.GAME.round_resets.blind_choices.Small = 'bl_lobc_dawn_base'
         else
             G.GAME.round_resets.blind_choices.Small = 'bl_small'
@@ -498,7 +523,7 @@ end
 -- Make Ordeals not end the game on win ante hopefully
 local get_typeref = Blind.get_type
 function Blind.get_type(self)
-    if self.config.blind.color then
+    if self.config.blind.color and not self.config.bonus then
         return G.GAME.blind_on_deck
     end
     return get_typeref(self)
@@ -623,7 +648,37 @@ function Game.start_run(self, args)
     if not args.savetext then
         if G.GAME.modifiers.lobc_fast_ante_1 then G.GAME.modifiers.scaling = 2 end
         if G.GAME.modifiers.lobc_fast_ante_2 then G.GAME.modifiers.scaling = 3 end
-        if G.GAME.modifiers.lobc_netzach then G.GAME.lobc_no_hand_reset = true end
+        if G.GAME.modifiers.lobc_netzach then G.GAME.lobc_no_hands_reset = true end
+    end
+
+    -- First time text
+    if not config.first_time then
+        config.first_time = true
+        SMODS.save_mod_config(current_mod)
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+            attention_text({
+                text = localize('k_lobc_first_time_1'),
+                scale = 0.35, 
+                hold = 15*G.SETTINGS.GAMESPEED,
+                major = G.play,
+                backdrop_colour = G.C.CLEAR,
+                align = 'cm',
+                offset = {x = 0.3, y = -3.5},
+                silent = true
+            })
+            attention_text({
+                text = localize('k_lobc_first_time_2'),
+                scale = 0.35, 
+                hold = 15*G.SETTINGS.GAMESPEED,
+                major = G.play,
+                backdrop_colour = G.C.CLEAR,
+                align = 'cm',
+                offset = {x = 0.3, y = -3.1},
+                silent = true
+            })
+            return true 
+            end 
+        }))
     end
 end
 
@@ -678,6 +733,17 @@ function Card.flip(self)
 end
 
 --=============== MECHANICAL ===============--
+
+-- copied from cryptid's cry_deep_copy
+function lobc_deep_copy(obj, seen)
+    if type(obj) ~= 'table' then return obj end
+    if seen and seen[obj] then return seen[obj] end
+    local s = seen or {}
+    local res = setmetatable({}, getmetatable(obj))
+    s[obj] = res
+    for k, v in pairs(obj) do res[lobc_deep_copy(k, s)] = lobc_deep_copy(v, s) end
+    return res
+end
 
 local init_game_objectref = Game.init_game_object
 function Game.init_game_object(self)
@@ -853,6 +919,13 @@ function new_round()
     }))
 end
 
+-- No SFX toggle
+local play_soundref = play_sound
+function play_sound(sound_code, per, vol)
+    if config.no_sfx and sound_code:find('lobc') then return end
+    return play_soundref(sound_code, per, vol)
+end
+
 --=============== OBSERVATION ===============--
 
 function lobc_get_usage_count(key)
@@ -977,6 +1050,84 @@ SMODS.Booster({
 
 --=============== CONFIG UI ===============--
 
+G.FUNCS.lobc_discover_all = function(e)
+    for _, v in ipairs(joker_list) do
+        local key = "j_lobc_"..v
+        if lobc_get_usage_count(key) < G.P_CENTERS[key].discover_rounds then
+            sendDebugMessage(key)
+            G.PROFILES[G.SETTINGS.profile].joker_usage[key] = {
+                count = G.P_CENTERS[key].discover_rounds, 
+                order = G.P_CENTERS[key].order, 
+                wins = {}, 
+                losses = {}
+            }
+        end
+    end
+    e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+    e.config.button = nil
+end
+
+SMODS.current_mod.config_tab = function()
+    return {n = G.UIT.ROOT, config = {r = 0.1, align = "t", padding = 0.1, colour = G.C.BLACK, minw = 8, minh = 6}, nodes = {
+        {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+                create_toggle{ col = true, label = "", scale = 0.85, w = 0, shadow = true, ref_table = config, ref_value = "no_sfx" },
+            }},
+            {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = localize('lobc_no_sfx'), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+            }},
+        }},
+
+        {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+                create_toggle{ col = true, label = "", scale = 0.85, w = 0, shadow = true, ref_table = config, ref_value = "no_music" },
+            }},
+            {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = localize('lobc_no_music'), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+            }},
+        }},
+
+        {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+                create_toggle{ col = true, label = "", scale = 0.85, w = 0, shadow = true, ref_table = config, ref_value = "show_art_undiscovered" },
+            }},
+            {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = localize('lobc_show_art_undiscovered'), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+            }},
+        }},
+
+        {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+                create_toggle{ col = true, label = "", scale = 0.85, w = 0, shadow = true, ref_table = config, ref_value = "disable_ordeals" },
+            }},
+            {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = localize('lobc_disable_ordeals'), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+            }},
+        }},
+
+        {n = G.UIT.R, config = {align = "cm", padding = 0, minh = 0.85}, nodes = {}},
+
+        {n = G.UIT.R, config = {align = "cm", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cm", minw = 2 }, nodes = {}},
+            {n = G.UIT.C,
+                config = { align = "cm", minw = 4, minh = 0.6, padding = 0.2, r = 0.1, hover = true, colour = G.C.RED, button = "lobc_discover_all", shadow = true },
+                nodes = {{
+                    n = G.UIT.R, config = { align = "cm", padding = 0 },
+                    nodes = {
+                        { n = G.UIT.T, config = { text = localize('lobc_discover_all'), scale = 0.35, colour = G.C.UI.TEXT_LIGHT, shadow = true, func = 'set_button_pip', focus_args = { button = 'x', set_button_pip = true } } }
+                    }
+                }}
+            },
+            {n = G.UIT.C, config = { align = "cm", minw = 2 }, nodes = {}}
+        }},
+
+        {n = G.UIT.R, config = {align = "cm", padding = 0, minh = 0.05}, nodes = {}},
+
+        {n = G.UIT.R, config = {align = "cm", padding = 0}, nodes = {
+            {n = G.UIT.T, config = { text = localize('lobc_irreversible'), scale = 0.25, colour = G.C.UI.TEXT_LIGHT}},
+        }}
+    }}
+end
 
 --=============== STEAMODDED OBJECTS 2 ===============--
 

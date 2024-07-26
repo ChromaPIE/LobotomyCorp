@@ -690,7 +690,7 @@ return {
                 name = "T-03-46",
                 text = {
                     "{C:attention}(#3#/?){} ...",
-                    "{C:attention}(#3#/8){} ..."
+                    "{C:attention}(#3#/6){} ..."
                 }
             },
             dis_j_lobc_whitenight_2 = {
@@ -701,7 +701,7 @@ return {
                     "{C:attention}Baptizes{} a playing card each hand",
                     "{s:0.15} {}",
                     "Played {C:attention}blessed{} cards give {C:mult}+#1#{} Mult",
-                    "{C:attention}(#3#/8){} ..."
+                    "{C:attention}(#3#/6){} ..."
                 }
             },
             j_lobc_whitenight = {
@@ -762,8 +762,8 @@ return {
                 name = "O-05-65",
                 text = {
                     "{C:attention}(#1#/2){} ...",
-                    "{C:attention}(#2#/5){} ...",
-                    "{C:attention}(#3#/7){} ...",
+                    "{C:attention}(#2#/4){} ...",
+                    "{C:attention}(#3#/6){} ...",
                 }
             },
             dis_j_lobc_price_of_silence_2 = {
@@ -771,8 +771,8 @@ return {
                 text = {
                     "While {C:green}active{}, converts the {C:attention}rightmost{} scoring",
                     "card to the {C:attention}leftmost{} scoring card",
-                    "{C:attention}(#2#/5){} ...",
-                    "{C:attention}(#3#/7){} ...",
+                    "{C:attention}(#2#/4){} ...",
+                    "{C:attention}(#3#/6){} ...",
                 }
             },
             dis_j_lobc_price_of_silence_3 = {
@@ -782,7 +782,7 @@ return {
                     "card to the {C:attention}leftmost{} scoring card",
                     "{s:0.15} {}",
                     "The converted card becomes {V:1}Amplified{}",
-                    "{C:attention}(#3#/7){} ...",
+                    "{C:attention}(#3#/6){} ...",
                 }
             },
             j_lobc_price_of_silence = {
@@ -793,8 +793,8 @@ return {
                     "{s:0.15} {}",
                     "The converted card becomes {V:1}Amplified{}",
                     "{s:0.15} {}",
-                    "Each hand, after {C:attention}13{} seconds, destroys a",
-                    "random {C:attention}other{} Joker and becomes {C:red}inactive{}",
+                    "After {C:attention}13{} seconds without {C:blue}play{} or {C:red}discard{}, destroys",
+                    "a random {C:attention}other{} Joker and becomes {C:red}inactive{}",
                     "{C:inactive}({C:red}Inactive{C:inactive} if there are no destructible Jokers)"
                 }
             },
@@ -1357,7 +1357,7 @@ return {
             ch_c_lobc_all_whitenight_5 = {"{C:inactive}({C:dark_edition}WhiteNight{C:inactive} cannot go below {C:attention}X6.66{C:inactive} Blind Size from {C:attention}Apostles{C:inactive})"},
 
             -- Malkuth
-            ch_c_lobc_malkuth = {"After Ante 3, all {C:attention}Consumables{} are faced down"},
+            ch_c_lobc_malkuth = {"After Ante {C:attention}3{}, all {C:attention}Consumables{} are faced down"},
             ch_c_lobc_malkuth_2 = {"After Ante {C:attention}6{}, all cards are faced down and can't be sold"},
             ch_c_lobc_malkuth_3 = {"Every Ante after Ante {C:attention}6{}, shuffles all owned {C:attention}Jokers{}"},
 
@@ -1373,9 +1373,9 @@ return {
             ch_c_lobc_hod_3 = {"After Ante {C:attention}6{}, all {C:attention}Jokers{} are {C:attention}35%{} less effective"},
 
             -- Netzach
-            ch_c_lobc_netzach = {"After round ends, {C:blue}Hands{} and {C:red}Discards{} are not replenished"},
-            ch_c_lobc_netzach_2 = {"After Ante {C:attention}3{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention1{}"},
-            ch_c_lobc_netzach_3 = {"After Ante {C:attention}6{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention1{}"},
+            ch_c_lobc_netzach = {"{C:blue}Hands{} and {C:red}Discards{} are only replenished after beating an {C:attention}Ante{}"},
+            ch_c_lobc_netzach_2 = {"After Ante {C:attention}3{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention}1{}"},
+            ch_c_lobc_netzach_3 = {"After Ante {C:attention}6{}, reduces {C:blue}Hands{} and {C:red}Discards{} by {C:attention}1{}"},
             ch_c_lobc_netzach_4 = {"All {C:attention}Blinds{} cannot be skipped"},
         },
         dictionary = {
@@ -1388,6 +1388,17 @@ return {
             k_lobc_iron_maiden = "We Can Change Anything",
             k_ego_gift = "E.G.O Gift",
             b_ego_gift_cards = "E.G.O Gifts",
+
+            lobc_show_art_undiscovered = "Show Abnormality Art when Undiscovered",
+            lobc_disable_ordeals = "Disable Random Ordeals",
+            lobc_discover_all = "Discover All",
+            lobc_no_sfx = "Disable Sound Effects",
+            lobc_no_music = "Disable Music",
+            lobc_irreversible = "(This effect is permanent on this profile!)",
+
+            ---- First time text ----
+            k_lobc_first_time_1 = "Manager, welcome to Lobotomy Corporation. Remember to take a look at the mod's settings.",
+            k_lobc_first_time_2 = "(Open the mod in the in-game mod list. This message will only appear once.)",
 
             ---- Ordeals ----
 

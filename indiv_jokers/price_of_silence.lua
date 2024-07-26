@@ -9,7 +9,7 @@ local joker = {
     perishable_compat = true,
     abno = true,
     risk = "he",
-    discover_rounds = 7,
+    discover_rounds = 6,
     loc_txt = {},
 }
 
@@ -77,6 +77,11 @@ joker.calculate = function(self, card, context)
         card.ability.extra.seconds = 0
         card.ability.extra.active = true
     end
+
+    if context.discard and not context.blueprint then
+        card.ability.extra.elapsed = 0
+        card.ability.extra.seconds = 0
+    end
     
     if context.before and context.cardarea == G.jokers and not context.blueprint then
         card.ability.extra.elapsed = 0
@@ -106,17 +111,17 @@ end
 
 joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local vars = { 
-        card:check_rounds(2), card:check_rounds(5), card:check_rounds(7),
+        card:check_rounds(2), card:check_rounds(4), card:check_rounds(6),
         colours = {HEX("004d00")}
     }
     local desc_key = self.key
     if card:check_rounds(2) < 2 then
         desc_key = 'dis_'..desc_key..'_1'
-    elseif card:check_rounds(5) < 5 then
+    elseif card:check_rounds(4) < 4 then
         desc_key = 'dis_'..desc_key..'_2'
     else
         info_queue[#info_queue+1] = {key = 'lobc_amplified', set = 'Other'}
-        if card:check_rounds(7) < 7 then
+        if card:check_rounds(6) < 6 then
             desc_key = 'dis_'..desc_key..'_3'
         end
     end
