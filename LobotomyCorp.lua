@@ -6,7 +6,7 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.8.1
+--- VERSION: 0.8.2
 
 -- Talisman compat
 to_big = to_big or function(num)
@@ -28,9 +28,9 @@ local joker_list = {
     "wall_gazer", -- The Lady Facing the Wall
     "plague_doctor",
     "punishing_bird",
-    "shy_look",
+    "shy_look", -- Today's Shy Look
     "iron_maiden", -- We Can Change Anything
-    "old_faith",
+    "old_faith", -- Old Faith and Promise
     "youre_bald",
 
     --- Uncommon
@@ -39,7 +39,8 @@ local joker_list = {
     "red_shoes",
     "nameless_fetus",
     "all_around_helper",
-    "fotdb",
+    "child_galaxy", -- Child of the Galaxy
+    "fotdb", -- Funeral of the Dead Butterflies
     "heart_of_aspiration",
     "scarecrow_searching",
 
@@ -54,6 +55,7 @@ local joker_list = {
     "price_of_silence",
     "laetitia",
     "mosb", -- The Mountain of Smiling Bodies
+    "censored",
     "servant_of_wrath",
 
     --- Legendary
@@ -108,6 +110,7 @@ local sound_list = {
     silence_tick = "Clock_Tick",
     helper_destroy = "Robo_Rise",
     butterfly_attack = "Butterfly_Attack",
+    censored = "Censored_Atk",
 
     green_start = "Machine_Start",
     green_end = "Machine_End",
@@ -120,7 +123,7 @@ local sound_list = {
     indigo_start = "Scavenger_Start",
     indigo_end = "Scavenger_End",
 
-    arcadespecialist = "arcadespecalist",
+    music_arcadespecialist = "arcadespecalist",
 }
 
 local challenge_list = {
@@ -139,6 +142,7 @@ local badge_colors = {
     lobc_blessed_wn = HEX("EDA9D3"),
     lobc_apostle = HEX("FF0000"),
     lobc_amplified = HEX("004d00"),
+    lobc_pebble = HEX("AAAAAA"),
     lobc_zayin = HEX("1DF900"),
     lobc_teth = HEX("13A2FF"),
     lobc_he = HEX("FFF900"),
@@ -160,7 +164,7 @@ end
 
 -- Load all jokers
 for _, v in ipairs(joker_list) do
-    local joker = NFS.load(mod_path .. "indiv_jokers/" .. v .. ".lua")()
+    local joker = SMODS.load_file("indiv_jokers/" .. v .. ".lua")()
 
     --joker.discovered = true
     joker.key = v
@@ -204,7 +208,7 @@ end
 
 -- Load all blinds
 for _, v in ipairs(blind_list) do
-    local blind = NFS.load(mod_path .. "indiv_blinds/" .. v .. ".lua")()
+    local blind = SMODS.load_file("indiv_blinds/" .. v .. ".lua")()
 
     blind.key = v
     blind.atlas = "LobotomyCorp_Blind"
@@ -226,7 +230,11 @@ end
 for k, v in pairs(sound_list) do
     local sound = SMODS.Sound({
         key = k,
-        path = v..".ogg"
+        path = v..".ogg",
+        pitch = 1,
+        volume = 0.9,
+        sync = false,
+        no_sync = true,
     })
     if k == "music_abno_choice" then
         sound.select_music_track = function()
@@ -250,22 +258,22 @@ for k, v in pairs(sound_list) do
             ((G.GAME.blind.config.blind.time and G.GAME.blind.config.blind.time == "dusk") or
             (G.GAME.blind.lobc_original_blind and G.GAME.blind.lobc_original_blind == "bl_lobc_dusk_crimson")))
         end
-    elseif k == "arcadespecialist" then
+    elseif k == "music_arcadespecialist" then
         sound.select_music_track = function()
             if config.no_music then return false end
-            for _, obj in pairs(G.I.SPRITE) do
-                if obj.atlas == G.ASSET_ATLAS["lobc_isaac"] and obj.states.drag.is then
-                    return true
-                end
+            if lobc_isaac and lobc_isaac.states.drag.is then
+                return true
             end
             return false
         end
+    else
+        sound.volume = 0.3
     end
 end
 
 -- Load challenges
 for _, v in ipairs(challenge_list) do
-    local chal = NFS.load(mod_path .. "challenges/" .. v .. ".lua")()
+    local chal = SMODS.load_file("challenges/" .. v .. ".lua")()
 
     chal.key = v
     chal.loc_txt = ""
@@ -274,7 +282,7 @@ end
 
 -- Load consumables
 for _, v in ipairs(consumable_list) do
-    local cons = NFS.load(mod_path .. "indiv_consumable/" .. v .. ".lua")()
+    local cons = SMODS.load_file("indiv_consumable/" .. v .. ".lua")()
 
     cons.key = v
     cons.atlas = "LobotomyCorp_consumable"
@@ -297,7 +305,7 @@ function get_new_boss()
     if G.GAME.modifiers.lobc_all_whitenight or 
     (G.GAME.pool_flags["plague_doctor_breach"] and not G.GAME.pool_flags["whitenight_defeated"]) then return "bl_lobc_whitenight" end
     return get_new_bossref()
-    --return "bl_lobc_dusk_crimson"
+    --return "bl_lobc_midnight_violet"
 end
 
 -- Overwrite blind select for Ordeals
@@ -467,7 +475,8 @@ function Card.sell_card(self)
         G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
             G.GAME.blind.hands_sub = 0
             for _, v in ipairs(G.playing_cards) do
-                v:set_debuff(false)
+                v.ability.lobc_dawn_crimson = false
+                SMODS.recalc_debuff(v)
             end
             return true
         end}))
@@ -603,11 +612,20 @@ function Sprite.draw(self, overlay)
     sprite_drawref(self, overlay)
 end
 
--- You're Bald...
+-- Sprite-based effects
 local set_spritesref = Card.set_sprites
 function Card.set_sprites(self, _center, _front)
     set_spritesref(self, _center, _front)
-    if next(SMODS.find_card("j_lobc_youre_bald")) then
+
+    -- CENSORED
+    if (self.ability and self.ability.lobc_censored) then
+        self.children.center.atlas = G.ASSET_ATLAS["lobc_LobotomyCorp_modifiers"]
+        self.children.center:set_sprite_pos({x = 9, y = 0})
+        self.children.front = nil
+    end
+
+    -- You're Bald...
+    if next(SMODS.find_card("j_lobc_youre_bald")) and (self.ability and not self.ability.lobc_censored) then
         if _center and _center.set == "Joker" and self.children.center.atlas == G.ASSET_ATLAS["Joker"] then
             self.children.center.atlas = G.ASSET_ATLAS["lobc_LobotomyCorp_jokersbald"]
             self.children.center:set_sprite_pos(_center.pos)
@@ -649,6 +667,111 @@ local set_costref = Card.set_cost
 function Card.set_cost(self)
     set_costref(self)
     if self.ability.set == "EGO_Gift" then self.sell_cost = 0 end
+end
+
+-- Global start of hand effect
+local drawn_to_handref = Blind.drawn_to_hand
+function Blind.drawn_to_hand(self)
+    drawn_to_handref(self)
+    if not G.GAME.lobc_prepped then return end
+
+    -- Child of the Galaxy add new pebbles
+    local children_of_the_galaxy = SMODS.find_card('j_lobc_child_galaxy')
+    if next(children_of_the_galaxy) then
+        for _, v in ipairs(G.playing_cards) do
+            v.ability.child_galaxy_pebble = nil
+        end
+        
+        local available_cards = {}
+
+        for _, v in ipairs(G.hand.cards) do
+            if not v.ability.child_galaxy_pebble then
+                available_cards[#available_cards + 1] = v
+            end
+        end
+
+        for i = 1, 4 * #children_of_the_galaxy do
+            if #available_cards > 0 then
+                local chosen_card, chosen_card_key = pseudorandom_element(available_cards, pseudoseed("random_card"))
+                chosen_card.ability.child_galaxy_pebble = true
+                chosen_card:juice_up()
+                table.remove(available_cards, chosen_card_key)
+            end
+        end
+    end
+
+    G.GAME.lobc_prepped = nil
+end
+
+local play_cards_from_highlightedref = G.FUNCS.play_cards_from_highlighted
+function G.FUNCS.play_cards_from_highlighted(e)
+    play_cards_from_highlightedref(e)
+    G.GAME.lobc_prepped = true
+end
+
+-- CENSORED
+local card_h_popupref = G.UIDEF.card_h_popup
+function G.UIDEF.card_h_popup(card)
+    if next(SMODS.find_card("j_lobc_censored")) and (not card.config or not card.config.center or card.config.center.key ~= "j_lobc_censored") then
+        local name_nodes = localize{type = 'name', key = "j_lobc_censored", set = "Joker", name_nodes = {}, vars = {}}
+        name_nodes[1].config.object.colours = {G.C.RED}
+        return {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
+            {n=G.UIT.C, config={align = "cm", object = Moveable(), ref_table = nil}, nodes = {
+                {n=G.UIT.R, config={padding = 0.05, r = 0.12, colour = G.C.BLACK, emboss = 0.07}, nodes={
+                    {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = G.C.RED}, nodes={
+                        {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes = name_nodes},
+                    }}
+                }}
+            }},
+        }}
+    end
+    return card_h_popupref(card)
+end
+
+-- Remove the topleft message when CENSORED is active
+local generate_UIBox_ability_tableref = Card.generate_UIBox_ability_table
+function Card.generate_UIBox_ability_table(self)
+    if next(SMODS.find_card("j_lobc_censored")) and self.config.center.key ~= "j_lobc_censored" then return end
+    return generate_UIBox_ability_tableref(self)
+end
+
+-- JokerDisplay modification when CENSORED is active
+if JokerDisplay then
+    local initialize_joker_displayref = Card.initialize_joker_display
+    function Card.initialize_joker_display(self, custom_parent)
+        if next(SMODS.find_card("j_lobc_censored")) and self.config.center.key ~= "j_lobc_censored" then 
+            self.children.joker_display:remove_text()
+            self.children.joker_display:remove_reminder_text()
+            self.children.joker_display:remove_extra()
+            self.children.joker_display:remove_modifiers()
+            self.children.joker_display_small:remove_text()
+            self.children.joker_display_small:remove_reminder_text()
+            self.children.joker_display_small:remove_extra()
+            self.children.joker_display_small:remove_modifiers()
+            self.children.joker_display_debuff:remove_text()
+            self.children.joker_display_debuff:remove_modifiers()
+            self.children.joker_display_debuff:add_text({ { text = "" .. localize("k_debuffed"), colour = G.C.UI.TEXT_INACTIVE } })
+        
+            local joker_display_definition = JokerDisplay.Definitions["lobc_other_censored"]
+            local definiton_text = joker_display_definition and
+                (joker_display_definition.text or joker_display_definition.line_1)
+            local text_config = joker_display_definition and joker_display_definition.text_config
+        
+            if custom_parent then
+                custom_parent.children.joker_display:add_text(definiton_text, text_config, self)
+                custom_parent.children.joker_display_small:add_text(definiton_text, text_config, self)
+                custom_parent.children.joker_display:recalculate()
+                custom_parent.children.joker_display_small:recalculate()
+            else
+                self.children.joker_display:add_text(definiton_text, text_config)
+                self.children.joker_display_small:add_text(definiton_text, text_config)
+                self.children.joker_display:recalculate()
+                self.children.joker_display_small:recalculate()
+            end
+        else
+            initialize_joker_displayref(self, custom_parent)
+        end
+    end
 end
 
 --=============== CHALLENGES ===============--
@@ -845,7 +968,7 @@ function Blind:ordeal_alert()
                     delay = G.SETTINGS.GAMESPEED * 0.05,
                     blockable = false,
                     func = (function()
-                        play_sound('lobc_'..self.config.blind.color..'_start', 1, 0.5)
+                        play_sound('lobc_'..self.config.blind.color..'_start', 1, 0.3)
                         local hold_time = G.SETTINGS.GAMESPEED * 5
                         local loc_key = 'k_lobc_'..self.config.blind.time..'_'..self.config.blind.color
                         G.E_MANAGER:add_event(Event({
@@ -895,7 +1018,7 @@ function G.FUNCS.draw_from_hand_to_discard(e)
                 local hold_time = G.SETTINGS.GAMESPEED * 5
                 local blind = G.GAME.blind
                 local loc_key = 'k_lobc_'..blind.config.blind.time..'_'..blind.config.blind.color
-                play_sound('lobc_'..blind.config.blind.color..'_end', 1, 0.5)
+                play_sound('lobc_'..blind.config.blind.color..'_end', 1, 0.3)
                 attention_text({scale = 0.3, text = localize(loc_key), hold = hold_time, align = 'cm', offset = { x = 0, y = -3.5 }, major = G.play, silent = true})
                 attention_text({scale = 1, text = localize(loc_key..'_name'), hold = hold_time, align = 'cm', offset = { x = 0, y = -2.5 }, major = G.play, silent = true})
                 attention_text({scale = 0.35, text = localize(loc_key..'_end_1'), hold = hold_time, align = 'cm', offset = { x = 0, y = -1 }, major = G.play, silent = true})
@@ -912,28 +1035,27 @@ function new_round()
     new_roundref()
     -- Reset hands for Crimson Dusk/Noon
     G.GAME.current_round.lobc_hands_given = 0
+    -- Reset death text if any
+    G.GAME.lobc_death_text = nil
 
     -- Kill on new round if hands is 0
     G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         func = function()
             if G.GAME.current_round.hands_left <= 0 then
-                G.STATE = G.STATES.GAME_OVER
-                if not G.GAME.won and not G.GAME.seeded and not G.GAME.challenge then 
-                    G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt = 0
-                end
-                G:save_settings()
-                G.FILE_HANDLER.force = true
+                G.STATE = G.STATES.NEW_ROUND
                 G.STATE_COMPLETE = false
             end
         return true
         end
     }))
+
+    G.GAME.lobc_prepped = true
 end
 
 local play_soundref = play_sound
 function play_sound(sound_code, per, vol)
-    if sound_code:find('lobc') then
+    if sound_code and sound_code:find('lobc') then
         -- No SFX toggle
         if config.no_sfx then return end
         return play_soundref(sound_code, per, vol * 0.8)
@@ -1146,13 +1268,13 @@ end
 
 lobc_isaac_dt, lobc_isaac_x, lobc_isaac_y = 0, 0, 0
 SMODS.current_mod.credits_tab = function()
-    local isaac = Sprite(0, 0, 1.12, 0.94, G.ASSET_ATLAS["lobc_isaac"], {x = 0, y = 0})
+    lobc_isaac = lobc_isaac or Sprite(0, 0, 1.12, 0.94, G.ASSET_ATLAS["lobc_isaac"], {x = 0, y = 0})
     lobc_isaac_x = 0
     lobc_isaac_y = 0
-    isaac.states.collide.can = true
-    isaac.states.hover.can = true
-    isaac.states.drag.can = true
-    isaac.states.click.can = true
+    lobc_isaac.states.collide.can = true
+    lobc_isaac.states.hover.can = true
+    lobc_isaac.states.drag.can = true
+    lobc_isaac.states.click.can = true
     return {n = G.UIT.ROOT, config = {r = 0.1, align = "tm", padding = 0.1, colour = G.C.BLACK, minw = 10, minh = 6}, nodes = {
         {n = G.UIT.R, config = {align = "cm", padding = 0.05}, nodes = {
             {n = G.UIT.T, config = { text = localize('lobc_credits_1'), scale = 0.35, colour = G.C.UI.TEXT_LIGHT}},
@@ -1192,7 +1314,7 @@ SMODS.current_mod.credits_tab = function()
         {n = G.UIT.R, config = {align = "cr", padding = 0}, nodes = {
             {n = G.UIT.R, config = {align = "cr", padding = 0}, nodes = {
                 {n = G.UIT.T, config = { text = "hey victin are you happy now >", scale = 0.3, colour = G.C.UI.TEXT_LIGHT}},
-                {n = G.UIT.O, config = {object = isaac}},
+                {n = G.UIT.O, config = {object = lobc_isaac}},
             }}
         }},
     }}
@@ -1201,22 +1323,21 @@ end
 local game_update = Game.update
 function Game.update(self, dt)
     game_update(self, dt)
-    -- borrowed from jimball
-    for _, obj in pairs(G.I.SPRITE) do
-        if obj.atlas == G.ASSET_ATLAS["lobc_isaac"] then
-            lobc_isaac_dt = lobc_isaac_dt + dt
-            if lobc_isaac_dt > 0.01666 then
-                lobc_isaac_dt = 0
-                if (lobc_isaac_x == 11 and lobc_isaac_y == 19) then
-                    lobc_isaac_x = 0
-                    lobc_isaac_y = 0
-                elseif (lobc_isaac_x < 22) then lobc_isaac_x = lobc_isaac_x + 1
-                elseif (lobc_isaac_y < 19) then
-                    lobc_isaac_x = 0
-                    lobc_isaac_y = lobc_isaac_y + 1
-                end
-                obj:set_sprite_pos({x = lobc_isaac_x, y = lobc_isaac_y})
+    -- borrowed from jimball, might need optimization?
+    if lobc_isaac then
+        lobc_isaac_dt = lobc_isaac_dt + dt
+        if lobc_isaac_dt > 0.01666 then
+            lobc_isaac_dt = 0
+            if (lobc_isaac_x == 11 and lobc_isaac_y == 19) then
+                lobc_isaac_x = 0
+                lobc_isaac_y = 0
+            elseif (lobc_isaac_x < 22) then
+                lobc_isaac_x = lobc_isaac_x + 1
+            elseif (lobc_isaac_y < 19) then
+                lobc_isaac_x = 0
+                lobc_isaac_y = lobc_isaac_y + 1
             end
+            lobc_isaac:set_sprite_pos({ x = lobc_isaac_x, y = lobc_isaac_y })
         end
     end
 end

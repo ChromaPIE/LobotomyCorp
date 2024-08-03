@@ -1,6 +1,6 @@
 local joker = {
     name = "Theresia",
-    config = {extra = {chips = 0, gain = 7, hands_played = 0}}, rarity = 1, cost = 5,
+    config = {extra = {chips = 0, gain = 6, hands_played = 0}}, rarity = 1, cost = 5,
     pos = {x = 6, y = 0}, 
     blueprint_compat = true, 
     eternal_compat = true,
@@ -76,7 +76,7 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
     end
 end
 
-if SMODS.Mods.JokerDisplay then
+if JokerDisplay then
     JokerDisplay.Definitions.j_lobc_theresia = {
         text = {
             { text = "+", colour = G.C.CHIPS },

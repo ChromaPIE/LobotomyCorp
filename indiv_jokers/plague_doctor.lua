@@ -70,7 +70,7 @@ joker.calculate = function(self, card, context)
             -- Show text. I don't care if you go so fast that it overlaps
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    play_sound('lobc_plague_doctor_bell', 1, 0.6)
+                    play_sound('lobc_plague_doctor_bell', 1, 0.4)
                     return true
                 end
             }))
@@ -184,7 +184,7 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
     end
 end
 
-if SMODS.Mods.JokerDisplay then
+if JokerDisplay then
     JokerDisplay.Definitions.j_lobc_plague_doctor = {
         text = {
             { text = "+", colour = G.C.MULT },

@@ -89,13 +89,16 @@ joker.generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, 
     end
 end
 
-if SMODS.Mods.JokerDisplay then
+if JokerDisplay then
     JokerDisplay.Definitions.j_lobc_laetitia = {
         reminder_text = {
             { text = "(" },
             { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = lighten(G.C.SUITS["Hearts"], 0.35) },
             { text = ")" }
         },
+        calc_function = function(card)
+            card.joker_display_values.localized_text = localize("Hearts", 'suits_plural')
+        end,
         style_function = function(card, text, reminder_text, extra)
             if text then 
             end

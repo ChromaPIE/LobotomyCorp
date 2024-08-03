@@ -105,6 +105,15 @@ return {
                     "Rise and serve me.",
                 }
             },
+            und_j_lobc_child_galaxy = {
+                name = "O-01-55",
+                text = {
+                    "\"A teardrop fell from the child's dewy",
+                    "eyes, as stars showered from the sky.",
+                    "The world falls into a slumber,",
+                    "trapped in an ecstatic lullaby.\""
+                }
+            },
             und_j_lobc_punishing_bird = {
                 name = "O-02-56",
                 text = {
@@ -166,6 +175,15 @@ return {
                     "a beautiful place where",
                     "the emerald roads sparkled",
                     "bright as ever.",
+                }
+            },
+            und_j_lobc_censored = {
+                name = "O-03-89",
+                text = {
+                    "\"If a flaw in the system disables",
+                    "the censors covering the Abnormality,",
+                    "we will once again have to sincerely",
+                    "consider how to dispose of the manager.\"",
                 }
             },
             und_j_lobc_shy_look = {
@@ -256,6 +274,7 @@ return {
                 name = "Apostle",
                 text = {
                     "{C:red}Debuffed{}",
+                    "{s:0.15} {}",
                     "{C:attention}Perishes{} when played",
                 }
             },
@@ -273,6 +292,7 @@ return {
                 text = {
                     "All abilities",
                     "are disabled",
+                    "{s:0.15} {}",
                     "No duplicates"
                 }
             },
@@ -287,7 +307,22 @@ return {
             lobc_amplified_1 = {
                 name = "Amplified",
                 text = {
-                    "..."
+                    "{C:inactive}...{}"
+                }
+            },
+            lobc_pebble = {
+                name = "Pebble",
+                text = {
+                    "Given by {C:attention}O-01-55{}",
+                    "{s:0.15} {}",
+                    "Effect removed at the",
+                    "start of each hand",
+                }
+            },
+            lobc_pebble_1 = {
+                name = "Pebble",
+                text = {
+                    "{C:inactive}...{}"
                 }
             },
         },
@@ -717,6 +752,48 @@ return {
                 }
             },
 
+            dis_j_lobc_child_galaxy_1 = {
+                name = "O-01-55",
+                text = {
+                    "{C:attention}(#4#/2){} ...",
+                    "{C:attention}(#5#/4){} ...",
+                    "{C:attention}(#6#/6){} ...",
+                }
+            },
+            dis_j_lobc_child_galaxy_2 = {
+                name = "O-01-55",
+                text = {
+                    "Gives {X:purple,C:white} X#1# {} of played {C:attention}poker hand{}'s",
+                    "base {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{C:attention}(#5#/4){} ...",
+                    "{C:attention}(#6#/6){} ...",
+                }
+            },
+            dis_j_lobc_child_galaxy_3 = {
+                name = "O-01-55",
+                text = {
+                    "Gives {X:purple,C:white} X#1# {} of played {C:attention}poker hand{}'s",
+                    "base {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{s:0.15} {}",
+                    "At the start of each hand, gives",
+                    "{C:attention}Pebble{} to {C:attention}4{} random cards in hand",
+                    "{C:attention}(#6#/7){} ...",
+                }
+            },
+            j_lobc_child_galaxy = {
+                name = "Child of the Galaxy",
+                text = {
+                    "Gives {X:purple,C:white} X#1# {} of played {C:attention}poker hand{}'s",
+                    "base {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{s:0.15} {}",
+                    "At the start of each hand, gives",
+                    "{C:attention}Pebble{} to {C:attention}4{} random cards in hand",
+                    "{s:0.15} {}",
+                    "Gains {X:purple,C:white} X#2# {} per scoring card with {C:attention}Pebble{},",
+                    "and loses {X:purple,C:white} X#3# {} per scoring card without",
+                }
+            },
+
             dis_j_lobc_punishing_bird_1 = {
                 name = "O-02-56",
                 text = {
@@ -1042,6 +1119,48 @@ return {
                 }
             },
 
+            dis_j_lobc_censored_1 = {
+                name = "O-03-89",
+                text = {
+                    "{C:attention}(#4#/2){} ...",
+                    "{C:attention}(#5#/5){} ...",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            dis_j_lobc_censored_2 = {
+                name = "O-03-89",
+                text = {
+                    "Removes all other descriptions",
+                    "{C:attention}(#5#/5){} ...",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            dis_j_lobc_censored_3 = {
+                name = "O-03-89",
+                text = {
+                    "Removes all other descriptions",
+                    "{s:0.15} {}",
+                    "Each Joker gives {C:mult}+#1#{} Mult",
+                    "Each held consumable gives {X:mult,C:white} X#2# {} Mult",
+                    "Each playing card in hand gives {C:chips}+#3#{} chips",
+                    "{s:0.15} {}",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            j_lobc_censored = {
+                name = "CENSORED",
+                text = {
+                    "Removes all other descriptions",
+                    "{s:0.15} {}",
+                    "Each Joker gives {C:mult}+#1#{} Mult",
+                    "Each held consumable gives {X:mult,C:white} X#2# {} Mult",
+                    "Each playing card in hand gives {C:chips}+#3#{} chips",
+                    "{s:0.15} {}",
+                    "After each hand, {C:red}[CENSORED]{} a random card",
+                    "{C:inactive}(Joker, consumable or playing card)",
+                }
+            },
+
             dis_j_lobc_shy_look_1 = {
                 name = "O-01-92",
                 text = {
@@ -1195,9 +1314,10 @@ return {
             bl_lobc_dawn_crimson = {
                 name = "Crimson Dawn",
                 text = {
-                    "Before every third hand,",
-                    "debuffs all playing cards",
-                    "until a Joker is sold"
+                    "If 2 or more hands",
+                    "played this round, all",
+                    "cards debuffed until",
+                    "a Joker is sold"
                 }
             },
             bl_lobc_dawn_violet = {
@@ -1240,8 +1360,10 @@ return {
             bl_lobc_noon_violet = {
                 name = "Violet Noon",
                 text = {
-                    "-2 hands if hand doesn't",
-                    "score at least 30% of blind"
+                    "-2 hands if hand scores",
+                    "less than 20% of blind,",
+                    "+X0.2 Blind Size per",
+                    "Consumable slot"
                 }
             },
 
@@ -1263,9 +1385,8 @@ return {
             bl_lobc_dusk_amber = {
                 name = "Amber Dusk",
                 text = {
-                    "Debuffs a playing card in",
-                    "hand or deck per",
-                    "card drawn, destroys played",
+                    "Random card debuffed",
+                    "per card drawn, destroys played",
                     "debuffed cards before scoring",
                 }
             },
@@ -1304,8 +1425,10 @@ return {
             bl_lobc_midnight_violet = {
                 name = "Violet Midnight",
                 text = {
-                    "Lose if hand doesn't",
-                    "score at least 40% of blind"
+                    "Lose if hand scores",
+                    "less than 30% of blind,",
+                    "+X1 Blind Size per",
+                    "Joker slot, minus 3",
                 }
             }
         },
@@ -1326,6 +1449,7 @@ return {
             lobc_blessed_wn = "Blessed",
             lobc_apostle = "Apostle",
             lobc_amplified = "Amplified",
+            lobc_pebble = "Pebble",
             lobc_zayin = "ZAYIN",
             lobc_teth = "TETH",
             lobc_he = "HE",
