@@ -102,6 +102,15 @@ return {
                     "起身侍奉我。"
                 }
             },
+            und_j_lobc_child_galaxy = {
+                name = "O-01-55",
+                text = {
+                    "\"A teardrop fell from the child's dewy",
+                    "eyes, as stars showered from the sky.",
+                    "The world falls into a slumber,",
+                    "trapped in an ecstatic lullaby.\""
+                }
+            },
             und_j_lobc_punishing_bird = {
                 name = "O-02-56",
                 text = {
@@ -160,6 +169,15 @@ return {
                     "a beautiful place where",
                     "the emerald roads sparkled",
                     "bright as ever.",
+                }
+            },
+            und_j_lobc_censored = {
+                name = "O-03-89",
+                text = {
+                    "\"If a flaw in the system disables",
+                    "the censors covering the Abnormality,",
+                    "we will once again have to sincerely",
+                    "consider how to dispose of the manager.\"",
                 }
             },
             und_j_lobc_shy_look = {
@@ -246,6 +264,7 @@ return {
                 name = "使徒",
                 text = {
                     "{C:red}失效",
+                    "{s:0.15} {}",
                     "打出时将{C:attention}腐化",
                 }
             },
@@ -261,6 +280,7 @@ return {
                 name = "失效",
                 text = {
                     "丧失所有能力",
+                    "{s:0.15} {}",
                     "无法被复制"
                 }
             },
@@ -275,7 +295,22 @@ return {
             lobc_amplified_1 = {
                 name = "Amplified",
                 text = {
-                    "..."
+                    "{C:inactive}...{}"
+                }
+            },
+            lobc_pebble = {
+                name = "Pebble",
+                text = {
+                    "Given by {C:attention}O-01-55{}",
+                    "{s:0.15} {}",
+                    "Effect removed at the",
+                    "start of each hand",
+                }
+            },
+            lobc_pebble_1 = {
+                name = "Pebble",
+                text = {
+                    "{C:inactive}...{}"
                 }
             },
         },
@@ -292,7 +327,7 @@ return {
                 name = "F-01-02",
                 text = {
                     "选择{C:attention}盲注{}时",
-                    "盲注分数要求{C:attention}-#1#%",
+                    "盲注得分要求{C:attention}-#1#%",
 					"{C:attention}(#3#/4){} ...",
                 }
             },
@@ -300,7 +335,7 @@ return {
                 name = "焦化少女",
                 text = {
                     "选择{C:attention}盲注{}时",
-                    "盲注分数要求{C:attention}-#1#%",
+                    "盲注得分要求{C:attention}-#1#%",
                     "{s:0.15} {}",
 					"开局手牌全部{C:red}失效",
                 }
@@ -704,6 +739,48 @@ return {
                 }
             },
 
+            dis_j_lobc_child_galaxy_1 = {
+                name = "O-01-55",
+                text = {
+                    "{C:attention}(#4#/2){} ...",
+                    "{C:attention}(#5#/4){} ...",
+                    "{C:attention}(#6#/6){} ...",
+                }
+            },
+            dis_j_lobc_child_galaxy_2 = {
+                name = "O-01-55",
+                text = {
+                    "Gives {X:purple,C:white} X#1# {} of played {C:attention}poker hand{}'s",
+                    "base {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{C:attention}(#5#/4){} ...",
+                    "{C:attention}(#6#/6){} ...",
+                }
+            },
+            dis_j_lobc_child_galaxy_3 = {
+                name = "O-01-55",
+                text = {
+                    "Gives {X:purple,C:white} X#1# {} of played {C:attention}poker hand{}'s",
+                    "base {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{s:0.15} {}",
+                    "At the start of each hand, gives",
+                    "{C:attention}Pebble{} to {C:attention}4{} random cards in hand",
+                    "{C:attention}(#6#/7){} ...",
+                }
+            },
+            j_lobc_child_galaxy = {
+                name = "Child of the Galaxy",
+                text = {
+                    "Gives {X:purple,C:white} X#1# {} of played {C:attention}poker hand{}'s",
+                    "base {C:chips}Chips{} and {C:mult}Mult{}",
+                    "{s:0.15} {}",
+                    "At the start of each hand, gives",
+                    "{C:attention}Pebble{} to {C:attention}4{} random cards in hand",
+                    "{s:0.15} {}",
+                    "Gains {X:purple,C:white} X#2# {} per scoring card with {C:attention}Pebble{},",
+                    "and loses {X:purple,C:white} X#3# {} per scoring card without",
+                }
+            },
+
             dis_j_lobc_punishing_bird_1 = {
                 name = "O-02-56",
                 text = {
@@ -999,7 +1076,7 @@ return {
             dis_j_lobc_scarecrow_searching_2 = {
                 name = "F-01-87",
                 text = {
-                    "After each Blind, create {C:attention}2 {C:tarot}Wisdoms {C:inactive}(Must have room)",
+                    "每个盲注后，生成{C:attention}2{}张{C:tarot}智慧{C:inactive}（必须有空位）",
                     "{C:attention}(#3#/4){} ...",
                     "{C:attention}(#4#/6){} ...",
                 }
@@ -1007,25 +1084,66 @@ return {
             dis_j_lobc_scarecrow_searching_3 = {
                 name = "F-01-87",
                 text = {
-                    "After each Blind, create {C:attention}2 {C:tarot}Wisdoms {C:inactive}(Must have room)",
+                    "每个盲注后，生成{C:attention}2{}张{C:tarot}智慧{C:inactive}（必须有空位）",
                     "{s:0.15} {}",
-                    "After each hand, destroy a {C:attention}Wisdom{} to",
-                    "give scoring cards an {C:attention}Enhancement{}, {C:blue}Seal{} or {C:dark_edition}Edition{}",
+                    "每次出牌后，摧毁一张{C:attention}智慧",
+                    "并给予计分牌随机的{C:attention}增强{}、{C:blue}蜡封{}或{C:dark_edition}版本",
                     "{C:attention}(#4#/6){} ...",
                 }
             },
             j_lobc_scarecrow_searching = {
-                name = "Scarecrow Searching for Wisdom",
+                name = "索求智慧的稻草人",
                 text = {
-                    "After each Blind, create {C:attention}2{}",
-                    "{C:tarot}Wisdom{} cards {C:inactive}(Must have room)",
+                    "每个盲注后，生成{C:attention}2{}张{C:tarot}智慧{C:inactive}（必须有空位）",
                     "{s:0.15} {}",
-                    "After each hand, destroy a {C:tarot}Wisdom{} to give",
-                    "scoring cards an {C:red}Enhancement{}, {C:blue}Seal{} or {C:dark_edition}Edition{}",
+                    "每次出牌后，摧毁一张{C:attention}智慧",
+                    "并给予计分牌随机的{C:attention}增强{}、{C:blue}蜡封{}或{C:dark_edition}版本",
                     "{s:0.15} {}",
-                    "If there are none, increase Blind Size by",
-                    "{C:attention}10%{} per {C:tarot}Wisdom{} created {C:inactive}(once per round){}",
-                    "{C:inactive}({C:tarot}Wisdoms{C:inactive} created: {C:attention}#1#{C:inactive})"
+                    "若无牌可摧毁，则每生成过一张{C:tarot}智慧",
+                    "盲注最低分数要求提升{C:attention}10%{C:inactive}（每回合一次）",
+                    "{C:inactive}（生成过{C:attention}#1#{C:inactive}张{C:tarot}智慧{C:inactive}）"
+                }
+            },
+
+            dis_j_lobc_censored_1 = {
+                name = "O-03-89",
+                text = {
+                    "{C:attention}(#4#/2){} ...",
+                    "{C:attention}(#5#/5){} ...",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            dis_j_lobc_censored_2 = {
+                name = "O-03-89",
+                text = {
+                    "Removes all other descriptions",
+                    "{C:attention}(#5#/5){} ...",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            dis_j_lobc_censored_3 = {
+                name = "O-03-89",
+                text = {
+                    "Removes all other descriptions",
+                    "{s:0.15} {}",
+                    "Each Joker gives {C:mult}+#1#{} Mult",
+                    "Each held consumable gives {X:mult,C:white} X#2# {} Mult",
+                    "Each playing card in hand gives {C:chips}+#3#{} chips",
+                    "{s:0.15} {}",
+                    "{C:attention}(#6#/8){} ...",
+                }
+            },
+            j_lobc_censored = {
+                name = "CENSORED",
+                text = {
+                    "Removes all other descriptions",
+                    "{s:0.15} {}",
+                    "Each Joker gives {C:mult}+#1#{} Mult",
+                    "Each held consumable gives {X:mult,C:white} X#2# {} Mult",
+                    "Each playing card in hand gives {C:chips}+#3#{} chips",
+                    "{s:0.15} {}",
+                    "After each hand, {C:red}[CENSORED]{} a random card",
+                    "{C:inactive}(Joker, consumable or playing card)",
                 }
             },
 
@@ -1180,9 +1298,9 @@ return {
             bl_lobc_dawn_crimson = {
                 name = "血色黎明",
                 text = {
-                    "每三次出牌前",
-                    "若不售出一张小丑牌",
-                    "则所有扑克牌失效"
+                    "若本回合已出牌两次或以上",
+                    "则在售出一张小丑牌前",
+                    "所有扑克牌全部失效"
                 }
             },
             bl_lobc_dawn_violet = {
@@ -1226,9 +1344,10 @@ return {
             bl_lobc_noon_violet = {
                 name = "紫罗兰色正午",
                 text = {
-                    "若单次出牌得分",
-                    "不足盲注要求的30%",
-                    "则出牌次数-2"
+                    "若出牌得分不足盲注要求的20%",
+                    "则出牌次数-2",
+                    "且每拥有一个消耗牌槽位",
+                    "盲注得分要求+X0.2"
                 }
             },
 
@@ -1249,8 +1368,7 @@ return {
             bl_lobc_dusk_amber = {
                 name = "琥珀色黄昏",
                 text = {
-                    "每抽一张牌，使手中",
-                    "或牌组中的随机一张牌失效",
+                    "每抽一张牌，使随机一张牌失效",
                     "打出的失效牌会在计分前遭到摧毁"
                 }
             },
@@ -1287,19 +1405,19 @@ return {
                 }
             },
             bl_lobc_midnight_violet = {
-                name = "Violet Midnight",
+                name = "紫罗兰色午夜",
                 text = {
-                    "Lose if hand doesn't",
-                    "score at least 40% of blind"
+                    "盲注得分要求+X(小丑牌槽位 - 3)",
+                    "若出牌得分不足盲注要求的30%",
+                    "则立即输掉本赛局",
                 }
             }
         },
         EGO_Gift = {
             c_lobc_wisdom = {
-                name = "Wisdom",
+                name = "智慧",
                 text = {
-                    "Creates a",
-                    "{C:attention}playing card{}",
+                    "生成一张{C:attention}扑克牌",
                 }
             }
         }
@@ -1311,6 +1429,7 @@ return {
             lobc_blessed_wn = "受祝",
             lobc_apostle = "使徒",
             lobc_amplified = "Amplified",
+            lobc_pebble = "Pebble",
             lobc_zayin = "ZAYIN",
             lobc_teth = "TETH",
             lobc_he = "HE",
