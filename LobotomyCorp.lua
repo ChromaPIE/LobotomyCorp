@@ -8,11 +8,6 @@
 --- BADGE_COLOR: FC3A3A
 --- VERSION: 0.8.2
 
--- Talisman compat
-to_big = to_big or function(num)
-    return num
-end
-
 local current_mod = SMODS.current_mod
 local mod_path = SMODS.current_mod.path
 local config = SMODS.current_mod.config
@@ -130,6 +125,7 @@ local challenge_list = {
     "ordeals",
     "dark_days",
     "malkuth",
+    --"yesod",
 }
 
 local consumable_list = {
@@ -232,7 +228,7 @@ for k, v in pairs(sound_list) do
         key = k,
         path = v..".ogg",
         pitch = 1,
-        volume = 0.9,
+        volume = 0.6,
         sync = false,
         no_sync = true,
     })
@@ -298,7 +294,115 @@ for _, v in ipairs(consumable_list) do
     end
 end
 
+--=============== HELPER FUNCTIONS ===============--
+
+-- Talisman compat
+to_big = to_big or function(num)
+    return num
+end
+
+-- copied from attention_text
+function lobc_screen_text(args)
+    args = args or {}
+    args.text = args.text or 'test'
+    args.scale = args.scale or 1
+    args.colour = copy_table(args.colour or G.C.WHITE)
+    args.hold = (args.hold or 0) + 0.1*(G.SPEEDFACTOR)
+    args.pos = args.pos or {x = 0, y = 0}
+    args.align = args.align or 'cm'
+    args.emboss = args.emboss or nil
+    if args.float == nil then args.float = true end
+
+    args.fade = 1
+    args.cover_colour = copy_table(G.C.CLEAR)
+
+    args.uibox_config = {
+        align = args.align or 'cm',
+        offset = args.offset or { x = 0, y = 0}, 
+        major = args.cover or args.major or nil,
+    }
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0,
+        blockable = false,
+        blocking = false,
+        func = function()
+            args.AT = UIBox{
+                T = {args.pos.x,args.pos.y,0,0},
+                definition = 
+                    {n=G.UIT.ROOT, config = {align = args.cover_align or 'cm', minw = (args.cover and args.cover.T.w or 0.001) + (args.cover_padding or 0), minh = (args.cover and args.cover.T.h or 0.001) + (args.cover_padding or 0), padding = 0.03, r = 0.1, emboss = args.emboss, colour = args.cover_colour}, nodes={
+                        {n=G.UIT.O, config = { draw_layer = 1, object = DynaText({scale = args.scale, string = args.text, maxw = args.maxw, colours = {args.colour}, float = args.float, shadow = true, silent = not args.noisy, pop_in = args.pop_in or 0, pop_in_rate = args.pop_in_rate or 3, rotate = args.rotate or nil, text_rot = args.text_rot or 0 })}},
+                    }}, 
+                config = args.uibox_config
+            }
+            args.AT.attention_text = true
+
+            args.text = args.AT.UIRoot.children[1].config.object
+            --args.text:pulse(0.5)
+        return true
+        end
+    }))
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = args.hold,
+        blockable = false,
+        blocking = false,
+        func = function()
+            if not args.start_time then
+                args.start_time = G.TIMERS.TOTAL
+                args.text:pop_out(args.pop_out or 3)
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 1,
+                    blockable = false,
+                    blocking = false,
+                    timer = "REAL",
+                    func = function()
+                        if args.AT then args.AT:remove() end
+                    end
+                }))
+            end
+        end
+    }))
+end
+
+-- copied from cryptid's cry_deep_copy
+function lobc_deep_copy(obj, seen)
+    if type(obj) ~= 'table' then return obj end
+    if seen and seen[obj] then return seen[obj] end
+    local s = seen or {}
+    local res = setmetatable({}, getmetatable(obj))
+    s[obj] = res
+    for k, v in pairs(obj) do res[lobc_deep_copy(k, s)] = lobc_deep_copy(v, s) end
+    return res
+end
+
+-- on-screen text that's present in like every project moon game
+function lobc_abno_text(key, eval_func, delay, quips)
+    local chosen_quip = math.random(1, quips or 8)
+    local rotation = math.random(-50, 50)/100
+    local offset = {math.random(-100, 100)/100, math.random(-100, 100)/100}
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = delay or 0, 
+        blocking = false, 
+        blockable = false, 
+        timer = 'REAL',
+        func = function() 
+            if eval_func() then 
+                lobc_screen_text({scale = 0.6, text = localize("k_lobc_"..key.."_"..chosen_quip), colour = G.C.RED, hold = 5*G.SETTINGS.GAMESPEED, align = 'cm', offset = offset, major = G.play, noisy = false, text_rot = rotation, pop_in_rate = 0.25, pop_out = 0.1*G.SETTINGS.GAMESPEED})
+                lobc_abno_text(key, eval_func, math.random(2, 10), quips) 
+            end 
+        return true 
+        end
+    }))
+end
+
 --=============== BLINDS ===============--
+
 -- Overwrite blind spawning for Abnormality Boss Blinds if requirements are met
 local get_new_bossref = get_new_boss
 function get_new_boss()
@@ -709,9 +813,15 @@ function G.FUNCS.play_cards_from_highlighted(e)
     G.GAME.lobc_prepped = true
 end
 
--- CENSORED
+-- Card popup UI effects
 local card_h_popupref = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
+    -- Yesod remove UI
+    if G.GAME and G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 3 then
+        return {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={}}
+    end
+
+    -- CENSORED
     if next(SMODS.find_card("j_lobc_censored")) and (not card.config or not card.config.center or card.config.center.key ~= "j_lobc_censored") then
         local name_nodes = localize{type = 'name', key = "j_lobc_censored", set = "Joker", name_nodes = {}, vars = {}}
         name_nodes[1].config.object.colours = {G.C.RED}
@@ -728,10 +838,11 @@ function G.UIDEF.card_h_popup(card)
     return card_h_popupref(card)
 end
 
--- Remove the topleft message when CENSORED is active
+-- Remove the topleft message when CENSORED/Yesod is active
 local generate_UIBox_ability_tableref = Card.generate_UIBox_ability_table
 function Card.generate_UIBox_ability_table(self)
-    if next(SMODS.find_card("j_lobc_censored")) and self.config.center.key ~= "j_lobc_censored" then return end
+    if (next(SMODS.find_card("j_lobc_censored")) and self.config.center.key ~= "j_lobc_censored") 
+    or (G.GAME and G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 3) then return end
     return generate_UIBox_ability_tableref(self)
 end
 
@@ -739,7 +850,7 @@ end
 if JokerDisplay then
     local initialize_joker_displayref = Card.initialize_joker_display
     function Card.initialize_joker_display(self, custom_parent)
-        if next(SMODS.find_card("j_lobc_censored")) and self.config.center.key ~= "j_lobc_censored" then 
+        if G.GAME and G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 3 then
             self.children.joker_display:remove_text()
             self.children.joker_display:remove_reminder_text()
             self.children.joker_display:remove_extra()
@@ -750,7 +861,18 @@ if JokerDisplay then
             self.children.joker_display_small:remove_modifiers()
             self.children.joker_display_debuff:remove_text()
             self.children.joker_display_debuff:remove_modifiers()
-            self.children.joker_display_debuff:add_text({ { text = "" .. localize("k_debuffed"), colour = G.C.UI.TEXT_INACTIVE } })
+        elseif next(SMODS.find_card("j_lobc_censored")) and self.config.center.key ~= "j_lobc_censored" then 
+            self.children.joker_display:remove_text()
+            self.children.joker_display:remove_reminder_text()
+            self.children.joker_display:remove_extra()
+            self.children.joker_display:remove_modifiers()
+            self.children.joker_display_small:remove_text()
+            self.children.joker_display_small:remove_reminder_text()
+            self.children.joker_display_small:remove_extra()
+            self.children.joker_display_small:remove_modifiers()
+            self.children.joker_display_debuff:remove_text()
+            self.children.joker_display_debuff:remove_modifiers()
+            self.children.joker_display_debuff:add_text({ { text = "CENSORED", colour = G.C.UI.TEXT_INACTIVE } })
         
             local joker_display_definition = JokerDisplay.Definitions["lobc_other_censored"]
             local definiton_text = joker_display_definition and
@@ -791,25 +913,25 @@ function Game.start_run(self, args)
         config.first_time = true
         SMODS.save_mod_config(current_mod)
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-            attention_text({
+            lobc_screen_text({
                 text = localize('k_lobc_first_time_1'),
                 scale = 0.35, 
                 hold = 15*G.SETTINGS.GAMESPEED,
                 major = G.play,
-                backdrop_colour = G.C.CLEAR,
                 align = 'cm',
                 offset = {x = 0.3, y = -3.5},
-                silent = true
+                noisy = false,
+                float = false,
             })
-            attention_text({
+            lobc_screen_text({
                 text = localize('k_lobc_first_time_2'),
                 scale = 0.35, 
                 hold = 15*G.SETTINGS.GAMESPEED,
                 major = G.play,
-                backdrop_colour = G.C.CLEAR,
                 align = 'cm',
                 offset = {x = 0.3, y = -3.1},
-                silent = true
+                noisy = false,
+                float = false,
             })
             return true 
             end 
@@ -867,18 +989,72 @@ function Card.flip(self)
     card_flipref(self)
 end
 
---=============== MECHANICAL ===============--
+-- Atlases and Shaders not affected by Pixelation (Yesod)
+local blacklist_atlas = {
+    "cards_1",
+    "cards_2",
+    "ui_1",
+    "ui_2",
+    "balatro",
+    "gamepad_ui",
+    "icons",
+    "centers",
+}
+local blacklist_shader = {
+    "lobc_pixelation",
+    "vortex",
+    "flame",
+    "splash",
+    "flash",
+    "background",
+}
 
--- copied from cryptid's cry_deep_copy
-function lobc_deep_copy(obj, seen)
-    if type(obj) ~= 'table' then return obj end
-    if seen and seen[obj] then return seen[obj] end
-    local s = seen or {}
-    local res = setmetatable({}, getmetatable(obj))
-    s[obj] = res
-    for k, v in pairs(obj) do res[lobc_deep_copy(k, s)] = lobc_deep_copy(v, s) end
-    return res
+-- Apply Pixelation shader (Yesod)
+local draw_shaderref = Sprite.draw_shader
+function Sprite.draw_shader(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
+    local check = G.GAME and G.GAME.modifiers.lobc_yesod
+    for _, v in ipairs(blacklist_atlas) do if self.atlas == G.ASSET_ATLAS[v] then check = false end end
+    if self.atlas == G.ANIMATION_ATLAS["shop_sign"] then check = false end
+    for _, v in ipairs(blacklist_shader) do if _shader == v then check = false end end
+    draw_shaderref(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
+    if check then draw_shaderref(self, "lobc_pixelation", _shadow_height, nil, nil, other_obj, ms, mr, mx, my) end
 end
+
+-- Load blank font (Yesod)
+local set_languageref = Game.set_language
+function Game.set_language(self)
+    set_languageref(self)
+    self.FONTS["blank"] = {
+        file = folder.."assets/fonts/AdobeBlank.ttf", 
+        render_scale = self.TILESIZE*10, 
+        TEXT_HEIGHT_SCALE = 0.83, 
+        TEXT_OFFSET = {x=10,y=-20}, 
+        FONTSCALE = 0.1, 
+        squish = 1, 
+        DESCSCALE = 1,
+        FONT = love.graphics.newFont(folder.."assets/fonts/AdobeBlank.ttf", self.TILESIZE*10)
+    }
+end
+
+-- Apply blank font (Yesod)
+local game_updateref = Game.update
+function Game.update(self, dt)
+    if not G.SETTINGS.paused and G.GAME and G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 6 then
+        G.LANG.font = G.FONTS["blank"]
+    else
+        G.LANG.font = G.FONTS[1]
+    end
+    game_updateref(self, dt)
+end
+
+-- Remove blank font when appropriate (Yesod)
+local overlay_menuref = G.FUNCS.overlay_menu
+function G.FUNCS.overlay_menu(args)
+    if G.SETTINGS.paused then G.LANG.font = G.FONTS[1] end
+    overlay_menuref(args)
+end
+
+--=============== MECHANICAL ===============--
 
 local init_game_objectref = Game.init_game_object
 function Game.init_game_object(self)
@@ -971,18 +1147,10 @@ function Blind:ordeal_alert()
                         play_sound('lobc_'..self.config.blind.color..'_start', 1, 0.3)
                         local hold_time = G.SETTINGS.GAMESPEED * 5
                         local loc_key = 'k_lobc_'..self.config.blind.time..'_'..self.config.blind.color
-                        G.E_MANAGER:add_event(Event({
-                            trigger = 'before',
-                            delay = hold_time,
-                            blockable = false,
-                            func = function()
-                                attention_text({scale = 0.3, text = localize(loc_key), hold = hold_time, align = 'cm', offset = { x = 0, y = -3.5 }, major = G.play, silent = true})
-                                attention_text({scale = 1, text = localize(loc_key..'_name'), hold = hold_time, align = 'cm', offset = { x = 0, y = -2.5 }, major = G.play, silent = true})
-                                attention_text({scale = 0.35, text = localize(loc_key..'_start_1'), hold = hold_time, align = 'cm', offset = { x = 0, y = -1 }, major = G.play, silent = true})
-                                attention_text({scale = 0.35, text = localize(loc_key..'_start_2'), hold = hold_time, align = 'cm', offset = { x = 0, y = -0.6 }, major = G.play, silent = true})
-                                return true
-                            end
-                        }))
+                        lobc_screen_text({scale = 0.3, text = localize(loc_key), hold = hold_time, align = 'cm', offset = { x = 0, y = -3.5 }, major = G.play, noisy = false, float = false})
+                        lobc_screen_text({scale = 1, text = localize(loc_key..'_name'), hold = hold_time, align = 'cm', offset = { x = 0, y = -2.5 }, major = G.play, noisy = false, float = false})
+                        lobc_screen_text({scale = 0.35, text = localize(loc_key..'_start_1'), hold = hold_time, align = 'cm', offset = { x = 0, y = -1 }, major = G.play, noisy = false, float = false})
+                        lobc_screen_text({scale = 0.35, text = localize(loc_key..'_start_2'), hold = hold_time, align = 'cm', offset = { x = 0, y = -0.6 }, major = G.play, noisy = false, float = false})
                         G.E_MANAGER:add_event(Event({
                             trigger = 'after',
                             delay = hold_time,
@@ -1019,10 +1187,10 @@ function G.FUNCS.draw_from_hand_to_discard(e)
                 local blind = G.GAME.blind
                 local loc_key = 'k_lobc_'..blind.config.blind.time..'_'..blind.config.blind.color
                 play_sound('lobc_'..blind.config.blind.color..'_end', 1, 0.3)
-                attention_text({scale = 0.3, text = localize(loc_key), hold = hold_time, align = 'cm', offset = { x = 0, y = -3.5 }, major = G.play, silent = true})
-                attention_text({scale = 1, text = localize(loc_key..'_name'), hold = hold_time, align = 'cm', offset = { x = 0, y = -2.5 }, major = G.play, silent = true})
-                attention_text({scale = 0.35, text = localize(loc_key..'_end_1'), hold = hold_time, align = 'cm', offset = { x = 0, y = -1 }, major = G.play, silent = true})
-                attention_text({scale = 0.35, text = localize(loc_key..'_end_2'), hold = hold_time, align = 'cm', offset = { x = 0, y = -0.6 }, major = G.play, silent = true})
+                lobc_screen_text({scale = 0.3, text = localize(loc_key), hold = hold_time, align = 'cm', offset = { x = 0, y = -3.5 }, major = G.play, noisy = false, float = false})
+                lobc_screen_text({scale = 1, text = localize(loc_key..'_name'), hold = hold_time, align = 'cm', offset = { x = 0, y = -2.5 }, major = G.play, noisy = false, float = false})
+                lobc_screen_text({scale = 0.35, text = localize(loc_key..'_end_1'), hold = hold_time, align = 'cm', offset = { x = 0, y = -1 }, major = G.play, noisy = false, float = false})
+                lobc_screen_text({scale = 0.35, text = localize(loc_key..'_end_2'), hold = hold_time, align = 'cm', offset = { x = 0, y = -0.6 }, major = G.play, noisy = false, float = false})
                 return true
             end)
         }))
@@ -1413,15 +1581,7 @@ SMODS.Atlas({
 
 -- ConsumableType (guh)
 SMODS.ConsumableType({
-    key = 'EGO_Gift', -- not actually ego gifts... more like tokens....
-    -- Remove all the collection UI stuff
-    --[[create_UIBox_your_collection = nil,
-    inject = function(self)
-        G.P_CENTER_POOLS[self.key] = G.P_CENTER_POOLS[self.key] or {}
-        G.localization.descriptions[self.key] = G.localization.descriptions[self.key] or {}
-        G.C.SET[self.key] = self.primary_colour
-        G.C.SECONDARY_SET[self.key] = self.secondary_colour
-    end,]]--
+    key = 'EGO_Gift', 
     primary_colour = HEX('424e54'),
     secondary_colour = HEX("dd4930"),
     loc_txt = {},
@@ -1430,56 +1590,10 @@ SMODS.ConsumableType({
 })
 
 -- Shaders
---[[SMODS.Shader({
+SMODS.Shader({
     key = "pixelation",
     path = "pixelation.fs"
 })
-
-local blacklist_atlas = {
-    "cards_1",
-    "cards_2",
-    "ui_1",
-    "ui_2",
-    "balatro",
-    "gamepad_ui",
-    "icons",
-    "centers",
-}
-local blacklist_shader = {
-    "lobc_pixelation",
-    "vortex",
-    "flame",
-    "splash",
-    "flash",
-    "background",
-}
--- shader test
-local draw_shaderref = Sprite.draw_shader
-function Sprite.draw_shader(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
-    local check = true
-    for _, v in ipairs(blacklist_atlas) do if self.atlas == G.ASSET_ATLAS[v] then check = false end end
-    if self.atlas == G.ANIMATION_ATLAS["shop_sign"] then check = false end
-    for _, v in ipairs(blacklist_shader) do if _shader == v then check = false end end
-    draw_shaderref(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
-    if check then draw_shaderref(self, "lobc_pixelation", _shadow_height, nil, nil, other_obj, ms, mr, mx, my) end
-end
-
--- Load blank font
-local set_languageref = Game.set_language
-function Game.set_language(self)
-    set_languageref(self)
-    self.FONTS["blank"] = {
-        file = folder.."assets/fonts/AdobeBlank.ttf", 
-        render_scale = self.TILESIZE*10, 
-        TEXT_HEIGHT_SCALE = 0.83, 
-        TEXT_OFFSET = {x=10,y=-20}, 
-        FONTSCALE = 0.1, 
-        squish = 1, 
-        DESCSCALE = 1,
-        FONT = love.graphics.newFont(folder.."assets/fonts/AdobeBlank.ttf", self.TILESIZE*10)
-    }
-    self.LANGUAGES["en-us"].font = self.FONTS["blank"]
-end]]
 
 -- Clear all Cathys
 sendInfoMessage("Loaded LobotomyCorp~")
