@@ -6,7 +6,8 @@
 --- MOD_DESCRIPTION: Face the Fear, Build the Future.
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
---- VERSION: 0.8.2
+--- DEPENDENCIES: [Steamodded>=1.0.0-ALPHA-0806a]
+--- VERSION: 0.8.3
 
 local current_mod = SMODS.current_mod
 local mod_path = SMODS.current_mod.path
@@ -293,6 +294,9 @@ for _, v in ipairs(consumable_list) do
         end
     end
 end
+
+-- Load achievements
+SMODS.load_file("achievements.lua")()
 
 --=============== HELPER FUNCTIONS ===============--
 
@@ -685,13 +689,18 @@ function Card.add_to_deck(self, from_debuff)
         for _, v in ipairs(SMODS.find_card("j_lobc_old_lady")) do
             if self ~= v then
                 v.ability.extra.mult = v.ability.extra.mult - v.ability.extra.loss
-                card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_lobc_downgrade')})
                 G.E_MANAGER:add_event(Event({
+                    trigger = "after",
+                    delay = 0.1,
                     func = function()
+                        SMODS.eval_this(v, { message = localize('k_lobc_downgrade') })
                         play_sound('lobc_old_lady_downgrade', 1, 0.6)
                         return true
                     end
                 }))
+                if v.ability.extra.mult <= -50 then
+                    check_for_unlock({type = "lobc_solitude"})
+                end
             end
         end
     end
@@ -1270,18 +1279,22 @@ local set_joker_usageref = set_joker_usage
 function set_joker_usage()
     set_joker_usageref()
     for k, v in pairs(G.jokers.cards) do
-        if v.config.center_key and v.ability.set == 'Joker' and v.config.center.abno and not v.config.center.discovered and 
-          lobc_get_usage_count(v.config.center_key) >= v.config.center.discover_rounds then
-            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
-                play_sound('card1')
-                v:flip()
-            return true end }))
-            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
-                discover_card(v.config.center)
-                v:set_sprites(v.config.center, nil)
-                play_sound('card1')
-                v:flip()
-            return true end }))
+        if v.config.center_key and v.ability.set == 'Joker' and v.config.center.abno then
+            if lobc_get_usage_count(v.config.center_key) >= v.config.center.discover_rounds then
+                if not v.config.center.discovered then
+                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
+                        play_sound('card1')
+                        v:flip()
+                    return true end }))
+                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4*G.SETTINGS.GAMESPEED, func = function()
+                        discover_card(v.config.center)
+                        v:set_sprites(v.config.center, nil)
+                        play_sound('card1')
+                        v:flip()
+                    return true end }))
+                end
+                check_for_unlock({type = "lobc_observe_abno", card = v})
+            end
         end
     end
 end
