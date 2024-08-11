@@ -7,7 +7,8 @@
 --- DISPLAY_NAME: L Corp.
 --- BADGE_COLOR: FC3A3A
 --- DEPENDENCIES: [Steamodded>=1.0.0-ALPHA-0806a]
---- VERSION: 0.8.3
+--- VERSION: 0.9.0
+--- CARMEN_SAYS: You should distort yourself... NOW!
 
 local current_mod = SMODS.current_mod
 local mod_path = SMODS.current_mod.path
@@ -15,6 +16,7 @@ local config = SMODS.current_mod.config
 local folder = string.match(mod_path, "[Mm]ods.*")
 
 --=============== STEAMODDED OBJECTS ===============--
+
 -- To disable any object, comment it out by adding -- at the start of the line.
 local joker_list = {
     --- Common
@@ -95,6 +97,18 @@ local sound_list = {
     music_third_warning = "Emergency3",
     music_abno_choice = "AbnormalityChoice",
 
+    music_malkuth_1 = "Violation of Black Colors",
+    music_malkuth_2 = "Red Dots",
+    music_yesod_1 = "Untitled9877645623413123325",
+    music_yesod_2 = "Faded",
+    music_hod_1 = "Theme - Retro Time ALT",
+    music_hod_2 = "Theme - Retro Time ALT Mix 1",
+    music_netzach_1 = "Abandoned",
+    music_netzach_2 = "Blue Dots",
+
+    meltdown_start = "Boss_StartButton",
+    overload_alert = "OverloadAlert3",
+
     mosb_upgrade = "Danggo_Lv2",
     old_lady_downgrade = "OldLady_effect01",
     plague_doctor_bell = "Lucifer_Bell0",
@@ -126,7 +140,9 @@ local challenge_list = {
     "ordeals",
     "dark_days",
     "malkuth",
-    --"yesod",
+    "yesod",
+    "hod",
+    "netzach",
 }
 
 local consumable_list = {
@@ -229,42 +245,16 @@ for k, v in pairs(sound_list) do
         key = k,
         path = v..".ogg",
         pitch = 1,
-        volume = 0.6,
+        volume = 0.3,
         sync = false,
         no_sync = true,
     })
-    if k == "music_abno_choice" then
-        sound.select_music_track = function()
-            if config.no_music then return false end
-            return (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.config.center.group_key == "k_lobc_extraction_pack")
+    
+    for _, vv in ipairs(SMODS.load_file("sound_conditionals.lua")()) do
+        if k == vv.key then
+            sound.select_music_track = vv.select_music_track
+            sound.volume = 0.6
         end
-    elseif k == "music_third_warning" then
-        sound.select_music_track = function()
-            if config.no_music then return false end
-            return (G.GAME and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_lobc_whitenight")
-        end
-    elseif k == "music_second_warning" then
-        sound.select_music_track = function()
-            if config.no_music then return false end
-            return (G.GAME and G.GAME.blind and G.GAME.blind.config.blind.time and G.GAME.blind.config.blind.time == "midnight")
-        end
-    elseif k == "music_first_warning" then
-        sound.select_music_track = function()
-            if config.no_music then return false end
-            return (G.GAME and G.GAME.blind and 
-            ((G.GAME.blind.config.blind.time and G.GAME.blind.config.blind.time == "dusk") or
-            (G.GAME.blind.lobc_original_blind and G.GAME.blind.lobc_original_blind == "bl_lobc_dusk_crimson")))
-        end
-    elseif k == "music_arcadespecialist" then
-        sound.select_music_track = function()
-            if config.no_music then return false end
-            if lobc_isaac and lobc_isaac.states.drag.is then
-                return true
-            end
-            return false
-        end
-    else
-        sound.volume = 0.3
     end
 end
 
@@ -336,13 +326,16 @@ function lobc_screen_text(args)
                 T = {args.pos.x,args.pos.y,0,0},
                 definition = 
                     {n=G.UIT.ROOT, config = {align = args.cover_align or 'cm', minw = (args.cover and args.cover.T.w or 0.001) + (args.cover_padding or 0), minh = (args.cover and args.cover.T.h or 0.001) + (args.cover_padding or 0), padding = 0.03, r = 0.1, emboss = args.emboss, colour = args.cover_colour}, nodes={
-                        {n=G.UIT.O, config = { draw_layer = 1, object = DynaText({scale = args.scale, string = args.text, maxw = args.maxw, colours = {args.colour}, float = args.float, shadow = true, silent = not args.noisy, pop_in = args.pop_in or 0, pop_in_rate = args.pop_in_rate or 3, rotate = args.rotate or nil, text_rot = args.text_rot or 0 })}},
+                        {n=G.UIT.O, config = { draw_layer = 1, object = DynaText({scale = args.scale, string = args.text, maxw = args.maxw, colours = {args.colour}, float = args.float, shadow = true, silent = not args.noisy, pop_in = args.pop_in or 0, pop_in_rate = args.pop_in_rate or 3, rotate = args.rotate or nil, text_rot = args.text_rot or 0, font = G.LANGUAGES[G.SETTINGS.language].font })}},
                     }}, 
                 config = args.uibox_config
             }
+            args.AT.states.hover.can = false
+            args.AT.states.click.can = false
             args.AT.attention_text = true
 
             args.text = args.AT.UIRoot.children[1].config.object
+            args.text.yesod_immune = true
             --args.text:pulse(0.5)
         return true
         end
@@ -385,9 +378,42 @@ end
 
 -- on-screen text that's present in like every project moon game
 function lobc_abno_text(key, eval_func, delay, quips)
-    local chosen_quip = math.random(1, quips or 8)
+    local chosen_quip = nil
+
+    for _, v in pairs(G.lobc_global_meltdowns) do
+        if G.GAME.modifiers["lobc_"..v] and key ~= v then return end
+    end
+
+    if type(quips) == "number" then chosen_quip = math.random(1, quips or 8)
+    else
+        --[[
+            quips = {
+                global = 2,
+                { min_ante = 0, max_ante = 3, amount = 2 },
+                { min_ante = 4, max_ante = 6, amount = 4 },
+                { min_ante = 7, max_ante = G.GAME.win_ante, amount = 4 },
+            }
+        ]]--
+        local all_quips = {}
+
+        if quips["global"] and G.GAME.round_resets.ante <= G.GAME.win_ante then
+            for i = 1, quips["global"] do
+                all_quips[#all_quips+1] = "0_"..i
+            end
+        end
+
+        for k, v in ipairs(quips) do
+            if G.GAME.round_resets.ante >= v.min_ante and G.GAME.round_resets.ante <= v.max_ante then
+                for i = 1, v.amount do
+                    all_quips[#all_quips+1] = k.."_"..i
+                end
+            end
+        end
+
+        chosen_quip = all_quips[math.random(#all_quips)]
+    end
     local rotation = math.random(-50, 50)/100
-    local offset = {math.random(-100, 100)/100, math.random(-100, 100)/100}
+    local offset = {x = math.random(-100, 100)/100, y = math.random(-150, 150)/100}
 
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
@@ -403,6 +429,17 @@ function lobc_abno_text(key, eval_func, delay, quips)
         return true 
         end
     }))
+end
+
+-- what it says
+function lobc_get_usage_count(key)
+    return G.PROFILES[G.SETTINGS.profile].joker_usage[key] and G.PROFILES[G.SETTINGS.profile].joker_usage[key].count or 0
+end
+
+-- Check rounds until observation unlock
+function Card:check_rounds(comp)
+    local val = lobc_get_usage_count(self.config.center_key)
+    return math.min(val, comp)
 end
 
 --=============== BLINDS ===============--
@@ -905,16 +942,33 @@ if JokerDisplay then
     end
 end
 
+-- No editions
+local set_editionref = Card.set_edition
+function Card.set_edition(self, edition, immediate, silent)
+    if G.GAME.modifiers.lobc_yesod then return end
+    set_editionref(self, edition, immediate, silent)
+end
+
 --=============== CHALLENGES ===============--
 
 -- Apply Modifiers to run
 local start_runref = Game.start_run
 function Game.start_run(self, args)
+    -- Reapply blank font to continued games (Yesod)
+    if args.savetext then
+        local g_game = args.savetext.GAME
+        if g_game.modifiers.lobc_yesod and g_game.round_resets.ante > 6 then
+            G.LANG.font = G.FONTS["blank"]
+        end
+    end
+
     start_runref(self, args)
+
     if not args.savetext then
         if G.GAME.modifiers.lobc_fast_ante_1 then G.GAME.modifiers.scaling = 2 end
         if G.GAME.modifiers.lobc_fast_ante_2 then G.GAME.modifiers.scaling = 3 end
         if G.GAME.modifiers.lobc_netzach then G.GAME.lobc_no_hands_reset = true end
+        if G.GAME.modifiers.lobc_hod then G.GAME.lobc_hod_modifier = 0.85 end
     end
 
     -- First time text
@@ -946,6 +1000,89 @@ function Game.start_run(self, args)
             end 
         }))
     end
+
+    -- Abno text
+    local quips = {
+        malkuth = {
+            global = 2,
+            { min_ante = 0, max_ante = 3, amount = 2 },
+            { min_ante = 4, max_ante = 6, amount = 4 },
+            { min_ante = 7, max_ante = G.GAME.win_ante, amount = 4 },
+        },
+        yesod = {
+            global = 2,
+            { min_ante = 0, max_ante = 3, amount = 2 },
+            { min_ante = 4, max_ante = 6, amount = 4 },
+            { min_ante = 7, max_ante = G.GAME.win_ante, amount = 3 },
+        },
+        hod = {
+            global = 2,
+            { min_ante = 0, max_ante = 3, amount = 2 },
+            { min_ante = 4, max_ante = 6, amount = 4 },
+            { min_ante = 7, max_ante = G.GAME.win_ante, amount = 4 },
+        },
+        netzach = {
+            global = 3,
+            { min_ante = 0, max_ante = 3, amount = 2 },
+            { min_ante = 4, max_ante = 6, amount = 3 },
+            { min_ante = 7, max_ante = G.GAME.win_ante, amount = 4 },
+        },
+    }
+
+    local eval_func = function() return G.GAME.round_resets.ante <= G.GAME.win_ante end
+    for k, v in pairs(quips) do
+        if G.GAME.modifiers["lobc_"..k] then
+            lobc_abno_text(k, eval_func, 0.2, v)
+            ease_background_colour_blind()
+            if not args.save_text then play_sound("lobc_meltdown_start", 1, 0.5) end
+            break
+        end
+    end
+
+    -- Reapply blank text to DynaTexts on Continue
+    if G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 6 then
+        for _, v in pairs(G.I.MOVEABLE) do
+            if getmetatable(v) == DynaText and not v.yesod_immune then
+                v.font = G.FONTS["blank"]
+                v:update_text(true)
+            end
+        end
+        G.HUD:recalculate()
+    end
+end
+
+-- Permanent background color
+local colors = {
+    malkuth = HEX("D8D556"),
+    yesod = HEX("81339C"),
+    hod = HEX("DA7F2F"),
+    netzach = HEX("69A448"),
+}
+
+local ease_background_colour_blindref = ease_background_colour_blind
+function ease_background_colour_blind(state, blind_override)
+    if config.disable_meltdown_color then return ease_background_colour_blindref(state, blind_override) end
+
+    for k, v in pairs(colors) do
+        if G.GAME.modifiers["lobc_"..k] then
+            ease_colour(G.C.DYN_UI.MAIN, v)
+            ease_background_colour({new_colour = darken(v, 0.1), special_colour = darken(v, 0.3), contrast = 1})
+            return
+        end
+    end
+
+    ease_background_colour_blindref(state, blind_override)
+end
+
+local get_blind_main_colourref = get_blind_main_colour
+function get_blind_main_colour(blind)
+    if config.disable_meltdown_color then return get_blind_main_colourref(blind) end
+
+    for k, v in pairs(colors) do
+        if G.GAME.modifiers["lobc_"..k] then return v end
+    end
+
+    return get_blind_main_colourref(blind)
 end
 
 -- Cards flipped (Malkuth)
@@ -962,13 +1099,14 @@ function Card.init(self, X, Y, W, H, card, center, params)
     end
 end
 
--- Card shuffle (Malkuth)
+-- Effects upon changing Ante
 local ease_anteref = ease_ante
 function ease_ante(mod)
     ease_anteref(mod)
     G.E_MANAGER:add_event(Event({
         trigger = "immediate",
         func = function()
+            -- Card shuffle (Malkuth)
             if G.GAME.modifiers.lobc_malkuth and G.GAME.round_resets.ante > 6 then
                 G.jokers:unhighlight_all()
                 if #G.jokers.cards > 1 then 
@@ -979,6 +1117,33 @@ function ease_ante(mod)
                         delay(0.1)
                         G.E_MANAGER:add_event(Event({ func = function() G.jokers:shuffle('malk_shuffle'); play_sound('cardSlide1', 1);return true end })) 
                     return true end })) 
+                end
+            end
+
+            -- Full text hiding (Yesod)
+            if G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 6 then
+                for _, v in pairs(G.I.MOVEABLE) do
+                    if getmetatable(v) == DynaText and not v.yesod_immune then
+                        v.font = G.FONTS["blank"]
+                        v:update_text(true)
+                    end
+                end
+                G.HUD:recalculate()
+            end
+
+            -- Increase the decrease value (Hod)
+            if G.GAME.modifiers.lobc_hod then
+                if G.GAME.round_resets.ante >= 4 and G.GAME.round_resets.ante <= 6 then
+                    G.GAME.lobc_hod_modifier = 0.75
+                elseif G.GAME.round_resets.ante > 6 then
+                    G.GAME.lobc_hod_modifier = 0.65
+                end
+            end
+
+            for _, v in pairs({"malkuth", "yesod", "hod", "netzach"}) do
+                if G.GAME.modifiers["lobc_"..v] and G.GAME.round_resets.ante == 4 or G.GAME.round_resets.ante == 7 then
+                    play_sound("lobc_overload_alert", 1, 0.5)
+                    break
                 end
             end
             return true
@@ -1048,10 +1213,10 @@ end
 -- Apply blank font (Yesod)
 local game_updateref = Game.update
 function Game.update(self, dt)
-    if not G.SETTINGS.paused and G.GAME and G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 6 then
+    if not G.SETTINGS.paused and G.GAME and G.GAME.modifiers.lobc_yesod and G.GAME.round_resets.ante > 6 and G.STATE ~= G.STATES.GAME_OVER then
         G.LANG.font = G.FONTS["blank"]
     else
-        G.LANG.font = G.FONTS[1]
+        G.LANG.font = G.LANGUAGES[G.SETTINGS.language].font
     end
     game_updateref(self, dt)
 end
@@ -1059,8 +1224,80 @@ end
 -- Remove blank font when appropriate (Yesod)
 local overlay_menuref = G.FUNCS.overlay_menu
 function G.FUNCS.overlay_menu(args)
-    if G.SETTINGS.paused then G.LANG.font = G.FONTS[1] end
+    if G.SETTINGS.paused then G.LANG.font = G.LANGUAGES[G.SETTINGS.language].font end
     overlay_menuref(args)
+end
+
+-- Reduce return values for card evals (Hod)
+local eval_cardref = eval_card
+function eval_card(card, context)
+    local eval = eval_cardref(card, context)
+    if eval and G.GAME.modifiers.lobc_hod then
+        if eval.chips then eval.chips = eval.chips * G.GAME.lobc_hod_modifier end
+        if eval.mult then eval.mult = eval.mult * G.GAME.lobc_hod_modifier end
+        if eval.x_mult then 
+            if eval.x_mult < 1 then eval.x_mult = eval.x_mult * G.GAME.lobc_hod_modifier
+            else eval.x_mult = 1 + (eval.x_mult - 1) * G.GAME.lobc_hod_modifier end
+        end
+        if eval.h_mult then eval.h_mult = eval.h_mult * G.GAME.lobc_hod_modifier end
+        if eval.h_x_mult then 
+            if eval.h_x_mult < 1 then eval.h_x_mult = eval.h_x_mult * G.GAME.lobc_hod_modifier
+            else eval.h_x_mult = 1 + (eval.h_x_mult - 1) * G.GAME.lobc_hod_modifier end
+        end
+    end
+    return eval
+end
+
+local calculate_jokerref = Card.calculate_joker
+function Card.calculate_joker(self, context)
+    local eval = calculate_jokerref(self, context)
+    if eval and G.GAME.modifiers.lobc_hod then
+        if eval.chips then eval.chips = eval.chips * G.GAME.lobc_hod_modifier end
+        if eval.mult then eval.mult = eval.mult * G.GAME.lobc_hod_modifier end
+        if eval.mult_mod then eval.mult_mod = eval.mult_mod * G.GAME.lobc_hod_modifier end
+        if eval.chip_mod then eval.chip_mod = eval.chip_mod * G.GAME.lobc_hod_modifier end
+        if eval.h_mult then eval.h_mult = eval.h_mult * G.GAME.lobc_hod_modifier end
+        if eval.h_x_mult then 
+            if eval.h_x_mult < 1 then eval.h_x_mult = eval.h_x_mult * G.GAME.lobc_hod_modifier
+            else eval.h_x_mult = 1 + (eval.h_x_mult - 1) * G.GAME.lobc_hod_modifier end
+        end
+        if eval.Xmult_mod then 
+            if eval.Xmult_mod < 1 then eval.Xmult_mod = eval.Xmult_mod * G.GAME.lobc_hod_modifier
+            else eval.Xmult_mod = 1 + (eval.Xmult_mod - 1) * G.GAME.lobc_hod_modifier end
+        end
+        if eval.x_mult then 
+            if eval.x_mult < 1 then eval.x_mult = eval.x_mult * G.GAME.lobc_hod_modifier
+            else eval.x_mult = 1 + (eval.x_mult - 1) * G.GAME.lobc_hod_modifier end
+        end
+    end
+    return eval
+end
+
+local get_editionref = Card.get_edition
+function Card.get_edition(self, context)
+    local eval = get_editionref(self)
+    if eval and G.GAME.modifiers.lobc_hod then
+        if eval.mult_mod then eval.mult_mod = eval.mult_mod * G.GAME.lobc_hod_modifier end
+        if eval.chip_mod then eval.chip_mod = eval.chip_mod * G.GAME.lobc_hod_modifier end
+        if eval.x_mult_mod then 
+            if eval.x_mult_mod < 1 then eval.x_mult_mod = eval.x_mult_mod * G.GAME.lobc_hod_modifier
+            else eval.x_mult_mod = 1 + (eval.x_mult_mod - 1) * G.GAME.lobc_hod_modifier end
+        end
+    end
+    return eval
+end
+
+local eval_thisref = SMODS.eval_this
+function SMODS.eval_this(_card, effects)
+    if effects and G.GAME.modifiers.lobc_hod then
+        if effects.mult_mod then effects.mult_mod = effects.mult_mod * G.GAME.lobc_hod_modifier end
+        if effects.chip_mod then effects.chip_mod = effects.chip_mod * G.GAME.lobc_hod_modifier end
+        if effects.Xmult_mod then 
+            if effects.Xmult_mod < 1 then effects.Xmult_mod = effects.Xmult_mod * G.GAME.lobc_hod_modifier
+            else effects.Xmult_mod = 1 + (effects.Xmult_mod - 1) * G.GAME.lobc_hod_modifier end
+        end
+    end
+    return eval_thisref(_card, effects)
 end
 
 --=============== MECHANICAL ===============--
@@ -1242,16 +1479,6 @@ end
 
 --=============== OBSERVATION ===============--
 
-function lobc_get_usage_count(key)
-    return G.PROFILES[G.SETTINGS.profile].joker_usage[key] and G.PROFILES[G.SETTINGS.profile].joker_usage[key].count or 0
-end
-
--- Check rounds until observation unlock
-function Card:check_rounds(comp)
-    local val = lobc_get_usage_count(self.config.center_key)
-    return math.min(val, comp)
-end
-
 -- Card updates
 local card_updateref = Card.update
 function Card.update(self, dt)
@@ -1423,7 +1650,14 @@ SMODS.current_mod.config_tab = function()
             }},
         }},
 
-        {n = G.UIT.R, config = {align = "cm", padding = 0, minh = 0.85}, nodes = {}},
+        {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+                create_toggle{ col = true, label = "", scale = 0.85, w = 0, shadow = true, ref_table = config, ref_value = "disable_meltdown_color" },
+            }},
+            {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = localize('lobc_disable_meltdown_color'), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+            }},
+        }},
 
         {n = G.UIT.R, config = {align = "cm", padding = 0}, nodes = {
             {n = G.UIT.C, config = { align = "cm", minw = 2 }, nodes = {}},
