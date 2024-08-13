@@ -1,9 +1,9 @@
 local joker = {
     name = "CENSORED",
     config = {extra = {
-        mult = 10,
-        x_mult = 1.5,
-        chips = 30,
+        mult = 7,
+        x_mult = 1.25,
+        chips = 15,
     }}, rarity = 3, cost = 9,
     pos = {x = 1, y = 6}, 
     blueprint_compat = true, 
@@ -16,7 +16,7 @@ local joker = {
 }
 
 joker.calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand then
+    if context.individual and context.cardarea == G.hand and not context.end_of_round then
         if context.other_card.debuff then
             return {
                 message = localize('k_debuffed'),
@@ -26,7 +26,7 @@ joker.calculate = function(self, card, context)
         else
             SMODS.eval_this(context.other_card, {
                 message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
-                chips_mod = card.ability.extra.chips, 
+                chip_mod = card.ability.extra.chips, 
                 colour = G.C.CHIPS
             })
         end
@@ -98,10 +98,7 @@ joker.add_to_deck = function(self, card, from_debuff)
         trigger = 'after', 
         func = function()
             if JokerDisplay and not from_debuff then
-                for k, v in pairs(G.jokers.cards) do
-                    v.children.joker_display = nil
-                    v:update_joker_display(false, true, "j_lobc_censored")
-                end
+                JokerDisplay.update_all_joker_display(false, true, "j_lobc_censored")
             end
         return true 
         end 
@@ -111,10 +108,7 @@ end
 
 joker.remove_from_deck = function(self, card, from_debuff)
     if JokerDisplay and not from_debuff then
-        for k, v in pairs(G.jokers.cards) do
-            v.children.joker_display = nil
-            v:update_joker_display(false, true, "j_lobc_censored")
-        end
+        JokerDisplay.update_all_joker_display(false, true, "j_lobc_censored")
     end
 end
 

@@ -161,6 +161,14 @@ return {
                     "about unwarranted frenzy.",
                 }
             },
+            und_j_lobc_fairy_festival = {
+                name = "F-04-83",
+                text = {
+                    "Everything will be peaceful",
+                    "while you are under",
+                    "the fairies' care.",
+                }
+            },
             und_j_lobc_iron_maiden = {
                 name = "T-09-85",
                 text = {
@@ -1042,6 +1050,34 @@ return {
                 }
             },
 
+            dis_j_lobc_fairy_festival_1 = {
+                name = "F-04-83",
+                text = {
+                    "{C:attention}(#2#/2){} ...",
+                    "{C:attention}(#3#/4){} ..."
+                }
+            },
+            dis_j_lobc_fairy_festival_2 = {
+                name = "F-04-83",
+                text = {
+                    "When entering a shop, sets a",
+                    "random shop item's price to {C:money}$#1#{}",
+                    "{C:inactive}(except Vouchers)",
+                    "{C:attention}(#3#/4){} ...",
+                }
+            },
+            j_lobc_fairy_festival = {
+                name = "Fairy Festival",
+                text = {
+                    "When entering a shop, sets a",
+                    "random shop item's price to {C:money}$#1#{}",
+                    "{C:inactive}(except Vouchers)",
+                    "{s:0.15} {}",
+                    "Buying a different item destroys",
+                    "all shop items and locks rerolls",
+                }
+            },
+
             dis_j_lobc_iron_maiden_1 = {
                 name = "T-09-85",
                 text = {
@@ -1470,7 +1506,7 @@ return {
             ch_c_lobc_fast_ante_1 = {"Required score scales {C:green}faster{} for each Ante"},
             ch_c_lobc_fast_ante_2 = {"Required score scales {C:purple}even faster{} for each Ante"},
             ch_c_lobc_end_ante = {"Game ends after Ante {C:attention}#1#{}"},
-            ch_c_lobc_midnight_endgame = {"Only {C:dark_edition}Midnight{} Ordeals can appear past Ante {C:attention}8{}"},
+            ch_c_lobc_midnight_endgame = {"Only {C:dark_edition}Midnight Ordeals{} can appear past Ante {C:attention}8{}"},
             ch_c_lobc_slow_endgame = {"Required score scales slower after Ante {C:attention}8{}"},
 
             -- Dark Days
@@ -1516,22 +1552,24 @@ return {
 
             lobc_show_art_undiscovered = "Show Abnormality Art when Undiscovered",
             lobc_disable_ordeals = "Disable Random Ordeals",
-            lobc_discover_all = "Discover All",
-            lobc_no_sfx = "Disable Sound Effects",
+            lobc_discover_all = "Discover All (Irreversible)",
+            lobc_no_sfx = "Disable All Sound Effects",
             lobc_no_music = "Disable Music",
             lobc_irreversible = "(This effect is permanent on this profile!)",
-            lobc_disable_meltdown_color = "Disable Background in some Challenges",
+            lobc_disable_meltdown_color = "Disable Background Override in Challenges",
+            lobc_disable_unsettling_sfx = "Disable Only Unsettling Sound Effects",
+            lobc_unlock_challenges = "Unlock All Challenges",
+            lobc_disable_abno_text = "Disable Abnormality (Red) Flavor Text",
+            lobc_disable_all_text = "Disable All Flavor Text",
 
             ---- Credits ----
             lobc_credits_1 = "Art and SFX from Lobotomy Corporation and Library of Ruina",
-            lobc_credits_2 = "\"First Warning\", \"Second Warning\" and \"Third Warning\"",
-            lobc_credits_3 = "\"Abnormality Choice\" from Limbus Company",
+            lobc_credits_2 = "Several tracks used from Lobotomy Corporation and Limbus Company",
+            lobc_credits_full_list = "The full list can be found in the \"music.txt\" file",
             lobc_credits_4 = "Nameless Fetus, The Lady Facing the Wall, All-Around Helper effects: ",
             lobc_credits_5 = "Initial JokerDisplay for All-Around Helper, One Sin and Hundreds of Good Deeds: ",
             lobc_credits_by = "by ",
             lobc_credits_pm = "Project Moon",
-            lobc_credits_reb = "Dr.Reb",
-            lobc_credits_eim = "Studio EIM",
             lobc_credits_twi = "Twilight & Sunset",
             lobc_credits_opp = "OppositeWolf770",
 
@@ -1777,7 +1815,19 @@ return {
             ach_lobc_blind_rage = "Blind Rage",
             ach_lobc_midnight = "Midnight Vanquisher",
             ach_lobc_white_nights = "White Nights",
-            ach_lobc_malkuth = "The Will to Stand up Straight"
+            ach_lobc_malkuth = "The Will to Stand up Straight",
+            ach_lobc_yesod = "The Rationality to Maintain Discretion",
+            ach_lobc_hod = "The Hope to be a Better Person",
+            ach_lobc_netzach = "The Fearlessness to Keep on Living",
+            ach_lobc_tiphereth = "The Expectation for the Meaning of Existance",
+            ach_lobc_gebura = "The Courage to Protect",
+            ach_lobc_chesed = "Those who are Faithful and Trustworthy",
+            ach_lobc_binah = "The Eye Facing the Fear; Breaking the Cycle",
+            ach_lobc_hokma = "The Eye Embracing the Past; Building the Future",
+            ach_lobc_keter = "Proving Oneself",
+            ach_lobc_asiyah = "Fatigue and Waiting",
+            ach_lobc_briah = "Regret and Atonement",
+            ach_lobc_atziluth = "Freedom and Salvation",
         },
         achievement_descriptions = {
             ach_lobc_penitence = "Confess to One Sin and Hundreds of Good Deeds and defeat WhiteNight",
@@ -1795,9 +1845,21 @@ return {
             ach_lobc_todays_expression = "Make the happiest face 10 times in a row on Today's Shy Look",
             ach_lobc_tough = "Fully observe You're Bald...",
             ach_lobc_blind_rage = "Have The Servant of Wrath for 6 rounds in one game while defeating each blind in only one hand",
-            ach_lobc_midnight = "Defeat a Midnight Ordeal",
+            ach_lobc_midnight = "Defeat a Midnight Ordeal in a non-challenge game",
             ach_lobc_white_nights = "Beat \"Dark Days\"",
-            ach_lobc_malkuth = "Beat \"Control\""
+            ach_lobc_malkuth = "Beat \"Control\"",
+            ach_lobc_yesod = "Beat \"Information\"",
+            ach_lobc_hod = "Beat \"Training\"",
+            ach_lobc_netzach = "Beat \"Safety\"",
+            ach_lobc_tiphereth = "Beat \"Central Command\"",
+            ach_lobc_gebura = "Beat \"Disciplinary\"",
+            ach_lobc_chesed = "Beat \"Welfare\"",
+            ach_lobc_binah = "Beat \"Extraction\"",
+            ach_lobc_hokma = "Beat \"Record\"",
+            ach_lobc_keter = "Beat \"Architecture\"",
+            ach_lobc_asiyah = "Beat \"Asiyah\"",
+            ach_lobc_briah = "Beat \"Briah\"",
+            ach_lobc_atziluth = "Beat \"Atziluth\"",
         }
     }
 }
